@@ -77,24 +77,28 @@ function spouseFactors(profile: Profile): SpouseBreakdown {
   }
 }
 
+/** Pick from a [weakTier, strongTier] pair; tier -1 → no points. */
+function tierPoints(row: readonly [number, number], tier: number): number {
+  return tier === 1 ? row[1] : tier === 0 ? row[0] : 0
+}
+
 function transferability(profile: Profile): TransferabilityBreakdown {
   const clb = profile.firstLanguage.clb
-  // Tier index into [weakTier, strongTier] pairs: -1 → no points.
   const languageTier = allAbilitiesAtLeast(clb, 9) ? 1 : allAbilitiesAtLeast(clb, 7) ? 0 : -1
   const canadianYears = fullYears(profile.canadianWorkMonths)
   const canadianTier = canadianYears >= 2 ? 1 : canadianYears >= 1 ? 0 : -1
 
   const educationRow = TRANSFER_EDUCATION_POINTS[profile.education]
-  const educationLanguage = languageTier >= 0 ? educationRow[languageTier] : 0
-  const educationCanadianWork = canadianTier >= 0 ? educationRow[canadianTier] : 0
+  const educationLanguage = tierPoints(educationRow, languageTier)
+  const educationCanadianWork = tierPoints(educationRow, canadianTier)
   const educationSubtotal = Math.min(
     TRANSFERABILITY_SECTION_CAP,
     educationLanguage + educationCanadianWork,
   )
 
   const foreignRow = transferForeignWorkPoints(fullYears(profile.foreignWorkMonths))
-  const foreignWorkLanguage = languageTier >= 0 ? foreignRow[languageTier] : 0
-  const foreignWorkCanadianWork = canadianTier >= 0 ? foreignRow[canadianTier] : 0
+  const foreignWorkLanguage = tierPoints(foreignRow, languageTier)
+  const foreignWorkCanadianWork = tierPoints(foreignRow, canadianTier)
   const foreignWorkSubtotal = Math.min(
     TRANSFERABILITY_SECTION_CAP,
     foreignWorkLanguage + foreignWorkCanadianWork,
@@ -102,8 +106,8 @@ function transferability(profile: Profile): TransferabilityBreakdown {
 
   // The certificate table uses lower CLB thresholds (5 / 7) than the others.
   const certificateTier = allAbilitiesAtLeast(clb, 7) ? 1 : allAbilitiesAtLeast(clb, 5) ? 0 : -1
-  const certificate = profile.certificateOfQualification && certificateTier >= 0
-    ? [25, 50][certificateTier]
+  const certificate = profile.certificateOfQualification
+    ? tierPoints([25, 50], certificateTier)
     : 0
 
   return {
