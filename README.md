@@ -1,5 +1,7 @@
 # EE CRS 计算器
 
+**在线使用:https://muhac.github.io/ee-crs-planner/**
+
 非官方的加拿大 Express Entry **CRS(Comprehensive Ranking System)分数计算器**:
 
 - 输入个人档案(年龄、教育、语言 CLB/NCLC、工作经验、配偶、附加项),实时查看总分和逐项拆解
