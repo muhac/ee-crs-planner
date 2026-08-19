@@ -11,10 +11,10 @@ import { es } from './locales/es'
 export const LANGUAGES = [
   { code: 'en', name: 'English' },
   { code: 'fr', name: 'Français' },
+  { code: 'es', name: 'Español' },
   { code: 'zh-CN', name: '简体中文' },
   { code: 'zh-TW', name: '繁體中文' },
   { code: 'hi', name: 'हिन्दी' },
-  { code: 'es', name: 'Español' },
 ] as const
 
 void i18n
