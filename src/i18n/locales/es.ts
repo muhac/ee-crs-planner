@@ -103,7 +103,8 @@ export const es = {
   },
   canadianEdu: {
     'none': 'Ninguno',
-    'one-or-two-year': 'Título de uno o dos años',
+    'one-year': 'Título de un año',
+    'two-year': 'Título de dos años',
     'three-plus-year': 'Título de 3+ años, o maestría/título profesional/doctorado (mínimo un año académico)',
   },
   score: {

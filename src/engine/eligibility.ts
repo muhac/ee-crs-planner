@@ -87,9 +87,16 @@ export function fsw67Points(profile: Profile, asOf: string): number {
 
   let adaptability = 0
   if (profile.spouse?.language && allAtLeast(profile.spouse.language.clb, 4)) adaptability += 5
-  if (profile.canadianEducationCredential !== 'none') adaptability += 5
+  // Own past studies: requires 2+ academic years in a 2+ year program.
+  if (
+    profile.canadianEducationCredential === 'two-year' ||
+    profile.canadianEducationCredential === 'three-plus-year'
+  ) {
+    adaptability += 5
+  }
   if (profile.spouse?.studiedInCanada) adaptability += 5
-  if (profile.canadianWorkMonths >= 12) adaptability += 5
+  // Own past work in Canada is the only 10-point adaptability factor.
+  if (profile.canadianWorkMonths >= 12) adaptability += 10
   if ((profile.spouse?.canadianWorkMonths ?? 0) >= 12) adaptability += 5
   if (profile.jobOffer) adaptability += 5
   if (profile.siblingInCanada || profile.relativeInCanada) adaptability += 5
@@ -115,7 +122,9 @@ export function checkEligibility(profile: Profile, asOf: string): EligibilityRes
   }
 
   // FSW: CLB 7 in every ability, 12+ months skilled experience, 67+ grid
-  // points, settlement funds (job offer counts toward the exemption).
+  // points, settlement funds. Funds are waived only with a valid job offer
+  // AND authorization to work in Canada (approximated by workingInCanada).
+  const fundsOk = profile.settlementFunds || (profile.jobOffer && profile.workingInCanada)
   const points67 = fsw67Points(profile, asOf)
   const fswReasons: EligibilityReason[] = []
   if (!allAtLeast(clb, 7)) fswReasons.push({ key: 'fswLanguage' })
@@ -125,7 +134,7 @@ export function checkEligibility(profile: Profile, asOf: string): EligibilityRes
   if (points67 < FSW_PASS_MARK) {
     fswReasons.push({ key: 'fswPoints', params: { points: points67 } })
   }
-  if (!profile.settlementFunds && !profile.jobOffer) fswReasons.push({ key: 'funds' })
+  if (!fundsOk) fswReasons.push({ key: 'funds' })
 
   // FST: certificate of qualification or job offer, 24 months trade
   // experience (last 5 years, assumed), CLB 5 speaking/listening and
@@ -140,7 +149,7 @@ export function checkEligibility(profile: Profile, asOf: string): EligibilityRes
   const fstLanguageOk = (['speaking', 'listening'] as Ability[]).every((a) => clb[a] >= 5) &&
     (['reading', 'writing'] as Ability[]).every((a) => clb[a] >= 4)
   if (!fstLanguageOk) fstReasons.push({ key: 'fstLanguage' })
-  if (!profile.settlementFunds && !profile.jobOffer) fstReasons.push({ key: 'funds' })
+  if (!fundsOk) fstReasons.push({ key: 'funds' })
 
   const cec = { eligible: cecReasons.length === 0, reasons: cecReasons }
   const fsw = { eligible: fswReasons.length === 0, reasons: fswReasons, points67 }

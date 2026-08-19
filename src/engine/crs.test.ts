@@ -366,7 +366,8 @@ describe('additional points', () => {
     expect(score({ provincialNomination: true }).additional.provincialNomination).toBe(600)
   })
   it('Canadian education credential → 15 / 30', () => {
-    expect(score({ canadianEducationCredential: 'one-or-two-year' }).additional.canadianEducation).toBe(15)
+    expect(score({ canadianEducationCredential: 'one-year' }).additional.canadianEducation).toBe(15)
+    expect(score({ canadianEducationCredential: 'two-year' }).additional.canadianEducation).toBe(15)
     expect(score({ canadianEducationCredential: 'three-plus-year' }).additional.canadianEducation).toBe(30)
   })
   it('French NCLC7+ with English CLB5+ → 50', () => {

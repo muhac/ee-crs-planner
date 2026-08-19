@@ -103,7 +103,8 @@ export const fr = {
   },
   canadianEdu: {
     'none': 'Aucun',
-    'one-or-two-year': 'Diplôme d’un ou deux ans',
+    'one-year': 'Diplôme d’un an',
+    'two-year': 'Diplôme de deux ans',
     'three-plus-year': 'Diplôme de 3 ans ou plus, ou maîtrise/diplôme professionnel/doctorat (au moins une année scolaire)',
   },
   score: {

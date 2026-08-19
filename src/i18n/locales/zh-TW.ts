@@ -101,7 +101,8 @@ export const zhTW = {
   },
   canadianEdu: {
     'none': '無',
-    'one-or-two-year': '一至兩年制文憑',
+    'one-year': '一年制文憑',
+    'two-year': '兩年制文憑',
     'three-plus-year': '三年及以上文憑，或碩士/職業/博士學位（至少一學年）',
   },
   score: {

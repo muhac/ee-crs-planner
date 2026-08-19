@@ -31,7 +31,7 @@ export type EducationLevel =
   | 'masters-or-professional'
   | 'doctoral'
 
-export type CanadianEducationCredential = 'none' | 'one-or-two-year' | 'three-plus-year'
+export type CanadianEducationCredential = 'none' | 'one-year' | 'two-year' | 'three-plus-year'
 
 /** TEER category of the Canadian work experience (drives the CEC language threshold). */
 export type WorkTeer = 'teer-0-1' | 'teer-2-3'

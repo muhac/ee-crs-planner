@@ -59,10 +59,16 @@ describe('fsw67Points', () => {
   })
 
   it('scores experience brackets from combined months', () => {
-    expect(fsw67Points(profile({ canadianWorkMonths: 12 }), AS_OF)).toBe(16 + 21 + 12 + 9 + 5)
-    // +5 adaptability for 1yr Canadian work; 2-3yr bracket:
+    // 1yr Canadian work: 9 exp + 10 adaptability (past work in Canada)
+    expect(fsw67Points(profile({ canadianWorkMonths: 12 }), AS_OF)).toBe(16 + 21 + 12 + 9 + 10)
     expect(fsw67Points(profile({ foreignWorkMonths: 30 }), AS_OF)).toBe(16 + 21 + 12 + 11)
     expect(fsw67Points(profile({ foreignWorkMonths: 76 }), AS_OF)).toBe(16 + 21 + 12 + 15)
+  })
+
+  it('credits Canadian study adaptability only for 2+ year credentials', () => {
+    expect(fsw67Points(profile({ canadianEducationCredential: 'one-year' }), AS_OF)).toBe(16 + 21 + 12)
+    expect(fsw67Points(profile({ canadianEducationCredential: 'two-year' }), AS_OF)).toBe(16 + 21 + 12 + 5)
+    expect(fsw67Points(profile({ canadianEducationCredential: 'three-plus-year' }), AS_OF)).toBe(16 + 21 + 12 + 5)
   })
 
   it('decreases age points after 35 and caps adaptability at 10', () => {
@@ -70,8 +76,8 @@ describe('fsw67Points', () => {
     expect(fsw67Points(profile({ dateOfBirth: '1978-01-01' }), AS_OF)).toBe(16 + 21) // age 48
     const p = profile({
       jobOffer: true, // +10 arranged +5 adapt
-      canadianWorkMonths: 12, // +9 exp +5 adapt
-      canadianEducationCredential: 'one-or-two-year', // +5 adapt
+      canadianWorkMonths: 12, // +9 exp +10 adapt
+      canadianEducationCredential: 'two-year', // +5 adapt
     })
     // adaptability capped at 10: 16 + 21 + 12(age) + 9(exp) + 10(offer) + 10(adapt)
     expect(fsw67Points(p, AS_OF)).toBe(16 + 21 + 12 + 9 + 10 + 10)
@@ -110,6 +116,18 @@ describe('checkEligibility', () => {
     expect(r.fsw.eligible).toBe(true)
     expect(checkEligibility(profile({ foreignWorkMonths: 72, secondLanguage: { language: 'french', clb: uniformClb(5) }, settlementFunds: false }), AS_OF).fsw.eligible).toBe(false)
     expect(checkEligibility(profile(), AS_OF).fsw.eligible).toBe(false) // no experience, 49 pts
+  })
+
+  it('waives funds only with a job offer AND authorization to work in Canada', () => {
+    const base = {
+      foreignWorkMonths: 72,
+      settlementFunds: false,
+      jobOffer: true, // +10 arranged +5 adapt → well past 67
+    }
+    expect(checkEligibility(profile(base), AS_OF).fsw.eligible).toBe(false)
+    expect(
+      checkEligibility(profile({ ...base, workingInCanada: true }), AS_OF).fsw.eligible,
+    ).toBe(true)
   })
 
   it('FST needs certificate/offer, 24 months, and its language thresholds', () => {

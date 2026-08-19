@@ -162,7 +162,7 @@ describe('simulate', () => {
       profile(),
       scenario({
         events: [
-          { id: 'e1', date: '2027-06-01', type: 'education-update', education: 'masters-or-professional', canadianEducationCredential: 'one-or-two-year' },
+          { id: 'e1', date: '2027-06-01', type: 'education-update', education: 'masters-or-professional', canadianEducationCredential: 'two-year' },
           { id: 'e2', date: '2028-01-01', type: 'provincial-nomination' },
         ],
       }),

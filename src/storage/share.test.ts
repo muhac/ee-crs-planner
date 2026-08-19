@@ -88,6 +88,39 @@ describe('share encoding', () => {
     })
   })
 
+  it('upgrades v6 payloads: one-or-two-year credential maps to two-year', () => {
+    const v6 = {
+      app: 'ee-crs',
+      schemaVersion: 6,
+      profile: {
+        ...stored,
+        profile: { ...stored.profile, canadianEducationCredential: 'one-or-two-year' },
+        scenarios: [
+          {
+            id: 's1',
+            name: '继续工作',
+            pinned: true,
+            events: [
+              {
+                id: 'e1',
+                date: '2027-01-01',
+                type: 'education-update',
+                education: 'masters-or-professional',
+                canadianEducationCredential: 'one-or-two-year',
+              },
+            ],
+            horizonMonths: 36,
+          },
+        ],
+      },
+    }
+    const decoded = decodeShare(compressToEncodedURIComponent(JSON.stringify(v6)))
+    expect(decoded?.profile.canadianEducationCredential).toBe('two-year')
+    expect(decoded?.scenarios[0].events[0]).toMatchObject({
+      canadianEducationCredential: 'two-year',
+    })
+  })
+
   it('parses only well-formed share hashes', () => {
     expect(parseShareHash(SHARE_HASH_PREFIX + encodeShare(stored))).toEqual(stored)
     expect(parseShareHash('#other=123')).toBeNull()

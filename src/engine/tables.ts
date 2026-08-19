@@ -1,6 +1,6 @@
 /**
  * CRS point tables, transcribed from the official IRCC grid:
- * https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/eligibility/criteria-comprehensive-ranking-system/grid.html
+ * https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html
  * (page last updated 2026-06-22; job-offer points removed as of 2025-03-25)
  *
  * Every entry is [withSpouse, withoutSpouse] unless noted otherwise.

@@ -144,7 +144,7 @@ function additionalPoints(profile: Profile): AdditionalBreakdown {
   const canadianEducation =
     profile.canadianEducationCredential === 'three-plus-year'
       ? ADDITIONAL_POINTS.canadianEducationThreePlusYear
-      : profile.canadianEducationCredential === 'one-or-two-year'
+      : profile.canadianEducationCredential !== 'none'
         ? ADDITIONAL_POINTS.canadianEducationOneOrTwoYear
         : 0
   return {

@@ -99,7 +99,8 @@ export const zhCN = {
   },
   canadianEdu: {
     'none': '无',
-    'one-or-two-year': '一至两年制文凭',
+    'one-year': '一年制文凭',
+    'two-year': '两年制文凭',
     'three-plus-year': '三年及以上文凭，或硕士/职业/博士学位（至少一学年）',
   },
   score: {

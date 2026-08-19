@@ -266,7 +266,7 @@ export function EventDialog({ profile, onAdd }: Props) {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    {(['none', 'one-or-two-year', 'three-plus-year'] as const).map((v) => (
+                    {(['none', 'one-year', 'two-year', 'three-plus-year'] as const).map((v) => (
                       <SelectItem key={v} value={v}>
                         {t(`canadianEdu.${v}`)}
                       </SelectItem>
