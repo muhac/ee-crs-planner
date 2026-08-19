@@ -71,14 +71,14 @@ export const fr = {
     eligibilitySection: 'Renseignements d’admissibilité',
     eligibilityHint:
       'Ces renseignements n’affectent pas le score SCG — ils servent uniquement à déterminer l’admissibilité au bassin.',
-    jobOffer: 'Offre d’emploi valide (emploi réservé)',
+    jobOffer: 'Offre d’emploi valide',
     jobOfferHint:
-      'Emploi réservé au sens d’IRCC : un poste TEER 0-3 à temps plein, non saisonnier, d’au moins un an, généralement appuyé par une EIMT — une offre ordinaire ne compte pas. Dispense des fonds requis (TQF/MQF) et compte dans la grille de 67 points TQF.',
+      'Emploi réservé au sens d’IRCC : un poste TEER 0-3 à temps plein, non saisonnier, d’au moins un an, généralement appuyé par une EIMT.',
     settlementFunds: 'Satisfait à l’exigence de fonds d’établissement',
     settlementFundsHint:
       'N’affecte que l’admissibilité TQF/MQF ; le montant dépend de la taille de la famille (environ 15 000 $ CA pour une personne). La CEC n’exige aucune preuve de fonds.',
     relativeInCanadaHint:
-      'Un parent citoyen/RP de vous ou de votre époux qui vous accompagne, âgé de 18 ans ou plus et vivant au Canada : parent, grand-parent, enfant, petit-enfant, frère ou sœur, oncle ou tante, neveu ou nièce. Compte uniquement pour l’adaptabilité de la grille de 67 points TQF.',
+      'Un parent citoyen/RP de vous ou de votre époux qui vous accompagne, âgé de 18 ans ou plus et vivant au Canada : parent, grand-parent, enfant, petit-enfant, frère ou sœur, oncle ou tante, neveu ou nièce.',
     spouseStudiedInCanada: 'Conjoint ayant étudié au Canada (2+ années scolaires)',
     belowLevel: 'Sous {{scale}} 4',
   },

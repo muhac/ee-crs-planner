@@ -67,14 +67,14 @@ export const zhCN = {
     relativeInCanada: '有其他成年亲属是加拿大公民或永久居民',
     eligibilitySection: '入池资格信息',
     eligibilityHint: '以下信息不影响 CRS 分数，仅用于判定入池资格。',
-    jobOffer: '有有效雇主 Job Offer（安排就业）',
+    jobOffer: '有有效雇主 Job Offer',
     jobOfferHint:
-      '指官方定义的“安排就业”：全职、非季节性、至少一年的 TEER 0-3 职位，通常需 LMIA 支持，普通 offer 不算。可免除 FSW/FST 资金证明，并计入 FSW 67 分表。',
+      '指官方定义的“安排就业”：全职、非季节性、至少一年的 TEER 0-3 职位，通常需 LMIA 支持。',
     settlementFunds: '满足安家资金要求',
     settlementFundsHint:
       '仅影响 FSW/FST 资格，金额随家庭人数而定（单人约 1.5 万加元）；CEC 无需资金证明。',
     relativeInCanadaHint:
-      '指本人或随行配偶年满 18 岁、居住在加拿大的公民/PR 亲属：父母、祖父母/外祖父母、子女、孙辈、兄弟姐妹、叔伯姑舅姨、侄甥。仅计入 FSW 67 分表的适应性加分。',
+      '指本人或随行配偶年满 18 岁、居住在加拿大的公民/PR 亲属：父母、祖父母/外祖父母、子女、孙辈、兄弟姐妹、叔伯姑舅姨、侄甥。',
     spouseStudiedInCanada: '配偶曾在加拿大学习（两学年及以上）',
     belowLevel: '低于 {{scale}} 4',
   },

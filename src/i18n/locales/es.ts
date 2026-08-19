@@ -71,14 +71,14 @@ export const es = {
     eligibilitySection: 'Datos de elegibilidad',
     eligibilityHint:
       'Estos datos no afectan la puntuación CRS; solo se usan para determinar la elegibilidad para el pool.',
-    jobOffer: 'Oferta de empleo válida (empleo concertado)',
+    jobOffer: 'Oferta de empleo válida',
     jobOfferHint:
-      'Empleo concertado según IRCC: un puesto TEER 0-3 a tiempo completo, no estacional, de al menos un año, normalmente respaldado por una LMIA — una oferta ordinaria no cuenta. Exime de los fondos requeridos (FSW/FST) y cuenta en la tabla de 67 puntos de FSW.',
+      'Empleo concertado según IRCC: un puesto TEER 0-3 a tiempo completo, no estacional, de al menos un año, normalmente respaldado por una LMIA.',
     settlementFunds: 'Cumple el requisito de fondos de asentamiento',
     settlementFundsHint:
       'Solo afecta la elegibilidad FSW/FST; el monto depende del tamaño de la familia (unos 15 000 CAD para una persona). CEC no exige prueba de fondos.',
     relativeInCanadaHint:
-      'Un familiar ciudadano/RP suyo o de su cónyuge acompañante, mayor de 18 años y residente en Canadá: padre/madre, abuelo/a, hijo/a, nieto/a, hermano/a, tío/a, sobrino/a. Solo cuenta para la adaptabilidad de la tabla de 67 puntos de FSW.',
+      'Un familiar ciudadano/RP suyo o de su cónyuge acompañante, mayor de 18 años y residente en Canadá: padre/madre, abuelo/a, hijo/a, nieto/a, hermano/a, tío/a, sobrino/a.',
     spouseStudiedInCanada: 'Cónyuge estudió en Canadá (2+ años académicos)',
     belowLevel: 'Menos de {{scale}} 4',
   },
