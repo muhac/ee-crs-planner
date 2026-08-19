@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import {
   CartesianGrid,
   Legend,
@@ -41,6 +42,7 @@ interface Props {
 }
 
 export function Projection({ profile, scenarios, onChange }: Props) {
+  const { t } = useTranslation()
   const [start] = useState(todayIso)
 
   const simulations = useMemo(
@@ -74,10 +76,8 @@ export function Projection({ profile, scenarios, onChange }: Props) {
     <div className="space-y-6">
       <Card>
         <CardHeader className="pb-0">
-          <h3 className="font-semibold">分数推演曲线</h3>
-          <p className="text-muted-foreground text-xs">
-            从今天起逐月推演:年龄自动增长,工作经验按方案设置累积,事件按日期生效。
-          </p>
+          <h3 className="font-semibold">{t('projection.chartTitle')}</h3>
+          <p className="text-muted-foreground text-xs">{t('projection.chartHint')}</p>
         </CardHeader>
         <CardContent>
           <div className="h-64 sm:h-80">
@@ -133,12 +133,12 @@ export function Projection({ profile, scenarios, onChange }: Props) {
             <table className="w-full min-w-105 text-sm">
               <thead>
                 <tr className="text-muted-foreground border-b text-left text-xs">
-                  <th className="py-2 pr-3 font-medium">方案</th>
-                  <th className="py-2 pr-3 font-medium">当前</th>
+                  <th className="py-2 pr-3 font-medium">{t('projection.scenarioCol')}</th>
+                  <th className="py-2 pr-3 font-medium">{t('projection.current')}</th>
                   {MILESTONES.map((m) => (
-                    <th key={m} className="py-2 pr-3 font-medium">+{m} 月</th>
+                    <th key={m} className="py-2 pr-3 font-medium">{t('projection.plusMonths', { m })}</th>
                   ))}
-                  <th className="py-2 font-medium">峰值</th>
+                  <th className="py-2 font-medium">{t('projection.peak')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -176,14 +176,19 @@ export function Projection({ profile, scenarios, onChange }: Props) {
 
       <div className="space-y-4">
         <div className="flex items-center justify-between">
-          <h3 className="font-semibold">推演方案</h3>
+          <h3 className="font-semibold">{t('projection.scenarios')}</h3>
           <Button
             variant="outline"
             size="sm"
             disabled={scenarios.length >= MAX_SCENARIOS}
-            onClick={() => onChange([...scenarios, defaultScenario(`方案 ${scenarios.length + 1}`)])}
+            onClick={() =>
+              onChange([
+                ...scenarios,
+                defaultScenario(t('projection.defaultScenarioName', { n: scenarios.length + 1 })),
+              ])
+            }
           >
-            + 新增方案
+            {t('projection.addScenario')}
           </Button>
         </div>
 
@@ -199,10 +204,12 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                   value={scenario.name}
                   className="w-36 sm:w-48"
                   onChange={(e) => updateScenario(scenario.id, { name: e.target.value })}
-                  aria-label="方案名称"
+                  aria-label={t('projection.scenarioName')}
                 />
                 <div className="flex items-center gap-2 sm:ml-auto">
-                  <Label className="text-muted-foreground whitespace-nowrap text-xs">推演时长</Label>
+                  <Label className="text-muted-foreground whitespace-nowrap text-xs">
+                    {t('projection.horizon')}
+                  </Label>
                   <Select
                     value={String(scenario.horizonMonths)}
                     onValueChange={(v) => updateScenario(scenario.id, { horizonMonths: Number(v) })}
@@ -212,7 +219,9 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                     </SelectTrigger>
                     <SelectContent>
                       {[12, 24, 36, 48, 60].map((m) => (
-                        <SelectItem key={m} value={String(m)}>{m} 个月</SelectItem>
+                        <SelectItem key={m} value={String(m)}>
+                          {t('projection.horizonMonths', { m })}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
@@ -222,7 +231,7 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                       size="sm"
                       onClick={() => onChange(scenarios.filter((s) => s.id !== scenario.id))}
                     >
-                      删除
+                      {t('projection.delete')}
                     </Button>
                   )}
                 </div>
@@ -236,7 +245,7 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                     onCheckedChange={(on) => updateScenario(scenario.id, { workingInCanada: on })}
                   />
                   <Label htmlFor={`wic-${scenario.id}`} className="font-normal">
-                    正在加拿大工作(经验持续累积)
+                    {t('projection.workingInCanada')}
                   </Label>
                 </div>
                 <div className="flex items-center gap-2">
@@ -246,7 +255,7 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                     onCheckedChange={(on) => updateScenario(scenario.id, { workingAbroad: on })}
                   />
                   <Label htmlFor={`wa-${scenario.id}`} className="font-normal">
-                    正在海外工作
+                    {t('projection.workingAbroad')}
                   </Label>
                 </div>
               </div>
@@ -264,7 +273,7 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                         <span className="text-muted-foreground mr-2 tabular-nums text-xs">
                           {event.date}
                         </span>
-                        {describeEvent(event)}
+                        {describeEvent(t, event)}
                       </div>
                       <Button
                         variant="ghost"
@@ -276,7 +285,7 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                           })
                         }
                       >
-                        移除
+                        {t('projection.remove')}
                       </Button>
                     </div>
                   ))}

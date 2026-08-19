@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import type { ScoreBreakdown } from '@/engine/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
@@ -32,62 +33,69 @@ function Section({
 }
 
 export function ScorePanel({ score }: { score: ScoreBreakdown }) {
+  const { t } = useTranslation()
   return (
     <Card>
       <CardHeader className="pb-2">
         <CardTitle className="flex items-baseline justify-between">
-          <span>CRS 总分</span>
+          <span>{t('score.total')}</span>
           <span className="text-3xl tabular-nums">{score.total}</span>
         </CardTitle>
         <p className="text-muted-foreground text-xs">
-          按{score.withSpouse ? '有' : '无'}随行配偶打分 · 当前年龄 {score.age} 岁
+          {t(score.withSpouse ? 'score.summaryWithSpouse' : 'score.summaryWithoutSpouse', {
+            age: score.age,
+          })}
         </p>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Section title="核心人力资本" subtotal={score.core.subtotal}>
-          <Row label="年龄" value={score.core.age} muted />
-          <Row label="教育" value={score.core.education} muted />
-          <Row label="第一语言" value={score.core.firstLanguage} muted />
+        <Section title={t('score.core')} subtotal={score.core.subtotal}>
+          <Row label={t('score.age')} value={score.core.age} muted />
+          <Row label={t('score.education')} value={score.core.education} muted />
+          <Row label={t('score.firstLanguage')} value={score.core.firstLanguage} muted />
           {score.core.secondLanguage > 0 && (
-            <Row label="第二语言" value={score.core.secondLanguage} muted />
+            <Row label={t('score.secondLanguage')} value={score.core.secondLanguage} muted />
           )}
-          <Row label="加拿大工作经验" value={score.core.canadianWork} muted />
+          <Row label={t('score.canadianWork')} value={score.core.canadianWork} muted />
         </Section>
 
         {score.withSpouse && (
           <>
             <Separator />
-            <Section title="配偶因素" subtotal={score.spouse.subtotal}>
-              <Row label="教育" value={score.spouse.education} muted />
-              <Row label="语言" value={score.spouse.language} muted />
-              <Row label="加拿大工作经验" value={score.spouse.canadianWork} muted />
+            <Section title={t('score.spouseFactors')} subtotal={score.spouse.subtotal}>
+              <Row label={t('score.education')} value={score.spouse.education} muted />
+              <Row label={t('score.language')} value={score.spouse.language} muted />
+              <Row label={t('score.canadianWork')} value={score.spouse.canadianWork} muted />
             </Section>
           </>
         )}
 
         <Separator />
-        <Section title="技能迁移性(上限 100)" subtotal={score.transferability.subtotal}>
-          <Row label="教育 × 语言" value={score.transferability.educationLanguage} muted />
-          <Row label="教育 × 加国经验" value={score.transferability.educationCanadianWork} muted />
-          <Row label="海外经验 × 语言" value={score.transferability.foreignWorkLanguage} muted />
-          <Row label="海外经验 × 加国经验" value={score.transferability.foreignWorkCanadianWork} muted />
+        <Section title={t('score.transferability')} subtotal={score.transferability.subtotal}>
+          <Row label={t('score.eduLang')} value={score.transferability.educationLanguage} muted />
+          <Row label={t('score.eduCdnWork')} value={score.transferability.educationCanadianWork} muted />
+          <Row label={t('score.foreignLang')} value={score.transferability.foreignWorkLanguage} muted />
+          <Row label={t('score.foreignCdnWork')} value={score.transferability.foreignWorkCanadianWork} muted />
           {score.transferability.certificate > 0 && (
-            <Row label="技工证书 × 语言" value={score.transferability.certificate} muted />
+            <Row label={t('score.certLang')} value={score.transferability.certificate} muted />
           )}
         </Section>
 
         <Separator />
-        <Section title="附加分(上限 600)" subtotal={score.additional.subtotal}>
+        <Section title={t('score.additional')} subtotal={score.additional.subtotal}>
           {score.additional.provincialNomination > 0 && (
-            <Row label="省提名" value={score.additional.provincialNomination} muted />
+            <Row label={t('score.pnp')} value={score.additional.provincialNomination} muted />
           )}
-          {score.additional.french > 0 && <Row label="法语加分" value={score.additional.french} muted />}
+          {score.additional.french > 0 && (
+            <Row label={t('score.frenchBonus')} value={score.additional.french} muted />
+          )}
           {score.additional.canadianEducation > 0 && (
-            <Row label="加拿大学历" value={score.additional.canadianEducation} muted />
+            <Row label={t('score.canadianEducation')} value={score.additional.canadianEducation} muted />
           )}
-          {score.additional.sibling > 0 && <Row label="兄弟姐妹在加" value={score.additional.sibling} muted />}
+          {score.additional.sibling > 0 && (
+            <Row label={t('score.sibling')} value={score.additional.sibling} muted />
+          )}
           {score.additional.subtotal === 0 && (
-            <p className="text-muted-foreground text-xs">暂无附加分</p>
+            <p className="text-muted-foreground text-xs">{t('score.noAdditional')}</p>
           )}
         </Section>
       </CardContent>

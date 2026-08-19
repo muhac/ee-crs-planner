@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 
@@ -9,6 +10,7 @@ interface Props {
 
 /** Duration entry as years + months, stored as total months. */
 export function MonthsInput({ id, value, onChange }: Props) {
+  const { t } = useTranslation()
   const years = Math.floor(value / 12)
   const months = value % 12
 
@@ -29,7 +31,7 @@ export function MonthsInput({ id, value, onChange }: Props) {
         value={years}
         onChange={(e) => set(Number(e.target.value), months)}
       />
-      <Label htmlFor={id} className="text-muted-foreground font-normal">年</Label>
+      <Label htmlFor={id} className="text-muted-foreground font-normal">{t('form.years')}</Label>
       <Input
         type="number"
         inputMode="numeric"
@@ -38,9 +40,9 @@ export function MonthsInput({ id, value, onChange }: Props) {
         className="w-20"
         value={months}
         onChange={(e) => set(years, Number(e.target.value))}
-        aria-label="月"
+        aria-label={t('form.monthsAria')}
       />
-      <span className="text-muted-foreground text-sm">个月</span>
+      <span className="text-muted-foreground text-sm">{t('form.months')}</span>
     </div>
   )
 }

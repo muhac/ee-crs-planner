@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
 import { calculateCrs } from '@/engine/crs'
 import { todayIso } from '@/engine/dates'
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export function ProfilePage({ stored, onChange, onBack }: Props) {
+  const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const today = useMemo(todayIso, [])
   const score = useMemo(() => calculateCrs(stored.profile, today), [stored.profile, today])
@@ -45,20 +47,20 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
     <div className="pb-24 lg:pb-0">
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <Button variant="ghost" size="sm" onClick={onBack}>
-          ← 返回
+          {t('page.back')}
         </Button>
         <Input
           value={stored.name}
           className="max-w-48 font-medium"
           onChange={(e) => onChange((p) => ({ ...p, name: e.target.value }))}
-          aria-label="档案名称"
+          aria-label={t('page.profileName')}
         />
         <div className="ml-auto flex gap-2">
           <Button variant="outline" size="sm" onClick={() => void share()}>
-            {copied ? '已复制链接 ✓' : '分享链接'}
+            {copied ? t('page.shareCopied') : t('page.share')}
           </Button>
           <Button variant="outline" size="sm" onClick={exportJson}>
-            导出 JSON
+            {t('page.exportJson')}
           </Button>
         </div>
       </div>
@@ -66,8 +68,8 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-6">
         <Tabs defaultValue="profile">
           <TabsList className="mb-2">
-            <TabsTrigger value="profile">档案资料</TabsTrigger>
-            <TabsTrigger value="projection">未来推演</TabsTrigger>
+            <TabsTrigger value="profile">{t('page.tabProfile')}</TabsTrigger>
+            <TabsTrigger value="projection">{t('page.tabProjection')}</TabsTrigger>
           </TabsList>
           <TabsContent value="profile">
             <ProfileForm

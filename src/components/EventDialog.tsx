@@ -1,9 +1,10 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { CanadianEducationCredential, ClbScores, EducationLevel, OfficialLanguage, Profile } from '@/engine/types'
 import type { FutureEvent } from '@/engine/simulate'
 import { addMonths, todayIso } from '@/engine/dates'
 import { newId } from '@/lib/profile'
-import { CANADIAN_EDUCATION_LABELS, EDUCATION_LABELS, EDUCATION_ORDER, EVENT_TYPE_LABELS } from '@/lib/labels'
+import { EDUCATION_ORDER } from '@/lib/labels'
 import { ClbInput } from './ClbInput'
 import { Button } from '@/components/ui/button'
 import {
@@ -31,7 +32,17 @@ interface Props {
   onAdd: (event: FutureEvent) => void
 }
 
+const EVENT_TYPES: Array<FutureEvent['type']> = [
+  'language-update',
+  'education-update',
+  'provincial-nomination',
+  'certificate-of-qualification',
+  'sibling-in-canada',
+  'spouse-language-update',
+]
+
 export function EventDialog({ profile, onAdd }: Props) {
+  const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [type, setType] = useState<FutureEvent['type']>('language-update')
   const [date, setDate] = useState(() => addMonths(todayIso(), 6))
@@ -43,8 +54,8 @@ export function EventDialog({ profile, onAdd }: Props) {
     profile.canadianEducationCredential,
   )
 
-  const types = (Object.keys(EVENT_TYPE_LABELS) as Array<FutureEvent['type']>).filter(
-    (t) => t !== 'spouse-language-update' || profile.spouse !== null,
+  const types = EVENT_TYPES.filter(
+    (v) => v !== 'spouse-language-update' || profile.spouse !== null,
   )
 
   const build = (): FutureEvent => {
@@ -76,23 +87,23 @@ export function EventDialog({ profile, onAdd }: Props) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">+ 添加未来事件</Button>
+        <Button variant="outline" size="sm">{t('events.addTrigger')}</Button>
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>添加未来事件</DialogTitle>
+          <DialogTitle>{t('events.dialogTitle')}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label>事件类型</Label>
+            <Label>{t('events.type')}</Label>
             <Select value={type} onValueChange={(v) => setType(v as FutureEvent['type'])}>
               <SelectTrigger className="w-full">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {types.map((t) => (
-                  <SelectItem key={t} value={t}>
-                    {EVENT_TYPE_LABELS[t]}
+                {types.map((v) => (
+                  <SelectItem key={v} value={v}>
+                    {t(`events.types.${v}`)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -100,7 +111,7 @@ export function EventDialog({ profile, onAdd }: Props) {
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="event-date">生效日期</Label>
+            <Label htmlFor="event-date">{t('events.date')}</Label>
             <Input
               id="event-date"
               type="date"
@@ -114,26 +125,26 @@ export function EventDialog({ profile, onAdd }: Props) {
             <>
               <div className="flex items-center gap-3">
                 <div className="space-y-1.5">
-                  <Label>更新哪门语言</Label>
+                  <Label>{t('events.whichLanguage')}</Label>
                   <Select value={target} onValueChange={(v) => selectTarget(v as 'first' | 'second')}>
                     <SelectTrigger className="w-36">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="first">第一语言</SelectItem>
-                      <SelectItem value="second">第二语言</SelectItem>
+                      <SelectItem value="first">{t('events.first')}</SelectItem>
+                      <SelectItem value="second">{t('events.second')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-1.5">
-                  <Label>语种</Label>
+                  <Label>{t('events.languageKind')}</Label>
                   <Select value={language} onValueChange={(v) => setLanguage(v as OfficialLanguage)}>
                     <SelectTrigger className="w-28">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="english">英语</SelectItem>
-                      <SelectItem value="french">法语</SelectItem>
+                      <SelectItem value="english">{t('common.english')}</SelectItem>
+                      <SelectItem value="french">{t('common.french')}</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -151,7 +162,7 @@ export function EventDialog({ profile, onAdd }: Props) {
           {type === 'education-update' && (
             <>
               <div className="space-y-1.5">
-                <Label>新学历</Label>
+                <Label>{t('events.newEducation')}</Label>
                 <Select value={education} onValueChange={(v) => setEducation(v as EducationLevel)}>
                   <SelectTrigger className="w-full">
                     <SelectValue />
@@ -159,14 +170,14 @@ export function EventDialog({ profile, onAdd }: Props) {
                   <SelectContent>
                     {EDUCATION_ORDER.map((level) => (
                       <SelectItem key={level} value={level}>
-                        {EDUCATION_LABELS[level]}
+                        {t(`education.${level}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               <div className="space-y-1.5">
-                <Label>加拿大境内学历</Label>
+                <Label>{t('events.canadianEducation')}</Label>
                 <Select
                   value={canadianEducation}
                   onValueChange={(v) => setCanadianEducation(v as CanadianEducationCredential)}
@@ -177,7 +188,7 @@ export function EventDialog({ profile, onAdd }: Props) {
                   <SelectContent>
                     {(['none', 'one-or-two-year', 'three-plus-year'] as const).map((v) => (
                       <SelectItem key={v} value={v}>
-                        {CANADIAN_EDUCATION_LABELS[v]}
+                        {t(`canadianEdu.${v}`)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -193,7 +204,7 @@ export function EventDialog({ profile, onAdd }: Props) {
               setOpen(false)
             }}
           >
-            添加
+            {t('events.add')}
           </Button>
         </DialogFooter>
       </DialogContent>

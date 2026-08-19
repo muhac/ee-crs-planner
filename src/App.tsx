@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
 import { parseShareHash } from '@/storage/share'
 import { useAppData } from '@/hooks/useAppData'
@@ -7,6 +8,7 @@ import { todayIso } from '@/engine/dates'
 import { newId } from '@/lib/profile'
 import { ProfileList } from '@/components/ProfileList'
 import { ProfilePage } from '@/components/ProfilePage'
+import { LanguageSwitcher } from '@/components/LanguageSwitcher'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -18,6 +20,7 @@ import {
 } from '@/components/ui/dialog'
 
 export default function App() {
+  const { t } = useTranslation()
   const { data, addProfile, updateProfile, removeProfile } = useAppData()
   const [openId, setOpenId] = useState<string | null>(null)
   const [shared, setShared] = useState<StoredProfile | null>(null)
@@ -35,9 +38,14 @@ export default function App() {
   return (
     <div className="min-h-dvh">
       <header className="border-b">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-          <h1 className="text-base font-bold">🍁 EE CRS 计算器</h1>
-          <span className="text-muted-foreground text-xs">数据仅保存在本机浏览器</span>
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
+          <h1 className="text-base font-bold">🍁 {t('common.appTitle')}</h1>
+          <div className="flex items-center gap-3">
+            <span className="text-muted-foreground hidden text-xs sm:inline">
+              {t('common.localNote')}
+            </span>
+            <LanguageSwitcher />
+          </div>
         </div>
       </header>
 
@@ -59,32 +67,39 @@ export default function App() {
       </main>
 
       <footer className="text-muted-foreground mx-auto max-w-6xl px-4 pb-24 pt-8 text-xs lg:pb-8">
-        非官方工具,分数按 IRCC 官方 CRS 标准(2026-06 版,不含 job offer 加分)计算,仅供参考。
+        {t('common.disclaimer')}
       </footer>
 
       <Dialog open={shared !== null} onOpenChange={(open) => !open && setShared(null)}>
         <DialogContent className="sm:max-w-sm">
           <DialogHeader>
-            <DialogTitle>导入分享的档案</DialogTitle>
+            <DialogTitle>{t('shareDialog.title')}</DialogTitle>
             <DialogDescription>
               {shared &&
-                `「${shared.name}」当前 CRS 分数 ${calculateCrs(shared.profile, todayIso()).total},保存到本地后可继续编辑和推演。`}
+                t('shareDialog.description', {
+                  name: shared.name,
+                  score: calculateCrs(shared.profile, todayIso()).total,
+                })}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <Button variant="outline" onClick={() => setShared(null)}>
-              忽略
+              {t('shareDialog.ignore')}
             </Button>
             <Button
               onClick={() => {
                 if (!shared) return
-                const copy = { ...shared, id: newId(), name: `${shared.name}(导入)` }
+                const copy = {
+                  ...shared,
+                  id: newId(),
+                  name: `${shared.name}${t('shareDialog.importedSuffix')}`,
+                }
                 addProfile(copy)
                 setShared(null)
                 setOpenId(copy.id)
               }}
             >
-              保存到本地
+              {t('shareDialog.save')}
             </Button>
           </DialogFooter>
         </DialogContent>

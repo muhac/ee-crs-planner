@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
 import { isShareEnvelope } from '@/storage/schema'
 import { calculateCrs } from '@/engine/crs'
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
+  const { t } = useTranslation()
   const fileInput = useRef<HTMLInputElement>(null)
   const today = todayIso()
 
@@ -24,14 +26,14 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
       if (!isShareEnvelope(parsed)) throw new Error('bad format')
       onAdd({ ...parsed.profile, id: newId() })
     } catch {
-      alert('导入失败:不是有效的档案 JSON 文件')
+      alert(t('list.importFailed'))
     }
   }
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold">我的档案</h2>
+        <h2 className="text-lg font-semibold">{t('list.myProfiles')}</h2>
         <div className="flex gap-2">
           <input
             ref={fileInput}
@@ -45,16 +47,19 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
             }}
           />
           <Button variant="outline" onClick={() => fileInput.current?.click()}>
-            导入 JSON
+            {t('list.importJson')}
           </Button>
           <Button
             onClick={() => {
-              const p = newStoredProfile(`档案 ${profiles.length + 1}`)
+              const p = newStoredProfile(
+                t('list.defaultName', { n: profiles.length + 1 }),
+                t('projection.defaultScenarioName', { n: 1 }),
+              )
               onAdd(p)
               onOpen(p.id)
             }}
           >
-            + 新建档案
+            {t('list.newProfile')}
           </Button>
         </div>
       </div>
@@ -62,7 +67,7 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
       {profiles.length === 0 && (
         <Card>
           <CardContent className="text-muted-foreground py-10 text-center text-sm">
-            还没有档案。点击「新建档案」输入你的信息,即可计算 CRS 分数并推演未来变化。
+            {t('list.emptyHint')}
           </CardContent>
         </Card>
       )}
@@ -80,7 +85,8 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
                 <div>
                   <p className="font-medium">{p.name}</p>
                   <p className="text-muted-foreground text-xs">
-                    更新于 {p.updatedAt} · {score.withSpouse ? '有' : '无'}随行配偶
+                    {t('list.updatedAt', { date: p.updatedAt })} ·{' '}
+                    {t(score.withSpouse ? 'list.withSpouse' : 'list.withoutSpouse')}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">
@@ -91,10 +97,10 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
                     className="text-muted-foreground"
                     onClick={(e) => {
                       e.stopPropagation()
-                      if (confirm(`删除档案「${p.name}」?此操作不可撤销。`)) onRemove(p.id)
+                      if (confirm(t('list.deleteConfirm', { name: p.name }))) onRemove(p.id)
                     }}
                   >
-                    删除
+                    {t('list.delete')}
                   </Button>
                 </div>
               </CardContent>

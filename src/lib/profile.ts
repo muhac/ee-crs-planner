@@ -41,12 +41,12 @@ export function defaultScenario(name: string): Scenario {
   }
 }
 
-export function newStoredProfile(name: string): StoredProfile {
+export function newStoredProfile(name: string, scenarioName: string): StoredProfile {
   return {
     id: newId(),
     name,
     updatedAt: todayIso(),
     profile: defaultProfile(),
-    scenarios: [defaultScenario('方案 1')],
+    scenarios: [defaultScenario(scenarioName)],
   }
 }

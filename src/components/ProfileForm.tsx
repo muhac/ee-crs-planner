@@ -1,10 +1,7 @@
+import { useTranslation } from 'react-i18next'
 import type { OfficialLanguage, Profile } from '@/engine/types'
 import { defaultSpouse } from '@/lib/profile'
-import {
-  CANADIAN_EDUCATION_LABELS,
-  EDUCATION_LABELS,
-  EDUCATION_ORDER,
-} from '@/lib/labels'
+import { EDUCATION_ORDER } from '@/lib/labels'
 import { ClbInput } from './ClbInput'
 import { MonthsInput } from './MonthsInput'
 import {
@@ -38,6 +35,7 @@ function EducationSelect({
   value: Profile['education']
   onChange: (v: Profile['education']) => void
 }) {
+  const { t } = useTranslation()
   return (
     <Select value={value} onValueChange={(v) => onChange(v as Profile['education'])}>
       <SelectTrigger className="w-full">
@@ -46,7 +44,7 @@ function EducationSelect({
       <SelectContent>
         {EDUCATION_ORDER.map((level) => (
           <SelectItem key={level} value={level}>
-            {EDUCATION_LABELS[level]}
+            {t(`education.${level}`)}
           </SelectItem>
         ))}
       </SelectContent>
@@ -61,29 +59,31 @@ function LanguagePicker({
   value: OfficialLanguage
   onChange: (v: OfficialLanguage) => void
 }) {
+  const { t } = useTranslation()
   return (
     <Select value={value} onValueChange={(v) => onChange(v as OfficialLanguage)}>
       <SelectTrigger className="w-32">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="english">英语</SelectItem>
-        <SelectItem value="french">法语</SelectItem>
+        <SelectItem value="english">{t('common.english')}</SelectItem>
+        <SelectItem value="french">{t('common.french')}</SelectItem>
       </SelectContent>
     </Select>
   )
 }
 
 export function ProfileForm({ profile, onChange }: Props) {
+  const { t } = useTranslation()
   const set = (patch: Partial<Profile>) => onChange({ ...profile, ...patch })
 
   return (
     <Accordion type="multiple" defaultValue={SECTIONS} className="w-full">
       <AccordionItem value="basics">
-        <AccordionTrigger className="text-base">基本信息</AccordionTrigger>
+        <AccordionTrigger className="text-base">{t('form.basics')}</AccordionTrigger>
         <AccordionContent className="space-y-4 pt-1">
           <div className="space-y-1.5">
-            <Label htmlFor="dob">出生日期</Label>
+            <Label htmlFor="dob">{t('form.dob')}</Label>
             <Input
               id="dob"
               type="date"
@@ -91,22 +91,20 @@ export function ProfileForm({ profile, onChange }: Props) {
               value={profile.dateOfBirth}
               onChange={(e) => e.target.value && set({ dateOfBirth: e.target.value })}
             />
-            <p className="text-muted-foreground text-xs">
-              年龄按打分日精确计算,推演时会自动随时间增长。
-            </p>
+            <p className="text-muted-foreground text-xs">{t('form.dobHint')}</p>
           </div>
         </AccordionContent>
       </AccordionItem>
 
       <AccordionItem value="education">
-        <AccordionTrigger className="text-base">教育</AccordionTrigger>
+        <AccordionTrigger className="text-base">{t('form.educationSection')}</AccordionTrigger>
         <AccordionContent className="space-y-4 pt-1">
           <div className="space-y-1.5">
-            <Label>最高学历</Label>
+            <Label>{t('form.highestEducation')}</Label>
             <EducationSelect value={profile.education} onChange={(v) => set({ education: v })} />
           </div>
           <div className="space-y-1.5">
-            <Label>加拿大境内学历(额外加分)</Label>
+            <Label>{t('form.canadianEducation')}</Label>
             <Select
               value={profile.canadianEducationCredential}
               onValueChange={(v) =>
@@ -119,7 +117,7 @@ export function ProfileForm({ profile, onChange }: Props) {
               <SelectContent>
                 {(['none', 'one-or-two-year', 'three-plus-year'] as const).map((v) => (
                   <SelectItem key={v} value={v}>
-                    {CANADIAN_EDUCATION_LABELS[v]}
+                    {t(`canadianEdu.${v}`)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -129,11 +127,11 @@ export function ProfileForm({ profile, onChange }: Props) {
       </AccordionItem>
 
       <AccordionItem value="language">
-        <AccordionTrigger className="text-base">语言成绩</AccordionTrigger>
+        <AccordionTrigger className="text-base">{t('form.languageSection')}</AccordionTrigger>
         <AccordionContent className="space-y-5 pt-1">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label>第一官方语言</Label>
+              <Label>{t('form.firstLanguage')}</Label>
               <LanguagePicker
                 value={profile.firstLanguage.language}
                 onChange={(language) =>
@@ -150,7 +148,7 @@ export function ProfileForm({ profile, onChange }: Props) {
 
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <Label htmlFor="second-lang">第二官方语言</Label>
+              <Label htmlFor="second-lang">{t('form.secondLanguage')}</Label>
               <Switch
                 id="second-lang"
                 checked={profile.secondLanguage !== null}
@@ -188,10 +186,10 @@ export function ProfileForm({ profile, onChange }: Props) {
       </AccordionItem>
 
       <AccordionItem value="work">
-        <AccordionTrigger className="text-base">工作经验</AccordionTrigger>
+        <AccordionTrigger className="text-base">{t('form.workSection')}</AccordionTrigger>
         <AccordionContent className="space-y-4 pt-1">
           <div className="space-y-1.5">
-            <Label htmlFor="cdn-work">加拿大境内工作经验(NOC TEER 0-3)</Label>
+            <Label htmlFor="cdn-work">{t('form.canadianWork')}</Label>
             <MonthsInput
               id="cdn-work"
               value={profile.canadianWorkMonths}
@@ -199,7 +197,7 @@ export function ProfileForm({ profile, onChange }: Props) {
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="foreign-work">海外工作经验(近 10 年内)</Label>
+            <Label htmlFor="foreign-work">{t('form.foreignWork')}</Label>
             <MonthsInput
               id="foreign-work"
               value={profile.foreignWorkMonths}
@@ -210,13 +208,13 @@ export function ProfileForm({ profile, onChange }: Props) {
       </AccordionItem>
 
       <AccordionItem value="extra">
-        <AccordionTrigger className="text-base">附加项</AccordionTrigger>
+        <AccordionTrigger className="text-base">{t('form.extraSection')}</AccordionTrigger>
         <AccordionContent className="space-y-4 pt-1">
           {(
             [
-              ['certificateOfQualification', '持有省/联邦技工职业证书'],
-              ['provincialNomination', '省提名(PNP)'],
-              ['siblingInCanada', '有兄弟姐妹是加拿大公民或永久居民'],
+              ['certificateOfQualification', t('form.certificate')],
+              ['provincialNomination', t('form.pnp')],
+              ['siblingInCanada', t('form.sibling')],
             ] as const
           ).map(([key, label]) => (
             <div key={key} className="flex items-center justify-between gap-4">
@@ -232,11 +230,11 @@ export function ProfileForm({ profile, onChange }: Props) {
       </AccordionItem>
 
       <AccordionItem value="spouse">
-        <AccordionTrigger className="text-base">随行配偶</AccordionTrigger>
+        <AccordionTrigger className="text-base">{t('form.spouseSection')}</AccordionTrigger>
         <AccordionContent className="space-y-4 pt-1">
           <div className="flex items-center justify-between gap-4">
             <Label htmlFor="has-spouse" className="font-normal">
-              有随行配偶(配偶非加拿大公民/PR)
+              {t('form.hasSpouse')}
             </Label>
             <Switch
               id="has-spouse"
@@ -247,7 +245,7 @@ export function ProfileForm({ profile, onChange }: Props) {
           {profile.spouse && (
             <div className="space-y-4 border-l-2 pl-4">
               <div className="space-y-1.5">
-                <Label>配偶最高学历</Label>
+                <Label>{t('form.spouseEducation')}</Label>
                 <EducationSelect
                   value={profile.spouse.education}
                   onChange={(education) => set({ spouse: { ...profile.spouse!, education } })}
@@ -255,7 +253,7 @@ export function ProfileForm({ profile, onChange }: Props) {
               </div>
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
-                  <Label htmlFor="spouse-lang">配偶语言成绩</Label>
+                  <Label htmlFor="spouse-lang">{t('form.spouseLanguage')}</Label>
                   <Switch
                     id="spouse-lang"
                     checked={profile.spouse.language !== null}
@@ -279,7 +277,7 @@ export function ProfileForm({ profile, onChange }: Props) {
                 )}
               </div>
               <div className="space-y-1.5">
-                <Label htmlFor="spouse-work">配偶加拿大工作经验</Label>
+                <Label htmlFor="spouse-work">{t('form.spouseWork')}</Label>
                 <MonthsInput
                   id="spouse-work"
                   value={profile.spouse.canadianWorkMonths}
