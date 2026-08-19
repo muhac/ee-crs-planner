@@ -65,14 +65,6 @@ export const zhTW = {
     monthsAria: '月',
     belowLevel: '低於 {{scale}} 4',
   },
-  tests: {
-    direct: '直接填 {{scale}} 等級',
-    celpip: '思培 CELPIP-General',
-    ielts: '雅思 IELTS（G 類）',
-    pte: 'PTE Core',
-    tef: 'TEF Canada',
-    tcf: 'TCF Canada',
-  },
   abilities: {
     listening: '聽力',
     reading: '閱讀',
@@ -145,7 +137,6 @@ export const zhTW = {
     whichLanguage: '更新哪門語言',
     first: '第一語言',
     second: '第二語言',
-    languageKind: '語種',
     newEducation: '新學歷',
     canadianEducation: '加拿大境內學歷',
     add: '新增',

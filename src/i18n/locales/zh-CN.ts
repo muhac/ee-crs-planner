@@ -63,14 +63,6 @@ export const zhCN = {
     monthsAria: '月',
     belowLevel: '低于 {{scale}} 4',
   },
-  tests: {
-    direct: '直接填 {{scale}} 等级',
-    celpip: '思培 CELPIP-General',
-    ielts: '雅思 IELTS（G 类）',
-    pte: 'PTE Core',
-    tef: 'TEF Canada',
-    tcf: 'TCF Canada',
-  },
   abilities: {
     listening: '听力',
     reading: '阅读',
@@ -143,7 +135,6 @@ export const zhCN = {
     whichLanguage: '更新哪门语言',
     first: '第一语言',
     second: '第二语言',
-    languageKind: '语种',
     newEducation: '新学历',
     canadianEducation: '加拿大境内学历',
     add: '添加',

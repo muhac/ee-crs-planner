@@ -56,6 +56,34 @@ describe('share encoding', () => {
     expect(decoded).toEqual(stored)
   })
 
+  it('upgrades v2 payloads: spouse language and events gain a full test result', () => {
+    const clb9 = { listening: 9, reading: 9, writing: 9, speaking: 9 }
+    const v2 = {
+      app: 'ee-crs',
+      schemaVersion: 2,
+      profile: {
+        ...stored,
+        profile: { ...stored.profile, spouse: { education: 'bachelors', language: clb9, canadianWorkMonths: 0 } },
+        scenarios: [
+          {
+            id: 's1',
+            name: '继续工作',
+            events: [{ id: 'e1', date: '2027-01-01', type: 'spouse-language-update', clb: clb9 }],
+            horizonMonths: 36,
+          },
+        ],
+      },
+    }
+    const decoded = decodeShare(compressToEncodedURIComponent(JSON.stringify(v2)))
+    expect(decoded?.profile.spouse?.language).toEqual({ language: 'english', clb: clb9 })
+    expect(decoded?.scenarios[0].events[0]).toEqual({
+      id: 'e1',
+      date: '2027-01-01',
+      type: 'spouse-language-update',
+      test: { language: 'english', clb: clb9 },
+    })
+  })
+
   it('parses only well-formed share hashes', () => {
     expect(parseShareHash(SHARE_HASH_PREFIX + encodeShare(stored))).toEqual(stored)
     expect(parseShareHash('#other=123')).toBeNull()

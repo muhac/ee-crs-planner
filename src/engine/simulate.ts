@@ -1,6 +1,5 @@
 import type {
   CanadianEducationCredential,
-  ClbScores,
   EducationLevel,
   LanguageTestResult,
   Profile,
@@ -15,7 +14,7 @@ export type FutureEvent =
   | { id: string; date: string; type: 'provincial-nomination' }
   | { id: string; date: string; type: 'certificate-of-qualification' }
   | { id: string; date: string; type: 'sibling-in-canada' }
-  | { id: string; date: string; type: 'spouse-language-update'; clb: ClbScores }
+  | { id: string; date: string; type: 'spouse-language-update'; test: LanguageTestResult }
 
 export interface Scenario {
   id: string
@@ -51,7 +50,7 @@ function applyEvent(profile: Profile, event: FutureEvent): Profile {
       return { ...profile, siblingInCanada: true }
     case 'spouse-language-update':
       return profile.spouse
-        ? { ...profile, spouse: { ...profile.spouse, language: event.clb } }
+        ? { ...profile, spouse: { ...profile.spouse, language: event.test } }
         : profile
   }
 }

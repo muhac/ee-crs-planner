@@ -159,12 +159,22 @@ describe('spouse factors', () => {
   })
   it('scores spouse language per ability: ≤4→0, 5-6→1, 7-8→3, 9+→5', () => {
     expect(
-      score({ spouse: { education: 'secondary', language: clb(9, 8, 6, 4), canadianWorkMonths: 0 } })
-        .spouse.language,
+      score({
+        spouse: {
+          education: 'secondary',
+          language: { language: 'english', clb: clb(9, 8, 6, 4) },
+          canadianWorkMonths: 0,
+        },
+      }).spouse.language,
     ).toBe(5 + 3 + 1 + 0)
     expect(
-      score({ spouse: { education: 'secondary', language: uniformClb(10), canadianWorkMonths: 0 } })
-        .spouse.language,
+      score({
+        spouse: {
+          education: 'secondary',
+          language: { language: 'english', clb: uniformClb(10) },
+          canadianWorkMonths: 0,
+        },
+      }).spouse.language,
     ).toBe(20)
   })
   it('scores spouse Canadian work experience', () => {
@@ -429,7 +439,7 @@ describe('integration', () => {
         siblingInCanada: true,
         spouse: {
           education: 'bachelors',
-          language: clb(5, 6, 7, 8),
+          language: { language: 'english', clb: clb(5, 6, 7, 8) },
           canadianWorkMonths: 24,
         },
       }),

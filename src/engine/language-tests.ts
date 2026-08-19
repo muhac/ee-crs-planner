@@ -11,6 +11,15 @@ export const TESTS_FOR_LANGUAGE: Record<OfficialLanguage, LanguageTestType[]> = 
   french: ['tef', 'tcf'],
 }
 
+/** Display names are the same in every UI language. */
+export const TEST_LABELS: Record<LanguageTestType, string> = {
+  celpip: 'CELPIP-General',
+  ielts: 'IELTS (G)',
+  pte: 'PTE Core',
+  tef: 'TEF Canada',
+  tcf: 'TCF Canada',
+}
+
 /** [minScore, CLB] rows, highest first; anything below the last row is CLB 3 ("below 4"). */
 type Thresholds = Record<Ability, Array<readonly [number, number]>>
 

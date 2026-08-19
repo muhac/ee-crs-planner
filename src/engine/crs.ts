@@ -66,7 +66,7 @@ function spouseFactors(profile: Profile): SpouseBreakdown {
   const { education, language, canadianWorkMonths } = profile.spouse
   const educationPts = SPOUSE_EDUCATION_POINTS[education]
   const languagePts = language
-    ? ABILITIES.reduce((sum, a) => sum + spouseLanguageAbilityPoints(language[a]), 0)
+    ? ABILITIES.reduce((sum, a) => sum + spouseLanguageAbilityPoints(language.clb[a]), 0)
     : 0
   const workPts = spouseCanadianWorkPoints(fullYears(canadianWorkMonths))
   return {

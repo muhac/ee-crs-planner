@@ -41,7 +41,7 @@ export function describeEvent(t: TFunction, event: FutureEvent): string {
         : t('events.descEducation', { education })
     }
     case 'spouse-language-update': {
-      const c = event.clb
+      const c = event.test.clb
       return t('events.descSpouseLanguage', {
         l: c.listening, r: c.reading, w: c.writing, s: c.speaking,
       })

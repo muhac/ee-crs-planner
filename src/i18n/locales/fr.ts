@@ -66,14 +66,6 @@ export const fr = {
     monthsAria: 'mois',
     belowLevel: 'Sous {{scale}} 4',
   },
-  tests: {
-    direct: 'Saisir directement les niveaux {{scale}}',
-    celpip: 'CELPIP-General',
-    ielts: 'IELTS (General Training)',
-    pte: 'PTE Core',
-    tef: 'TEF Canada',
-    tcf: 'TCF Canada',
-  },
   abilities: {
     listening: 'Écoute',
     reading: 'Lecture',
@@ -146,7 +138,6 @@ export const fr = {
     whichLanguage: 'Quelle langue',
     first: 'Première langue',
     second: 'Seconde langue',
-    languageKind: 'Langue',
     newEducation: 'Nouveau niveau de scolarité',
     canadianEducation: 'Diplôme canadien',
     add: 'Ajouter',

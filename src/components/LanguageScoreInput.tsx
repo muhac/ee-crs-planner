@@ -1,8 +1,14 @@
 import { useTranslation } from 'react-i18next'
-import type { Ability, ClbScores, LanguageTestResult, LanguageTestType } from '@/engine/types'
+import type {
+  Ability,
+  ClbScores,
+  LanguageTestResult,
+  LanguageTestType,
+  OfficialLanguage,
+} from '@/engine/types'
 import { ABILITIES } from '@/engine/types'
 import {
-  TESTS_FOR_LANGUAGE,
+  TEST_LABELS,
   clbToMinScore,
   scoreToClb,
   testInputSpec,
@@ -24,7 +30,23 @@ interface Props {
   onChange: (next: LanguageTestResult) => void
 }
 
-const DIRECT = 'direct'
+interface Mode {
+  id: string
+  label: string
+  language: OfficialLanguage
+  test?: LanguageTestType
+}
+
+/** One unified selector: the choice implies the official language. */
+const MODES: Mode[] = [
+  { id: 'clb', label: 'CLB', language: 'english' },
+  { id: 'celpip', label: TEST_LABELS.celpip, language: 'english', test: 'celpip' },
+  { id: 'ielts', label: TEST_LABELS.ielts, language: 'english', test: 'ielts' },
+  { id: 'pte', label: TEST_LABELS.pte, language: 'english', test: 'pte' },
+  { id: 'nclc', label: 'NCLC', language: 'french' },
+  { id: 'tef', label: TEST_LABELS.tef, language: 'french', test: 'tef' },
+  { id: 'tcf', label: TEST_LABELS.tcf, language: 'french', test: 'tcf' },
+]
 
 function convertAll(test: LanguageTestType, scores: ClbScores): ClbScores {
   return {
@@ -37,26 +59,27 @@ function convertAll(test: LanguageTestType, scores: ClbScores): ClbScores {
 
 /**
  * Language input with two modes: direct CLB/NCLC levels (default), or raw
- * scores from an approved test converted to CLB per the official charts.
+ * scores from an approved test converted per the official IRCC charts.
  */
 export function LanguageScoreInput({ value, onChange }: Props) {
   const { t } = useTranslation()
   const scale = value.language === 'french' ? 'NCLC' : 'CLB'
-  const mode = value.raw?.test ?? DIRECT
+  const modeId = value.raw?.test ?? (value.language === 'french' ? 'nclc' : 'clb')
 
-  const switchMode = (m: string) => {
-    if (m === DIRECT) {
-      onChange({ language: value.language, clb: value.clb })
+  const switchMode = (id: string) => {
+    const mode = MODES.find((m) => m.id === id)!
+    if (!mode.test) {
+      onChange({ language: mode.language, clb: value.clb })
       return
     }
-    const test = m as LanguageTestType
+    const test = mode.test
     const scores: ClbScores = {
       listening: clbToMinScore(test, 'listening', value.clb.listening),
       reading: clbToMinScore(test, 'reading', value.clb.reading),
       writing: clbToMinScore(test, 'writing', value.clb.writing),
       speaking: clbToMinScore(test, 'speaking', value.clb.speaking),
     }
-    onChange({ ...value, raw: { test, scores }, clb: convertAll(test, scores) })
+    onChange({ language: mode.language, raw: { test, scores }, clb: convertAll(test, scores) })
   }
 
   const setScore = (ability: Ability, score: number) => {
@@ -67,15 +90,14 @@ export function LanguageScoreInput({ value, onChange }: Props) {
 
   return (
     <div className="space-y-3">
-      <Select value={mode} onValueChange={switchMode}>
-        <SelectTrigger className="w-full sm:w-64">
+      <Select value={modeId} onValueChange={switchMode}>
+        <SelectTrigger className="w-full sm:w-56">
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value={DIRECT}>{t('tests.direct', { scale })}</SelectItem>
-          {TESTS_FOR_LANGUAGE[value.language].map((test) => (
-            <SelectItem key={test} value={test}>
-              {t(`tests.${test}`)}
+          {MODES.map((mode) => (
+            <SelectItem key={mode.id} value={mode.id}>
+              {mode.label}
             </SelectItem>
           ))}
         </SelectContent>

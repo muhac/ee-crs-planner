@@ -1,11 +1,16 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { CanadianEducationCredential, ClbScores, EducationLevel, OfficialLanguage, Profile } from '@/engine/types'
+import type {
+  CanadianEducationCredential,
+  EducationLevel,
+  LanguageTestResult,
+  Profile,
+} from '@/engine/types'
 import type { FutureEvent } from '@/engine/simulate'
 import { addMonths, todayIso } from '@/engine/dates'
 import { newId } from '@/lib/profile'
 import { EDUCATION_ORDER } from '@/lib/labels'
-import { ClbInput } from './ClbInput'
+import { LanguageScoreInput } from './LanguageScoreInput'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -25,13 +30,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 
-const UNIFORM_7: ClbScores = { listening: 7, reading: 7, writing: 7, speaking: 7 }
-
-interface Props {
-  profile: Profile
-  onAdd: (event: FutureEvent) => void
-}
-
 const EVENT_TYPES: Array<FutureEvent['type']> = [
   'language-update',
   'education-update',
@@ -41,14 +39,26 @@ const EVENT_TYPES: Array<FutureEvent['type']> = [
   'spouse-language-update',
 ]
 
+const DEFAULT_TEST: LanguageTestResult = {
+  language: 'english',
+  clb: { listening: 7, reading: 7, writing: 7, speaking: 7 },
+}
+
+interface Props {
+  profile: Profile
+  onAdd: (event: FutureEvent) => void
+}
+
 export function EventDialog({ profile, onAdd }: Props) {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [type, setType] = useState<FutureEvent['type']>('language-update')
   const [date, setDate] = useState(() => addMonths(todayIso(), 6))
   const [target, setTarget] = useState<'first' | 'second'>('first')
-  const [language, setLanguage] = useState<OfficialLanguage>(profile.firstLanguage.language)
-  const [clb, setClb] = useState<ClbScores>(profile.firstLanguage.clb)
+  const [test, setTest] = useState<LanguageTestResult>(profile.firstLanguage)
+  const [spouseTest, setSpouseTest] = useState<LanguageTestResult>(
+    profile.spouse?.language ?? DEFAULT_TEST,
+  )
   const [education, setEducation] = useState<EducationLevel>(profile.education)
   const [canadianEducation, setCanadianEducation] = useState<CanadianEducationCredential>(
     profile.canadianEducationCredential,
@@ -62,26 +72,25 @@ export function EventDialog({ profile, onAdd }: Props) {
     const base = { id: newId(), date }
     switch (type) {
       case 'language-update':
-        return { ...base, type, target, test: { language, clb } }
+        return { ...base, type, target, test }
       case 'education-update':
         return { ...base, type, education, canadianEducationCredential: canadianEducation }
       case 'spouse-language-update':
-        return { ...base, type, clb }
+        return { ...base, type, test: spouseTest }
       default:
         return { ...base, type }
     }
   }
 
-  const selectTarget = (t: 'first' | 'second') => {
-    setTarget(t)
-    const test = t === 'first' ? profile.firstLanguage : profile.secondLanguage
-    if (test) {
-      setLanguage(test.language)
-      setClb(test.clb)
-    } else {
-      setLanguage(profile.firstLanguage.language === 'english' ? 'french' : 'english')
-      setClb(UNIFORM_7)
-    }
+  const selectTarget = (next: 'first' | 'second') => {
+    setTarget(next)
+    const current = next === 'first' ? profile.firstLanguage : profile.secondLanguage
+    setTest(
+      current ?? {
+        language: profile.firstLanguage.language === 'english' ? 'french' : 'english',
+        clb: DEFAULT_TEST.clb,
+      },
+    )
   }
 
   return (
@@ -123,41 +132,25 @@ export function EventDialog({ profile, onAdd }: Props) {
 
           {type === 'language-update' && (
             <>
-              <div className="flex items-center gap-3">
-                <div className="space-y-1.5">
-                  <Label>{t('events.whichLanguage')}</Label>
-                  <Select value={target} onValueChange={(v) => selectTarget(v as 'first' | 'second')}>
-                    <SelectTrigger className="w-36">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="first">{t('events.first')}</SelectItem>
-                      <SelectItem value="second">{t('events.second')}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-1.5">
-                  <Label>{t('events.languageKind')}</Label>
-                  <Select value={language} onValueChange={(v) => setLanguage(v as OfficialLanguage)}>
-                    <SelectTrigger className="w-28">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="english">{t('common.english')}</SelectItem>
-                      <SelectItem value="french">{t('common.french')}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+              <div className="space-y-1.5">
+                <Label>{t('events.whichLanguage')}</Label>
+                <Select value={target} onValueChange={(v) => selectTarget(v as 'first' | 'second')}>
+                  <SelectTrigger className="w-36">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="first">{t('events.first')}</SelectItem>
+                    <SelectItem value="second">{t('events.second')}</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
-              <ClbInput
-                value={clb}
-                onChange={setClb}
-                scaleName={language === 'french' ? 'NCLC' : 'CLB'}
-              />
+              <LanguageScoreInput value={test} onChange={setTest} />
             </>
           )}
 
-          {type === 'spouse-language-update' && <ClbInput value={clb} onChange={setClb} />}
+          {type === 'spouse-language-update' && (
+            <LanguageScoreInput value={spouseTest} onChange={setSpouseTest} />
+          )}
 
           {type === 'education-update' && (
             <>

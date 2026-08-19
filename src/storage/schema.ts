@@ -1,10 +1,10 @@
-import type { Profile } from '@/engine/types'
+import type { ClbScores, Profile } from '@/engine/types'
 import type { Scenario } from '@/engine/simulate'
 
-export const SCHEMA_VERSION = 2
+export const SCHEMA_VERSION = 3
 
 /** Schema versions this build can read (older ones are upgraded on load). */
-const READABLE_VERSIONS: number[] = [1, 2]
+const READABLE_VERSIONS: number[] = [1, 2, 3]
 
 export interface StoredProfile {
   id: string
@@ -34,11 +34,20 @@ export function emptyAppData(): AppData {
  * Upgrade a stored profile written by any readable schema version.
  * v1 → v2: the working-status flags moved from Scenario to Profile; a flag
  * set in any v1 scenario carries over to the profile.
+ * v2 → v3: spouse language and spouse-language-update events hold a full
+ * LanguageTestResult instead of bare CLB scores.
  */
 export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
   const scenarios = sp.scenarios as Array<
     Scenario & { workingInCanada?: boolean; workingAbroad?: boolean }
   >
+
+  const spouse = sp.profile.spouse
+  const spouseLanguage =
+    spouse?.language && !('clb' in spouse.language)
+      ? { language: 'english' as const, clb: spouse.language as unknown as ClbScores }
+      : (spouse?.language ?? null)
+
   return {
     ...sp,
     profile: {
@@ -50,8 +59,21 @@ export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
       workingAbroad:
         (sp.profile.workingAbroad as boolean | undefined) ??
         scenarios.some((s) => s.workingAbroad === true),
+      spouse: spouse ? { ...spouse, language: spouseLanguage } : null,
     },
-    scenarios: scenarios.map(({ workingInCanada: _wic, workingAbroad: _wa, ...rest }) => rest),
+    scenarios: scenarios.map(({ workingInCanada: _wic, workingAbroad: _wa, ...rest }) => ({
+      ...rest,
+      events: rest.events.map((event) =>
+        event.type === 'spouse-language-update' && 'clb' in event
+          ? {
+              id: event.id,
+              date: event.date,
+              type: event.type,
+              test: { language: 'english' as const, clb: (event as unknown as { clb: ClbScores }).clb },
+            }
+          : event,
+      ),
+    })),
   }
 }
 

@@ -1,8 +1,7 @@
 import { useTranslation } from 'react-i18next'
-import type { OfficialLanguage, Profile } from '@/engine/types'
+import type { Profile } from '@/engine/types'
 import { defaultSpouse } from '@/lib/profile'
 import { EDUCATION_ORDER } from '@/lib/labels'
-import { ClbInput } from './ClbInput'
 import { LanguageScoreInput } from './LanguageScoreInput'
 import { MonthsInput } from './MonthsInput'
 import {
@@ -48,27 +47,6 @@ function EducationSelect({
             {t(`education.${level}`)}
           </SelectItem>
         ))}
-      </SelectContent>
-    </Select>
-  )
-}
-
-function LanguagePicker({
-  value,
-  onChange,
-}: {
-  value: OfficialLanguage
-  onChange: (v: OfficialLanguage) => void
-}) {
-  const { t } = useTranslation()
-  return (
-    <Select value={value} onValueChange={(v) => onChange(v as OfficialLanguage)}>
-      <SelectTrigger className="w-32">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value="english">{t('common.english')}</SelectItem>
-        <SelectItem value="french">{t('common.french')}</SelectItem>
       </SelectContent>
     </Select>
   )
@@ -131,16 +109,7 @@ export function ProfileForm({ profile, onChange }: Props) {
         <AccordionTrigger className="text-base">{t('form.languageSection')}</AccordionTrigger>
         <AccordionContent className="space-y-5 pt-1">
           <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <Label>{t('form.firstLanguage')}</Label>
-              <LanguagePicker
-                value={profile.firstLanguage.language}
-                onChange={(language) =>
-                  // Raw test scores are language-specific — drop them on switch.
-                  set({ firstLanguage: { language, clb: profile.firstLanguage.clb } })
-                }
-              />
-            </div>
+            <Label>{t('form.firstLanguage')}</Label>
             <LanguageScoreInput
               value={profile.firstLanguage}
               onChange={(firstLanguage) => set({ firstLanguage })}
@@ -166,20 +135,10 @@ export function ProfileForm({ profile, onChange }: Props) {
               />
             </div>
             {profile.secondLanguage && (
-              <>
-                <div className="flex justify-end">
-                  <LanguagePicker
-                    value={profile.secondLanguage.language}
-                    onChange={(language) =>
-                      set({ secondLanguage: { language, clb: profile.secondLanguage!.clb } })
-                    }
-                  />
-                </div>
-                <LanguageScoreInput
-                  value={profile.secondLanguage}
-                  onChange={(secondLanguage) => set({ secondLanguage })}
-                />
-              </>
+              <LanguageScoreInput
+                value={profile.secondLanguage}
+                onChange={(secondLanguage) => set({ secondLanguage })}
+              />
             )}
           </div>
         </AccordionContent>
@@ -282,7 +241,10 @@ export function ProfileForm({ profile, onChange }: Props) {
                         spouse: {
                           ...profile.spouse!,
                           language: on
-                            ? { listening: 5, reading: 5, writing: 5, speaking: 5 }
+                            ? {
+                                language: 'english',
+                                clb: { listening: 5, reading: 5, writing: 5, speaking: 5 },
+                              }
                             : null,
                         },
                       })
@@ -290,7 +252,7 @@ export function ProfileForm({ profile, onChange }: Props) {
                   />
                 </div>
                 {profile.spouse.language && (
-                  <ClbInput
+                  <LanguageScoreInput
                     value={profile.spouse.language}
                     onChange={(language) => set({ spouse: { ...profile.spouse!, language } })}
                   />

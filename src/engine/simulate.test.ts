@@ -131,7 +131,10 @@ describe('simulate', () => {
             id: 'e2',
             date: '2026-10-01',
             type: 'spouse-language-update',
-            clb: { listening: 9, reading: 9, writing: 9, speaking: 9 },
+            test: {
+              language: 'english',
+              clb: { listening: 9, reading: 9, writing: 9, speaking: 9 },
+            },
           },
         ],
       }),

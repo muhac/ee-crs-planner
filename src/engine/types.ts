@@ -36,7 +36,7 @@ export type CanadianEducationCredential = 'none' | 'one-or-two-year' | 'three-pl
 export interface SpouseProfile {
   education: EducationLevel
   /** Spouse's first official language test; null if not tested. */
-  language: ClbScores | null
+  language: LanguageTestResult | null
   canadianWorkMonths: number
 }
 
