@@ -17,7 +17,9 @@ An unofficial **CRS (Comprehensive Ranking System) calculator & planner** for Ca
 - Responsive: two-column workbench on desktop, single column with a floating score bar on mobile
 - Six-language UI: English / Français / Español / 简体中文 / 繁體中文 / हिन्दी, auto-detected from the browser on first visit
 
-![EE CRS Planner — profile with live score breakdown and pool eligibility](docs/screenshot.jpg)
+![Home dashboard — every pinned scenario across all profiles on one chart, dashed while ineligible](docs/home.jpg)
+
+![Profile — live score breakdown with transferability caps and pool eligibility](docs/profile.jpg)
 
 Point tables are transcribed from the [official IRCC CRS criteria](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html) (June 2026 edition; job-offer points removed as of 2025-03-25) and verified value-by-value against the live IRCC pages — the CRS grid, the language-test equivalency charts, and the program eligibility rules (August 2026). For reference only — always defer to IRCC.
 
