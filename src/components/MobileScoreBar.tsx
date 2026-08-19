@@ -45,7 +45,7 @@ export function MobileScoreBar({
             <DrawerHeader className="sr-only">
               <DrawerTitle>{t('score.detailsTitle')}</DrawerTitle>
             </DrawerHeader>
-            <div className="max-h-[75vh] overflow-y-auto px-4 pb-6 pt-2 [&_[data-slot=card]]:border-0 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:shadow-none">
+            <div className="max-h-[75vh] overflow-y-auto px-4 pb-6 pt-2 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:ring-0">
               <ScorePanel
                 score={score}
                 swapGain={swapGain}
