@@ -75,7 +75,7 @@ export function ProfilePage({ stored, onChange, onBack, initialSelection }: Prop
   }
 
   return (
-    <div className="pb-24 lg:pb-0">
+    <div>
       <div className="mb-4 flex flex-wrap items-center gap-2">
         <Button variant="ghost" size="sm" onClick={onBack}>
           {t('page.back')}

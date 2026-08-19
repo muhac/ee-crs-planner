@@ -77,7 +77,11 @@ export default function App() {
         )}
       </main>
 
-      <footer className="text-muted-foreground mx-auto max-w-6xl px-4 pb-24 pt-8 text-xs lg:pb-8">
+      <footer
+        className={`text-muted-foreground mx-auto max-w-6xl px-4 pt-8 text-xs ${
+          current ? 'pb-24 lg:pb-8' : 'pb-8'
+        }`}
+      >
         {t('common.footer')}
       </footer>
 
