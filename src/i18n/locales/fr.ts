@@ -105,8 +105,6 @@ export const fr = {
   },
   score: {
     total: 'Total SCG',
-    summaryWithSpouse: 'Évalué avec conjoint · âge actuel {{age}} ans',
-    summaryWithoutSpouse: 'Évalué sans conjoint · âge actuel {{age}} ans',
     core: 'Capital humain de base',
     age: 'Âge',
     education: 'Études',

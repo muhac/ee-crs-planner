@@ -101,8 +101,6 @@ export const zhCN = {
   },
   score: {
     total: 'CRS 总分',
-    summaryWithSpouse: '按有随行配偶打分 · 当前年龄 {{age}} 岁',
-    summaryWithoutSpouse: '按无随行配偶打分 · 当前年龄 {{age}} 岁',
     core: '核心人力资本',
     age: '年龄',
     education: '教育',

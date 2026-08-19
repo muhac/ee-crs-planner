@@ -105,8 +105,6 @@ export const hi = {
   },
   score: {
     total: 'CRS कुल',
-    summaryWithSpouse: 'जीवनसाथी सहित स्कोर · वर्तमान आयु {{age}}',
-    summaryWithoutSpouse: 'जीवनसाथी रहित स्कोर · वर्तमान आयु {{age}}',
     core: 'मूल मानव पूंजी',
     age: 'आयु',
     education: 'शिक्षा',

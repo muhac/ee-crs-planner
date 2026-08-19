@@ -105,8 +105,6 @@ export const es = {
   },
   score: {
     total: 'Total CRS',
-    summaryWithSpouse: 'Evaluado con cónyuge · edad actual {{age}}',
-    summaryWithoutSpouse: 'Evaluado sin cónyuge · edad actual {{age}}',
     core: 'Capital humano básico',
     age: 'Edad',
     education: 'Educación',

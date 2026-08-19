@@ -102,11 +102,6 @@ export function ScorePanel({
           <span>{t('score.total')}</span>
           <span className="text-3xl tabular-nums">{score.total}</span>
         </CardTitle>
-        <p className="text-muted-foreground text-xs">
-          {t(score.withSpouse ? 'score.summaryWithSpouse' : 'score.summaryWithoutSpouse', {
-            age: score.age,
-          })}
-        </p>
         {swapGain > 0 && !contextLabel && (
           <div className="mt-1 flex items-center justify-between gap-2 rounded-md bg-amber-500/10 px-2.5 py-1.5">
             <p className="text-xs text-amber-700 dark:text-amber-500">

@@ -103,8 +103,6 @@ export const zhTW = {
   },
   score: {
     total: 'CRS 總分',
-    summaryWithSpouse: '按有隨行配偶評分 · 目前年齡 {{age}} 歲',
-    summaryWithoutSpouse: '按無隨行配偶評分 · 目前年齡 {{age}} 歲',
     core: '核心人力資本',
     age: '年齡',
     education: '教育',
