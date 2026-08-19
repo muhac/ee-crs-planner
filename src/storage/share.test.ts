@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest'
+import { compressToEncodedURIComponent } from 'lz-string'
 import type { StoredProfile } from './schema'
 import { decodeShare, encodeShare, parseShareHash, SHARE_HASH_PREFIX } from './share'
 
@@ -14,14 +15,14 @@ const stored: StoredProfile = {
     secondLanguage: null,
     canadianWorkMonths: 12,
     foreignWorkMonths: 36,
+    workingInCanada: true,
+    workingAbroad: false,
     certificateOfQualification: false,
     provincialNomination: false,
     siblingInCanada: false,
     spouse: null,
   },
-  scenarios: [
-    { id: 's1', name: '继续工作', workingInCanada: true, workingAbroad: false, events: [], horizonMonths: 36 },
-  ],
+  scenarios: [{ id: 's1', name: '继续工作', events: [], horizonMonths: 36 }],
 }
 
 describe('share encoding', () => {
@@ -36,6 +37,23 @@ describe('share encoding', () => {
   it('rejects garbage input', () => {
     expect(decodeShare('not-a-valid-blob')).toBeNull()
     expect(decodeShare('')).toBeNull()
+  })
+
+  it('upgrades v1 payloads: working flags move from scenario to profile', () => {
+    const { workingInCanada: _wic, workingAbroad: _wa, ...v1Profile } = stored.profile
+    const v1 = {
+      app: 'ee-crs',
+      schemaVersion: 1,
+      profile: {
+        ...stored,
+        profile: v1Profile,
+        scenarios: [
+          { id: 's1', name: '继续工作', workingInCanada: true, workingAbroad: false, events: [], horizonMonths: 36 },
+        ],
+      },
+    }
+    const decoded = decodeShare(compressToEncodedURIComponent(JSON.stringify(v1)))
+    expect(decoded).toEqual(stored)
   })
 
   it('parses only well-formed share hashes', () => {

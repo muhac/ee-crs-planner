@@ -27,6 +27,8 @@ function baseProfile(overrides: Partial<Profile> = {}): Profile {
     secondLanguage: null,
     canadianWorkMonths: 0,
     foreignWorkMonths: 0,
+    workingInCanada: false,
+    workingAbroad: false,
     certificateOfQualification: false,
     provincialNomination: false,
     siblingInCanada: false,

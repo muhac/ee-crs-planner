@@ -20,10 +20,6 @@ export type FutureEvent =
 export interface Scenario {
   id: string
   name: string
-  /** Canadian work experience keeps accruing month by month. */
-  workingInCanada: boolean
-  /** Foreign work experience keeps accruing month by month. */
-  workingAbroad: boolean
   events: FutureEvent[]
   horizonMonths: number
 }
@@ -70,8 +66,8 @@ export function projectProfile(
   const date = addMonths(startDate, monthOffset)
   let profile: Profile = {
     ...base,
-    canadianWorkMonths: base.canadianWorkMonths + (scenario.workingInCanada ? monthOffset : 0),
-    foreignWorkMonths: base.foreignWorkMonths + (scenario.workingAbroad ? monthOffset : 0),
+    canadianWorkMonths: base.canadianWorkMonths + (base.workingInCanada ? monthOffset : 0),
+    foreignWorkMonths: base.foreignWorkMonths + (base.workingAbroad ? monthOffset : 0),
   }
   const dueEvents = scenario.events
     .filter((e) => e.date <= date)

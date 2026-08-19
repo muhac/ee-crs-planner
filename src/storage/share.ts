@@ -1,6 +1,6 @@
 import { compressToEncodedURIComponent, decompressFromEncodedURIComponent } from 'lz-string'
 import type { ShareEnvelope, StoredProfile } from './schema'
-import { SCHEMA_VERSION, isShareEnvelope } from './schema'
+import { SCHEMA_VERSION, isShareEnvelope, upgradeStoredProfile } from './schema'
 
 export const SHARE_HASH_PREFIX = '#share='
 
@@ -17,7 +17,7 @@ export function decodeShare(encoded: string): StoredProfile | null {
     const json = decompressFromEncodedURIComponent(encoded)
     if (!json) return null
     const parsed: unknown = JSON.parse(json)
-    return isShareEnvelope(parsed) ? parsed.profile : null
+    return isShareEnvelope(parsed) ? upgradeStoredProfile(parsed.profile) : null
   } catch {
     return null
   }

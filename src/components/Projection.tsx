@@ -21,7 +21,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
 import {
   Select,
   SelectContent,
@@ -234,29 +233,6 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                       {t('projection.delete')}
                     </Button>
                   )}
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-x-8 gap-y-3">
-                <div className="flex items-center gap-2">
-                  <Switch
-                    id={`wic-${scenario.id}`}
-                    checked={scenario.workingInCanada}
-                    onCheckedChange={(on) => updateScenario(scenario.id, { workingInCanada: on })}
-                  />
-                  <Label htmlFor={`wic-${scenario.id}`} className="font-normal">
-                    {t('projection.workingInCanada')}
-                  </Label>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Switch
-                    id={`wa-${scenario.id}`}
-                    checked={scenario.workingAbroad}
-                    onCheckedChange={(on) => updateScenario(scenario.id, { workingAbroad: on })}
-                  />
-                  <Label htmlFor={`wa-${scenario.id}`} className="font-normal">
-                    {t('projection.workingAbroad')}
-                  </Label>
                 </div>
               </div>
 

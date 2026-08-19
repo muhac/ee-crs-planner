@@ -45,6 +45,10 @@ export interface Profile {
   secondLanguage: LanguageTestResult | null
   canadianWorkMonths: number
   foreignWorkMonths: number
+  /** Currently working in Canada — Canadian experience accrues during projection. */
+  workingInCanada: boolean
+  /** Currently working abroad — foreign experience accrues during projection. */
+  workingAbroad: boolean
   certificateOfQualification: boolean
   provincialNomination: boolean
   siblingInCanada: boolean

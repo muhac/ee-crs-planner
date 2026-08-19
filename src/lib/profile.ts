@@ -19,6 +19,8 @@ export function defaultProfile(): Profile {
     secondLanguage: null,
     canadianWorkMonths: 0,
     foreignWorkMonths: 0,
+    workingInCanada: false,
+    workingAbroad: false,
     certificateOfQualification: false,
     provincialNomination: false,
     siblingInCanada: false,
@@ -34,8 +36,6 @@ export function defaultScenario(name: string): Scenario {
   return {
     id: newId(),
     name,
-    workingInCanada: false,
-    workingAbroad: false,
     events: [],
     horizonMonths: 36,
   }

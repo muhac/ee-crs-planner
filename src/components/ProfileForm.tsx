@@ -196,12 +196,32 @@ export function ProfileForm({ profile, onChange }: Props) {
               onChange={(canadianWorkMonths) => set({ canadianWorkMonths })}
             />
           </div>
+          <div className="flex items-center justify-between gap-4">
+            <Label htmlFor="working-in-canada" className="font-normal">
+              {t('form.workingInCanada')}
+            </Label>
+            <Switch
+              id="working-in-canada"
+              checked={profile.workingInCanada}
+              onCheckedChange={(on) => set({ workingInCanada: on })}
+            />
+          </div>
           <div className="space-y-1.5">
             <Label htmlFor="foreign-work">{t('form.foreignWork')}</Label>
             <MonthsInput
               id="foreign-work"
               value={profile.foreignWorkMonths}
               onChange={(foreignWorkMonths) => set({ foreignWorkMonths })}
+            />
+          </div>
+          <div className="flex items-center justify-between gap-4">
+            <Label htmlFor="working-abroad" className="font-normal">
+              {t('form.workingAbroad')}
+            </Label>
+            <Switch
+              id="working-abroad"
+              checked={profile.workingAbroad}
+              onCheckedChange={(on) => set({ workingAbroad: on })}
             />
           </div>
         </AccordionContent>

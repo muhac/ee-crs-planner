@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
-import { isShareEnvelope } from '@/storage/schema'
+import { isShareEnvelope, upgradeStoredProfile } from '@/storage/schema'
 import { calculateCrs } from '@/engine/crs'
 import { todayIso } from '@/engine/dates'
 import { newId, newStoredProfile } from '@/lib/profile'
@@ -24,7 +24,7 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
     try {
       const parsed: unknown = JSON.parse(await file.text())
       if (!isShareEnvelope(parsed)) throw new Error('bad format')
-      onAdd({ ...parsed.profile, id: newId() })
+      onAdd({ ...upgradeStoredProfile(parsed.profile), id: newId() })
     } catch {
       alert(t('list.importFailed'))
     }

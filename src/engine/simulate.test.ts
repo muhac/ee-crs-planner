@@ -14,6 +14,8 @@ function profile(overrides: Partial<Profile> = {}): Profile {
     secondLanguage: null,
     canadianWorkMonths: 0,
     foreignWorkMonths: 0,
+    workingInCanada: false,
+    workingAbroad: false,
     certificateOfQualification: false,
     provincialNomination: false,
     siblingInCanada: false,
@@ -26,8 +28,6 @@ function scenario(overrides: Partial<Scenario> = {}): Scenario {
   return {
     id: 's1',
     name: 'test',
-    workingInCanada: false,
-    workingAbroad: false,
     events: [],
     horizonMonths: 36,
     ...overrides,
@@ -50,7 +50,7 @@ describe('simulate', () => {
   })
 
   it('accrues Canadian work experience while working in Canada', () => {
-    const points = simulate(profile(), scenario({ workingInCanada: true }), START)
+    const points = simulate(profile({ workingInCanada: true }), scenario(), START)
     expect(points[11].score.core.canadianWork).toBe(0)
     expect(points[12].score.core.canadianWork).toBe(40)
     expect(points[24].score.core.canadianWork).toBe(53)
@@ -58,8 +58,8 @@ describe('simulate', () => {
 
   it('accrues foreign work experience while working abroad', () => {
     const points = simulate(
-      profile({ foreignWorkMonths: 30 }),
-      scenario({ workingAbroad: true }),
+      profile({ foreignWorkMonths: 30, workingAbroad: true }),
+      scenario(),
       START,
     )
     // 30 → 36 months at offset 6: foreign×language tier moves from 1-2yr (13) to 3+yr (25)
