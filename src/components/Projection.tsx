@@ -189,8 +189,7 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                         {(() => {
                           const entry = earliestEntry(scenario.id)
                           if (entry === null) return <span className="text-muted-foreground">—</span>
-                          if (entry === 0)
-                            return <span className="text-emerald-600 dark:text-emerald-500">✓</span>
+                          if (entry === 0) return <span>✓</span>
                           return cell(entry, points[entry].date.slice(0, 7))
                         })()}
                       </td>

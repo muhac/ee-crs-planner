@@ -144,8 +144,7 @@ export function HomeOverview({ profiles, onOpen }: Props) {
                       {(() => {
                         const entry = earliestEntry(s)
                         if (entry === null) return <span className="text-muted-foreground">—</span>
-                        if (entry === 0)
-                          return <span className="text-emerald-600 dark:text-emerald-500">✓</span>
+                        if (entry === 0) return <span>✓</span>
                         return cell(s.id, entry, s.points[entry].date.slice(0, 7))
                       })()}
                     </td>
