@@ -119,7 +119,6 @@ export const hi = {
     frenchBonus: 'फ़्रेंच भाषा बोनस',
     canadianEducation: 'कनाडाई शिक्षा',
     sibling: 'कनाडा में भाई/बहन',
-    noAdditional: 'अभी कोई अतिरिक्त अंक नहीं',
     swapHint: '⚠ पहली/दूसरी भाषा की अदला-बदली से +{{n}} अंक मिलेंगे',
     swapAction: 'अदला-बदली करें',
     backToNow: 'वर्तमान पर लौटें',

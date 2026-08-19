@@ -119,7 +119,6 @@ export const fr = {
     frenchBonus: 'Points pour le français',
     canadianEducation: 'Études au Canada',
     sibling: 'Fratrie au Canada',
-    noAdditional: 'Aucun point supplémentaire pour l’instant',
     swapHint: '⚠ Inverser vos première/seconde langues officielles rapporte +{{n}} points',
     swapAction: 'Inverser',
     backToNow: 'Revenir à aujourd’hui',

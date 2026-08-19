@@ -119,7 +119,6 @@ export const es = {
     frenchBonus: 'Bonificación por francés',
     canadianEducation: 'Educación en Canadá',
     sibling: 'Hermano/a en Canadá',
-    noAdditional: 'Sin puntos adicionales por ahora',
     swapHint: '⚠ Intercambiar el primer/segundo idioma oficial suma +{{n}} puntos',
     swapAction: 'Intercambiar',
     backToNow: 'Volver a hoy',

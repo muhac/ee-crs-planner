@@ -119,7 +119,6 @@ export const en = {
     frenchBonus: 'French-language bonus',
     canadianEducation: 'Canadian education',
     sibling: 'Sibling in Canada',
-    noAdditional: 'No additional points yet',
     swapHint: '⚠ Swapping your first/second language designations gains +{{n}} points',
     swapAction: 'Swap now',
     backToNow: 'Back to now',

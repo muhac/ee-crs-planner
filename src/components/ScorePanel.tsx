@@ -200,9 +200,6 @@ export function ScorePanel({
           {score.additional.sibling > 0 && (
             <Row label={t('score.sibling')} value={score.additional.sibling} muted />
           )}
-          {score.additional.subtotal === 0 && (
-            <p className="text-muted-foreground text-xs">{t('score.noAdditional')}</p>
-          )}
         </Section>
 
         {eligibility && (

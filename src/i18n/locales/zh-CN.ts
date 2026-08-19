@@ -116,7 +116,6 @@ export const zhCN = {
     frenchBonus: '法语加分',
     canadianEducation: '加拿大学历',
     sibling: '兄弟姐妹在加',
-    noAdditional: '暂无附加分',
     swapHint: '⚠ 交换第一/第二语言可得 +{{n}} 分',
     swapAction: '一键交换',
     backToNow: '回到当前',

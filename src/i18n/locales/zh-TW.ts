@@ -118,7 +118,6 @@ export const zhTW = {
     frenchBonus: '法語加分',
     canadianEducation: '加拿大學歷',
     sibling: '兄弟姊妹在加',
-    noAdditional: '暫無附加分',
     swapHint: '⚠ 交換第一/第二語言可得 +{{n}} 分',
     swapAction: '一鍵交換',
     backToNow: '回到當前',
