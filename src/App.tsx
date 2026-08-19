@@ -62,7 +62,7 @@ export default function App() {
       </main>
 
       <footer className="text-muted-foreground mx-auto max-w-6xl px-4 pb-24 pt-8 text-xs lg:pb-8">
-        {t('common.disclaimer')} {t('common.localNote')}
+        {t('common.footer')}
       </footer>
 
       <Dialog open={shared !== null} onOpenChange={(open) => !open && setShared(null)}>

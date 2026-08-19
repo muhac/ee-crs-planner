@@ -3,9 +3,8 @@ import type { Messages } from './zh-CN'
 export const fr = {
   common: {
     appTitle: 'Planificateur SCG EE',
-    localNote: 'Les données restent dans votre navigateur',
-    disclaimer:
-      'Outil non officiel. Les scores suivent les critères officiels du SCG d’IRCC; à titre indicatif seulement.',
+    footer:
+      'Outil non officiel. Les scores suivent les critères officiels du SCG d’IRCC, à titre indicatif seulement. Les données restent dans votre navigateur.',
     english: 'Anglais',
     french: 'Français',
   },

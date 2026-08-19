@@ -3,9 +3,8 @@ import type { Messages } from './zh-CN'
 export const en = {
   common: {
     appTitle: 'EE CRS Planner',
-    localNote: 'Data stays in your browser',
-    disclaimer:
-      'Unofficial tool. Scores follow the official IRCC CRS criteria; for reference only.',
+    footer:
+      'Unofficial tool. Scores follow the official IRCC CRS criteria; for reference only. Data stays in your browser.',
     english: 'English',
     french: 'French',
   },

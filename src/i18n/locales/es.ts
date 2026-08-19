@@ -3,9 +3,8 @@ import type { Messages } from './zh-CN'
 export const es = {
   common: {
     appTitle: 'Planificador CRS de EE',
-    localNote: 'Los datos permanecen en tu navegador',
-    disclaimer:
-      'Herramienta no oficial. Las puntuaciones siguen los criterios oficiales CRS de IRCC; solo como referencia.',
+    footer:
+      'Herramienta no oficial. Las puntuaciones siguen los criterios oficiales CRS de IRCC; solo como referencia. Los datos permanecen en tu navegador.',
     english: 'Inglés',
     french: 'Francés',
   },
