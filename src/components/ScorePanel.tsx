@@ -121,12 +121,6 @@ export function ScorePanel({
         )}
       </CardHeader>
       <CardContent className="space-y-4">
-        {eligibility && (
-          <EligibilityCard
-            result={eligibility}
-            pnp={score.additional.provincialNomination > 0}
-          />
-        )}
         <Section title={t('score.core')} subtotal={score.core.subtotal}>
           <Row label={t('score.age')} value={score.core.age} muted />
           <Row label={t('score.education')} value={score.core.education} muted />
@@ -210,6 +204,13 @@ export function ScorePanel({
             <p className="text-muted-foreground text-xs">{t('score.noAdditional')}</p>
           )}
         </Section>
+
+        {eligibility && (
+          <EligibilityCard
+            result={eligibility}
+            pnp={score.additional.provincialNomination > 0}
+          />
+        )}
       </CardContent>
     </Card>
   )
