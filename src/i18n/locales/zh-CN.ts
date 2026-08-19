@@ -146,7 +146,7 @@ export const zhCN = {
     cec: 'CEC 加拿大经验类',
     fsw: 'FSW 联邦技术类',
     fst: 'FST 联邦技工类',
-    fswPoints: '67 分制 {{points}} 分',
+    fswPoints: '{{points}}/67',
     pnpWarning: '⚠ 省提名 +600 仅在可入池时有效；当前不符合任何 EE 项目资格',
     reasons: {
       cecExperience: '加国技术类经验不足 12 个月（当前 {{have}}）',

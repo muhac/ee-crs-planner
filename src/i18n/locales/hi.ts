@@ -149,7 +149,7 @@ export const hi = {
     cec: 'CEC (कनाडाई अनुभव)',
     fsw: 'FSW (कुशल कामगार)',
     fst: 'FST (कुशल ट्रेड)',
-    fswPoints: '67-अंक ग्रिड पर {{points}} अंक',
+    fswPoints: '{{points}}/67',
     pnpWarning: '⚠ PNP के +600 केवल पूल में प्रवेश योग्य होने पर गिने जाते हैं; वर्तमान में कोई EE कार्यक्रम मानदंड पूरा नहीं है',
     reasons: {
       cecExperience: '12 माह से कम कुशल कनाडाई अनुभव (अभी {{have}})',

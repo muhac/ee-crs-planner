@@ -149,7 +149,7 @@ export const es = {
     cec: 'CEC (experiencia canadiense)',
     fsw: 'FSW (trabajadores calificados)',
     fst: 'FST (oficios calificados)',
-    fswPoints: '{{points}} pts en la tabla de 67',
+    fswPoints: '{{points}}/67',
     pnpWarning: '⚠ Los +600 del PNP solo cuentan al poder entrar al pool; actualmente no se cumple ningún programa EE',
     reasons: {
       cecExperience: 'Menos de 12 meses de experiencia canadiense calificada ({{have}} actualmente)',

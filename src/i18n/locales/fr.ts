@@ -149,7 +149,7 @@ export const fr = {
     cec: 'CEC (expérience canadienne)',
     fsw: 'FSW (travailleurs qualifiés)',
     fst: 'FST (métiers spécialisés)',
-    fswPoints: '{{points}} pts sur la grille de 67',
+    fswPoints: '{{points}}/67',
     pnpWarning: '⚠ Les +600 du PCP ne comptent qu’une fois admissible au bassin ; aucun programme EE n’est actuellement satisfait',
     reasons: {
       cecExperience: 'Moins de 12 mois d’expérience canadienne qualifiée ({{have}} actuellement)',

@@ -149,7 +149,7 @@ export const en = {
     cec: 'CEC (Canadian Experience)',
     fsw: 'FSW (Skilled Worker)',
     fst: 'FST (Skilled Trades)',
-    fswPoints: '{{points}} pts on the 67-point grid',
+    fswPoints: '{{points}}/67',
     pnpWarning: '⚠ The PNP +600 only counts once you can enter the pool; no EE program criteria are currently met',
     reasons: {
       cecExperience: 'Under 12 months of skilled Canadian experience ({{have}} now)',

@@ -25,9 +25,15 @@ function ProgramRow({
     <div>
       <div className="flex items-baseline justify-between text-sm">
         <span>{name}</span>
-        <span className={status.eligible ? 'text-emerald-600 dark:text-emerald-500' : 'text-muted-foreground'}>
-          {status.eligible ? '✓' : '✗'}
-          {detail && <span className="text-muted-foreground ml-1.5 text-xs">{detail}</span>}
+        <span className="flex items-baseline gap-1.5">
+          {detail && <span className="text-muted-foreground text-xs tabular-nums">{detail}</span>}
+          <span
+            className={
+              status.eligible ? 'text-emerald-600 dark:text-emerald-500' : 'text-muted-foreground'
+            }
+          >
+            {status.eligible ? '✓' : '✗'}
+          </span>
         </span>
       </div>
       {!status.eligible && <ReasonList reasons={status.reasons} />}
