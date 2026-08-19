@@ -70,7 +70,6 @@ export function ProfileForm({ profile, onChange }: Props) {
               value={profile.dateOfBirth}
               onChange={(e) => e.target.value && set({ dateOfBirth: e.target.value })}
             />
-            <p className="text-muted-foreground text-xs">{t('form.dobHint')}</p>
           </div>
         </AccordionContent>
       </AccordionItem>
