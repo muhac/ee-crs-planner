@@ -66,13 +66,13 @@ export default function App() {
           />
         ) : (
           <div className="space-y-6">
-            <HomeOverview profiles={data.profiles} onOpen={openProfile} />
             <ProfileList
               profiles={data.profiles}
               onOpen={(id) => openProfile(id)}
               onAdd={addProfile}
               onRemove={removeProfile}
             />
+            <HomeOverview profiles={data.profiles} onOpen={openProfile} />
           </div>
         )}
       </main>
