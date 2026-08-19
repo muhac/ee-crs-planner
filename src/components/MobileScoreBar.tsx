@@ -10,8 +10,14 @@ import {
   DrawerTrigger,
 } from '@/components/ui/drawer'
 
+interface Props {
+  score: ScoreBreakdown
+  swapGain?: number
+  onSwap?: () => void
+}
+
 /** Fixed bottom bar on small screens showing the live total, expandable to the full breakdown. */
-export function MobileScoreBar({ score }: { score: ScoreBreakdown }) {
+export function MobileScoreBar({ score, swapGain, onSwap }: Props) {
   const { t } = useTranslation()
   return (
     <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur lg:hidden">
@@ -29,7 +35,7 @@ export function MobileScoreBar({ score }: { score: ScoreBreakdown }) {
               <DrawerTitle>{t('score.detailsTitle')}</DrawerTitle>
             </DrawerHeader>
             <div className="max-h-[75vh] overflow-y-auto px-4 pb-6">
-              <ScorePanel score={score} />
+              <ScorePanel score={score} swapGain={swapGain} onSwap={onSwap} />
             </div>
           </DrawerContent>
         </Drawer>

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
-import { calculateCrs } from '@/engine/crs'
+import { calculateCrs, swapGain, swapLanguages } from '@/engine/crs'
 import { todayIso } from '@/engine/dates'
 import { buildShareUrl } from '@/storage/share'
 import { makeEnvelope } from '@/storage/share'
@@ -24,6 +24,9 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
   const [copied, setCopied] = useState(false)
   const today = useMemo(todayIso, [])
   const score = useMemo(() => calculateCrs(stored.profile, today), [stored.profile, today])
+  const gain = useMemo(() => swapGain(stored.profile, today), [stored.profile, today])
+  const swap = () =>
+    onChange((p) => ({ ...p, profile: swapLanguages(p.profile) ?? p.profile }))
 
   const share = async () => {
     await navigator.clipboard.writeText(buildShareUrl(stored))
@@ -88,12 +91,12 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
 
         <div className="hidden lg:block">
           <div className="sticky top-4">
-            <ScorePanel score={score} />
+            <ScorePanel score={score} swapGain={gain} onSwap={swap} />
           </div>
         </div>
       </div>
 
-      <MobileScoreBar score={score} />
+      <MobileScoreBar score={score} swapGain={gain} onSwap={swap} />
     </div>
   )
 }

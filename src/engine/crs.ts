@@ -159,6 +159,26 @@ function additionalPoints(profile: Profile): AdditionalBreakdown {
   }
 }
 
+/**
+ * The same profile with first/second official language designations swapped
+ * (IRCC lets applicants choose which is first). Null without a second language.
+ */
+export function swapLanguages(profile: Profile): Profile | null {
+  if (!profile.secondLanguage) return null
+  return {
+    ...profile,
+    firstLanguage: profile.secondLanguage,
+    secondLanguage: profile.firstLanguage,
+  }
+}
+
+/** Extra points available by swapping the language designations (0 if none). */
+export function swapGain(profile: Profile, asOf: string): number {
+  const swapped = swapLanguages(profile)
+  if (!swapped) return 0
+  return Math.max(0, calculateCrs(swapped, asOf).total - calculateCrs(profile, asOf).total)
+}
+
 export function calculateCrs(profile: Profile, asOf: string): ScoreBreakdown {
   const withSpouse = profile.spouse !== null
   const age = ageAt(profile.dateOfBirth, asOf)

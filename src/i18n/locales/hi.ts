@@ -111,6 +111,8 @@ export const hi = {
     canadianEducation: 'कनाडाई शिक्षा',
     sibling: 'कनाडा में भाई/बहन',
     noAdditional: 'अभी कोई अतिरिक्त अंक नहीं',
+    swapHint: '⚠ पहली/दूसरी भाषा की अदला-बदली से +{{n}} अंक मिलेंगे',
+    swapAction: 'अदला-बदली करें',
     viewDetails: 'विवरण',
     detailsTitle: 'स्कोर विवरण',
   },
@@ -129,6 +131,7 @@ export const hi = {
     delete: 'हटाएँ',
     remove: 'निकालें',
     defaultScenarioName: 'परिदृश्य {{n}}',
+    swapHint: '⚠ भाषा पदनाम की अदला-बदली से कुछ महीनों में {{n}} अंक तक अधिक मिल सकते हैं',
   },
   events: {
     addTrigger: '+ भावी घटना जोड़ें',

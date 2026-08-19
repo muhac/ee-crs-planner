@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import type { ClbScores, EducationLevel, Profile } from './types'
 import { ageAt } from './dates'
-import { calculateCrs } from './crs'
+import { calculateCrs, swapGain, swapLanguages } from './crs'
 
 const AS_OF = '2026-08-18'
 
@@ -404,6 +404,36 @@ describe('additional points', () => {
       secondLanguage: { language: 'english', clb: uniformClb(5) },
     })
     expect(s.additional.subtotal).toBe(600)
+  })
+})
+
+describe('language designation swap', () => {
+  it('detects reversed designations and quantifies the gain', () => {
+    const reversed = baseProfile({
+      firstLanguage: { language: 'french', clb: uniformClb(5) },
+      secondLanguage: { language: 'english', clb: uniformClb(9) },
+    })
+    // Reversed: first 6×4=24, second capped 24 → 48; no transferability (first < CLB7).
+    expect(calculateCrs(reversed, AS_OF).core.firstLanguage).toBe(24)
+    const gain = swapGain(reversed, AS_OF)
+    // Swapped: first 31×4=124, second 1×4=4 → +76 core language alone.
+    expect(gain).toBeGreaterThanOrEqual(76)
+    expect(calculateCrs(swapLanguages(reversed)!, AS_OF).total).toBe(
+      calculateCrs(reversed, AS_OF).total + gain,
+    )
+  })
+  it('reports zero gain for correct designations or no second language', () => {
+    expect(
+      swapGain(
+        baseProfile({
+          firstLanguage: { language: 'english', clb: uniformClb(9) },
+          secondLanguage: { language: 'french', clb: uniformClb(5) },
+        }),
+        AS_OF,
+      ),
+    ).toBe(0)
+    expect(swapGain(baseProfile(), AS_OF)).toBe(0)
+    expect(swapLanguages(baseProfile())).toBeNull()
   })
 })
 

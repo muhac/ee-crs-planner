@@ -110,6 +110,8 @@ export const zhTW = {
     canadianEducation: '加拿大學歷',
     sibling: '兄弟姊妹在加',
     noAdditional: '暫無附加分',
+    swapHint: '⚠ 交換第一/第二語言可得 +{{n}} 分',
+    swapAction: '一鍵交換',
     viewDetails: '查看明細',
     detailsTitle: '分數明細',
   },
@@ -128,6 +130,7 @@ export const zhTW = {
     delete: '刪除',
     remove: '移除',
     defaultScenarioName: '方案 {{n}}',
+    swapHint: '⚠ 推演期間交換第一/第二語言指定,部分月份最多可再高 {{n}} 分',
   },
   events: {
     addTrigger: '+ 新增未來事件',

@@ -111,6 +111,8 @@ export const fr = {
     canadianEducation: 'Études au Canada',
     sibling: 'Fratrie au Canada',
     noAdditional: 'Aucun point supplémentaire pour l’instant',
+    swapHint: '⚠ Inverser vos première/seconde langues officielles rapporte +{{n}} points',
+    swapAction: 'Inverser',
     viewDetails: 'Détails',
     detailsTitle: 'Détail du score',
   },
@@ -129,6 +131,7 @@ export const fr = {
     delete: 'Supprimer',
     remove: 'Retirer',
     defaultScenarioName: 'Scénario {{n}}',
+    swapHint: '⚠ Inverser la désignation des langues donnerait jusqu’à {{n}} points de plus certains mois',
   },
   events: {
     addTrigger: '+ Ajouter un événement futur',

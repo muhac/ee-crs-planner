@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import type { ScoreBreakdown } from '@/engine/types'
+import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 
@@ -32,7 +33,14 @@ function Section({
   )
 }
 
-export function ScorePanel({ score }: { score: ScoreBreakdown }) {
+interface Props {
+  score: ScoreBreakdown
+  /** Extra points available by swapping the first/second language designations. */
+  swapGain?: number
+  onSwap?: () => void
+}
+
+export function ScorePanel({ score, swapGain = 0, onSwap }: Props) {
   const { t } = useTranslation()
   return (
     <Card>
@@ -46,6 +54,18 @@ export function ScorePanel({ score }: { score: ScoreBreakdown }) {
             age: score.age,
           })}
         </p>
+        {swapGain > 0 && (
+          <div className="mt-1 flex items-center justify-between gap-2 rounded-md bg-amber-500/10 px-2.5 py-1.5">
+            <p className="text-xs text-amber-700 dark:text-amber-500">
+              {t('score.swapHint', { n: swapGain })}
+            </p>
+            {onSwap && (
+              <Button variant="outline" size="sm" className="h-7 shrink-0 text-xs" onClick={onSwap}>
+                {t('score.swapAction')}
+              </Button>
+            )}
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-4">
         <Section title={t('score.core')} subtotal={score.core.subtotal}>

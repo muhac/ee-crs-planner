@@ -12,8 +12,9 @@ import {
 } from 'recharts'
 import type { Profile } from '@/engine/types'
 import type { Scenario, SimulationPoint } from '@/engine/simulate'
-import { simulate } from '@/engine/simulate'
-import { todayIso } from '@/engine/dates'
+import { projectProfile, simulate } from '@/engine/simulate'
+import { swapGain } from '@/engine/crs'
+import { addMonths, todayIso } from '@/engine/dates'
 import { defaultScenario } from '@/lib/profile'
 import { describeEvent } from '@/lib/labels'
 import { EventDialog } from './EventDialog'
@@ -49,6 +50,19 @@ export function Projection({ profile, scenarios, onChange }: Props) {
     [profile, scenarios, start],
   )
 
+  // Highest score any month could gain by swapping the language designations
+  // (a designation is freely chosen at submission time).
+  const maxSwapGain = useMemo(() => {
+    let max = 0
+    for (const scenario of scenarios) {
+      for (let offset = 0; offset <= scenario.horizonMonths; offset++) {
+        const projected = projectProfile(profile, scenario, start, offset)
+        max = Math.max(max, swapGain(projected, addMonths(start, offset)))
+      }
+    }
+    return max
+  }, [profile, scenarios, start])
+
   const maxHorizon = Math.max(0, ...scenarios.map((s) => s.horizonMonths))
   const chartData = useMemo(() => {
     const rows: Array<Record<string, number | string>> = []
@@ -77,6 +91,11 @@ export function Projection({ profile, scenarios, onChange }: Props) {
         <CardHeader className="pb-0">
           <h3 className="font-semibold">{t('projection.chartTitle')}</h3>
           <p className="text-muted-foreground text-xs">{t('projection.chartHint')}</p>
+          {maxSwapGain > 0 && (
+            <p className="rounded-md bg-amber-500/10 px-2.5 py-1.5 text-xs text-amber-700 dark:text-amber-500">
+              {t('projection.swapHint', { n: maxSwapGain })}
+            </p>
+          )}
         </CardHeader>
         <CardContent>
           <div className="h-64 sm:h-80">

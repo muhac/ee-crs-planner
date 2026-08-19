@@ -111,6 +111,8 @@ export const es = {
     canadianEducation: 'Educación en Canadá',
     sibling: 'Hermano/a en Canadá',
     noAdditional: 'Sin puntos adicionales por ahora',
+    swapHint: '⚠ Intercambiar el primer/segundo idioma oficial suma +{{n}} puntos',
+    swapAction: 'Intercambiar',
     viewDetails: 'Detalles',
     detailsTitle: 'Desglose de la puntuación',
   },
@@ -129,6 +131,7 @@ export const es = {
     delete: 'Eliminar',
     remove: 'Quitar',
     defaultScenarioName: 'Escenario {{n}}',
+    swapHint: '⚠ Intercambiar la designación de idiomas daría hasta {{n}} puntos más en algunos meses',
   },
   events: {
     addTrigger: '+ Añadir evento futuro',

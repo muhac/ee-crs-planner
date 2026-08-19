@@ -108,6 +108,8 @@ export const zhCN = {
     canadianEducation: '加拿大学历',
     sibling: '兄弟姐妹在加',
     noAdditional: '暂无附加分',
+    swapHint: '⚠ 交换第一/第二语言可得 +{{n}} 分',
+    swapAction: '一键交换',
     viewDetails: '查看明细',
     detailsTitle: '分数明细',
   },
@@ -126,6 +128,7 @@ export const zhCN = {
     delete: '删除',
     remove: '移除',
     defaultScenarioName: '方案 {{n}}',
+    swapHint: '⚠ 推演期间交换第一/第二语言指定,部分月份最多可再高 {{n}} 分',
   },
   events: {
     addTrigger: '+ 添加未来事件',

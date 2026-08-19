@@ -111,6 +111,8 @@ export const en = {
     canadianEducation: 'Canadian education',
     sibling: 'Sibling in Canada',
     noAdditional: 'No additional points yet',
+    swapHint: '⚠ Swapping your first/second language designations gains +{{n}} points',
+    swapAction: 'Swap now',
     viewDetails: 'Details',
     detailsTitle: 'Score breakdown',
   },
@@ -129,6 +131,7 @@ export const en = {
     delete: 'Delete',
     remove: 'Remove',
     defaultScenarioName: 'Scenario {{n}}',
+    swapHint: '⚠ Swapping the first/second language designations would score up to {{n}} points higher in some months',
   },
   events: {
     addTrigger: '+ Add future event',
