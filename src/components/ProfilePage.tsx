@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Trash2 } from 'lucide-react'
 import type { StoredProfile } from '@/storage/schema'
 import { calculateCrs, swapGain, swapLanguages } from '@/engine/crs'
 import { checkEligibility } from '@/engine/eligibility'
@@ -20,11 +21,12 @@ interface Props {
   stored: StoredProfile
   onChange: (fn: (prev: StoredProfile) => StoredProfile) => void
   onBack: () => void
+  onRemove: () => void
   /** Preselected projection point (e.g. clicked on the home overview). */
   initialSelection?: ProjectionSelection | null
 }
 
-export function ProfilePage({ stored, onChange, onBack, initialSelection }: Props) {
+export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelection }: Props) {
   const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const today = useMemo(todayIso, [])
@@ -92,6 +94,17 @@ export function ProfilePage({ stored, onChange, onBack, initialSelection }: Prop
           </Button>
           <Button variant="outline" size="sm" onClick={exportJson}>
             {t('page.exportJson')}
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={t('list.delete')}
+            className="text-muted-foreground size-8"
+            onClick={() => {
+              if (confirm(t('list.deleteConfirm', { name: stored.name }))) onRemove()
+            }}
+          >
+            <Trash2 className="size-4" />
           </Button>
         </div>
       </div>

@@ -1,6 +1,5 @@
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Trash2 } from 'lucide-react'
 import type { StoredProfile } from '@/storage/schema'
 import { isShareEnvelope, upgradeStoredProfile } from '@/storage/schema'
 import { calculateCrs } from '@/engine/crs'
@@ -15,10 +14,9 @@ interface Props {
   profiles: StoredProfile[]
   onOpen: (id: string) => void
   onAdd: (profile: StoredProfile) => void
-  onRemove: (id: string) => void
 }
 
-export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
+export function ProfileList({ profiles, onOpen, onAdd }: Props) {
   const { t } = useTranslation()
   const fileInput = useRef<HTMLInputElement>(null)
   const today = todayIso()
@@ -98,9 +96,9 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
               className="hover:border-ring cursor-pointer transition-colors"
               onClick={() => onOpen(p.id)}
             >
-              <CardContent className="flex items-stretch justify-between gap-3 py-4">
-                <div className="flex min-w-0 flex-col">
-                  <p className="truncate font-medium">{p.name}</p>
+              <CardContent className="flex items-center justify-between gap-3 py-4">
+                <div className="min-w-0">
+                  <p className="truncate text-lg font-semibold">{p.name}</p>
                   <p className="text-muted-foreground text-xs">
                     {programs.length > 0 ? (
                       programs.join(' / ')
@@ -108,20 +106,8 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
                       <span className="text-red-600 dark:text-red-500">NONE</span>
                     )}
                   </p>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    aria-label={t('list.delete')}
-                    className="text-muted-foreground -mb-1 -ml-2 mt-auto size-8 self-start pt-2"
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      if (confirm(t('list.deleteConfirm', { name: p.name }))) onRemove(p.id)
-                    }}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
                 </div>
-                <div className="flex shrink-0 flex-col items-end justify-between">
+                <div className="flex shrink-0 flex-col items-end">
                   <span className="text-3xl font-bold tabular-nums">{score.total}</span>
                   {change && (
                     <p className="text-muted-foreground text-xs tabular-nums">

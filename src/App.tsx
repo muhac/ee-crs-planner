@@ -63,6 +63,11 @@ export default function App() {
               setOpenId(null)
               setPendingSelection(null)
             }}
+            onRemove={() => {
+              removeProfile(current.id)
+              setOpenId(null)
+              setPendingSelection(null)
+            }}
           />
         ) : (
           <div className="space-y-6">
@@ -70,7 +75,6 @@ export default function App() {
               profiles={data.profiles}
               onOpen={(id) => openProfile(id)}
               onAdd={addProfile}
-              onRemove={removeProfile}
             />
             <HomeOverview profiles={data.profiles} onOpen={openProfile} />
           </div>
