@@ -2,9 +2,7 @@ import { useTranslation } from 'react-i18next'
 import type { EligibilityReason, EligibilityResult, ProgramStatus } from '@/engine/eligibility'
 
 function Badge({ eligible }: { eligible: boolean }) {
-  return (
-    <span className={eligible ? '' : 'text-muted-foreground'}>{eligible ? '✓' : '✗'}</span>
-  )
+  return <span>{eligible ? '✓' : '✗'}</span>
 }
 
 function ReasonList({ reasons }: { reasons: EligibilityReason[] }) {
