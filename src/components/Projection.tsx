@@ -147,7 +147,7 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                     value,
                     scenarios.find((s) => s.id === name)?.name ?? String(name),
                   ]}
-                  labelFormatter={(d) => String(d)}
+                  labelFormatter={(d) => String(d).slice(0, 7)}
                   contentStyle={{
                     background: 'var(--popover)',
                     border: '1px solid var(--border)',

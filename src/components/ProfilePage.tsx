@@ -37,7 +37,7 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
     if (!scenario || selected.monthOffset > scenario.horizonMonths) return null
     const date = addMonths(today, selected.monthOffset)
     return {
-      label: `${scenario.name} · ${date}`,
+      label: `${scenario.name} · ${date.slice(0, 7)}`,
       score: calculateCrs(projectProfile(stored.profile, scenario, today, selected.monthOffset), date),
     }
   }, [selected, stored.profile, stored.scenarios, today])
