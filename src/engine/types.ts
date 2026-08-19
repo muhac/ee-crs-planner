@@ -33,6 +33,9 @@ export type EducationLevel =
 
 export type CanadianEducationCredential = 'none' | 'one-or-two-year' | 'three-plus-year'
 
+/** TEER category of the Canadian work experience (drives the CEC language threshold). */
+export type WorkTeer = 'teer-0-1' | 'teer-2-3'
+
 export interface SpouseProfile {
   education: EducationLevel
   /** Spouse's first official language test; null if not tested. */
@@ -40,6 +43,8 @@ export interface SpouseProfile {
   canadianWorkMonths: number
   /** Spouse currently working in Canada — experience accrues during projection. */
   workingInCanada: boolean
+  /** Spouse completed 2+ academic years of study in Canada (FSW adaptability). */
+  studiedInCanada: boolean
 }
 
 export interface Profile {
@@ -55,6 +60,14 @@ export interface Profile {
   workingInCanada: boolean
   /** Currently working abroad — foreign experience accrues during projection. */
   workingAbroad: boolean
+  /** TEER category of the Canadian work experience. */
+  canadianWorkTeer: WorkTeer
+  /** Valid arranged employment / job offer (FSW-67 points; no longer scores in CRS). */
+  jobOffer: boolean
+  /** Meets the settlement-funds requirement (or is exempt). */
+  settlementFunds: boolean
+  /** Adult relative in Canada beyond a sibling (FSW adaptability). */
+  relativeInCanada: boolean
   certificateOfQualification: boolean
   provincialNomination: boolean
   siblingInCanada: boolean

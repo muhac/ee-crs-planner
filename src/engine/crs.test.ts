@@ -29,6 +29,10 @@ function baseProfile(overrides: Partial<Profile> = {}): Profile {
     foreignWorkMonths: 0,
     workingInCanada: false,
     workingAbroad: false,
+    canadianWorkTeer: 'teer-0-1',
+    jobOffer: false,
+    settlementFunds: true,
+    relativeInCanada: false,
     certificateOfQualification: false,
     provincialNomination: false,
     siblingInCanada: false,
@@ -59,7 +63,7 @@ describe('core: age', () => {
     expect(score({ dateOfBirth: dobForAge(age) }).core.age).toBe(pts)
   })
 
-  const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false } as const
+  const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } as const
   const casesWith: Array<[number, number]> = [
     [18, 90], [19, 95], [25, 100], [30, 95], [35, 70], [40, 45], [44, 5], [45, 0],
   ]
@@ -81,7 +85,7 @@ describe('core: education', () => {
   ]
   it.each(cases)('%s → %i without / %i with spouse', (level, without, withSp) => {
     expect(score({ education: level }).core.education).toBe(without)
-    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false } as const
+    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } as const
     expect(score({ education: level, spouse }).core.education).toBe(withSp)
   })
 })
@@ -96,7 +100,7 @@ describe('core: first official language', () => {
     expect(
       score({ firstLanguage: { language: 'english', clb: uniformClb(level) } }).core.firstLanguage,
     ).toBe(without * 4)
-    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false } as const
+    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } as const
     expect(
       score({ firstLanguage: { language: 'english', clb: uniformClb(level) }, spouse }).core
         .firstLanguage,
@@ -125,7 +129,7 @@ describe('core: second official language', () => {
   })
   it('caps at 24 without spouse and 22 with spouse', () => {
     expect(score(mk(9)).core.secondLanguage).toBe(24)
-    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false } as const
+    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } as const
     expect(score({ ...mk(9), spouse }).core.secondLanguage).toBe(22)
   })
 })
@@ -138,7 +142,7 @@ describe('core: Canadian work experience', () => {
   ]
   it.each(cases)('%i months → %i without / %i with spouse', (months, without, withSp) => {
     expect(score({ canadianWorkMonths: months, workingInCanada: false }).core.canadianWork).toBe(without)
-    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false } as const
+    const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } as const
     expect(score({ canadianWorkMonths: months, spouse }).core.canadianWork).toBe(withSp)
   })
 })
@@ -152,7 +156,7 @@ describe('spouse factors', () => {
     ]
     for (const [level, pts] of cases) {
       expect(
-        score({ spouse: { education: level, language: null, canadianWorkMonths: 0, workingInCanada: false } }).spouse
+        score({ spouse: { education: level, language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } }).spouse
           .education,
       ).toBe(pts)
     }
@@ -165,6 +169,7 @@ describe('spouse factors', () => {
           language: { language: 'english', clb: clb(9, 8, 6, 4) },
           canadianWorkMonths: 0,
           workingInCanada: false,
+        studiedInCanada: false,
         },
       }).spouse.language,
     ).toBe(5 + 3 + 1 + 0)
@@ -175,6 +180,7 @@ describe('spouse factors', () => {
           language: { language: 'english', clb: uniformClb(10) },
           canadianWorkMonths: 0,
           workingInCanada: false,
+        studiedInCanada: false,
         },
       }).spouse.language,
     ).toBe(20)
@@ -185,7 +191,7 @@ describe('spouse factors', () => {
     ]
     for (const [months, pts] of cases) {
       expect(
-        score({ spouse: { education: 'less-than-secondary', language: null, canadianWorkMonths: months, workingInCanada: false } })
+        score({ spouse: { education: 'less-than-secondary', language: null, canadianWorkMonths: months, workingInCanada: false, studiedInCanada: false } })
           .spouse.canadianWork,
       ).toBe(pts)
     }
@@ -475,6 +481,7 @@ describe('integration', () => {
           language: { language: 'english', clb: clb(5, 6, 7, 8) },
           canadianWorkMonths: 24,
           workingInCanada: false,
+        studiedInCanada: false,
         },
       }),
       AS_OF,

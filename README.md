@@ -7,6 +7,7 @@ An unofficial **CRS (Comprehensive Ranking System) calculator & planner** for Ca
 - Enter your profile (age, education, language CLB/NCLC, work experience, spouse, additional factors) and see your total score with a full per-factor breakdown, updated live
 - Language scores accepted as CLB/NCLC levels directly, or as raw results from CELPIP-General, IELTS (General Training), PTE Core, TEF Canada, or TCF Canada — converted per the official IRCC equivalency charts with the resulting CLB shown inline
 - **Future projection**: age advances automatically, work experience accrues month by month, and dated events (language retest, education upgrade, provincial nomination, …) take effect on schedule — plotted as monthly score curves
+- **Pool eligibility**: checks CEC / FSW (including the 67-point selection grid) / FST criteria, explains what's missing, warns when PNP points can't count, and marks ineligible stretches of the projection as dashed with the earliest pool-entry month per scenario
 - Multiple profiles and side-by-side what-if scenarios; all data stays in your browser (localStorage)
 - JSON export/import for backup, plus share links that encode the profile into the URL hash — nothing ever touches a server
 - Responsive: two-column workbench on desktop, single column with a floating score bar on mobile

@@ -15,6 +15,7 @@ import type { Profile } from '@/engine/types'
 import type { Scenario, SimulationPoint } from '@/engine/simulate'
 import { projectProfile, simulate } from '@/engine/simulate'
 import { swapGain } from '@/engine/crs'
+import { checkEligibility } from '@/engine/eligibility'
 import { addMonths, todayIso } from '@/engine/dates'
 import { defaultScenario } from '@/lib/profile'
 import { describeEvent } from '@/lib/labels'
@@ -71,21 +72,52 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
     return max
   }, [profile, scenarios, start])
 
+  /** Per scenario: whether the profile qualifies for any EE program each month. */
+  const eligibilityByScenario = useMemo(() => {
+    const map = new Map<string, boolean[]>()
+    for (const scenario of scenarios) {
+      const flags: boolean[] = []
+      for (let offset = 0; offset <= scenario.horizonMonths; offset++) {
+        const projected = projectProfile(profile, scenario, start, offset)
+        flags.push(checkEligibility(projected, addMonths(start, offset)).anyEligible)
+      }
+      map.set(scenario.id, flags)
+    }
+    return map
+  }, [profile, scenarios, start])
+
   const maxHorizon = Math.max(0, ...scenarios.map((s) => s.horizonMonths))
   const chartData = useMemo(() => {
-    const rows: Array<Record<string, number | string>> = []
+    const rows: Array<Record<string, number | string | null>> = []
     for (let offset = 0; offset <= maxHorizon; offset++) {
-      const row: Record<string, number | string> = {
+      const row: Record<string, number | string | null> = {
         date: simulations[0]?.points[Math.min(offset, simulations[0].points.length - 1)]?.date ?? '',
         offset,
       }
       for (const { scenario, points } of simulations) {
-        if (offset < points.length) row[scenario.id] = points[offset].score.total
+        if (offset >= points.length) continue
+        const total = points[offset].score.total
+        const flags = eligibilityByScenario.get(scenario.id) ?? []
+        const ok = flags[offset] ?? true
+        const last = points.length - 1
+        // Solid line while eligible; dashed while not, extended one point into
+        // eligible territory at each boundary so the segments connect.
+        row[scenario.id] = ok ? total : null
+        const boundary =
+          (offset > 0 && flags[offset - 1] === false) ||
+          (offset < last && flags[offset + 1] === false)
+        row[`${scenario.id}:no`] = !ok || boundary ? total : null
       }
       rows.push(row)
     }
     return rows
-  }, [simulations, maxHorizon])
+  }, [simulations, maxHorizon, eligibilityByScenario])
+
+  const earliestEntry = (scenarioId: string): number | null => {
+    const flags = eligibilityByScenario.get(scenarioId) ?? []
+    const idx = flags.indexOf(true)
+    return idx === -1 ? null : idx
+  }
 
   const updateScenario = (id: string, patch: Partial<Scenario>) =>
     onChange(scenarios.map((s) => (s.id === id ? { ...s, ...patch } : s)))
@@ -160,6 +192,33 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                 )}
                 {scenarios.map((s, i) => (
                   <Line
+                    key={`${s.id}:no`}
+                    type="stepAfter"
+                    dataKey={`${s.id}:no`}
+                    stroke={seriesColor(i)}
+                    strokeWidth={2}
+                    strokeDasharray="4 4"
+                    strokeOpacity={0.55}
+                    dot={false}
+                    legendType="none"
+                    tooltipType="none"
+                    activeDot={{
+                      r: 5,
+                      stroke: 'var(--background)',
+                      strokeWidth: 2,
+                      cursor: 'pointer',
+                      onClick: (...args: unknown[]) => {
+                        const dot = args.find(
+                          (a): a is { payload: { offset: number } } =>
+                            typeof a === 'object' && a !== null && 'payload' in a,
+                        )
+                        if (dot) select(s.id, dot.payload.offset)
+                      },
+                    }}
+                  />
+                ))}
+                {scenarios.map((s, i) => (
+                  <Line
                     key={s.id}
                     type="stepAfter"
                     dataKey={s.id}
@@ -204,7 +263,8 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                   {MILESTONES.map((m) => (
                     <th key={m} className="py-2 pr-3 font-medium">{t('projection.plusMonths', { m })}</th>
                   ))}
-                  <th className="py-2 font-medium">{t('projection.peak')}</th>
+                  <th className="py-2 pr-3 font-medium">{t('projection.peak')}</th>
+                  <th className="py-2 font-medium">{t('projection.earliestEntry')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -239,7 +299,7 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                           {m < points.length ? cell(m, points[m].score.total) : '—'}
                         </td>
                       ))}
-                      <td className="py-1.5 font-medium">
+                      <td className="py-1.5 pr-3 font-medium">
                         {cell(
                           p.monthOffset,
                           <>
@@ -249,6 +309,15 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                             </span>
                           </>,
                         )}
+                      </td>
+                      <td className="py-1.5">
+                        {(() => {
+                          const entry = earliestEntry(scenario.id)
+                          if (entry === null) return <span className="text-muted-foreground">—</span>
+                          if (entry === 0)
+                            return <span className="text-emerald-600 dark:text-emerald-500">✓</span>
+                          return cell(entry, points[entry].date.slice(0, 7))
+                        })()}
                       </td>
                     </tr>
                   )

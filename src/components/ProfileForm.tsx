@@ -175,6 +175,21 @@ export function ProfileForm({ profile, onChange }: Props) {
               onCheckedChange={(on) => set({ workingInCanada: on })}
             />
           </div>
+          <div className="flex items-center justify-between gap-4">
+            <Label className="font-normal">{t('form.canadianWorkTeer')}</Label>
+            <Select
+              value={profile.canadianWorkTeer}
+              onValueChange={(v) => set({ canadianWorkTeer: v as Profile['canadianWorkTeer'] })}
+            >
+              <SelectTrigger className="w-40">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="teer-0-1">{t('form.teer01')}</SelectItem>
+                <SelectItem value="teer-2-3">{t('form.teer23')}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
           <div className="space-y-1.5">
             <Label htmlFor="foreign-work">{t('form.foreignWork')}</Label>
             <MonthsInput
@@ -204,6 +219,9 @@ export function ProfileForm({ profile, onChange }: Props) {
               ['certificateOfQualification', t('form.certificate')],
               ['provincialNomination', t('form.pnp')],
               ['siblingInCanada', t('form.sibling')],
+              ['relativeInCanada', t('form.relativeInCanada')],
+              ['jobOffer', t('form.jobOffer')],
+              ['settlementFunds', t('form.settlementFunds')],
             ] as const
           ).map(([key, label]) => (
             <div key={key} className="flex items-center justify-between gap-4">
@@ -287,6 +305,18 @@ export function ProfileForm({ profile, onChange }: Props) {
                   checked={profile.spouse.workingInCanada}
                   onCheckedChange={(on) =>
                     set({ spouse: { ...profile.spouse!, workingInCanada: on } })
+                  }
+                />
+              </div>
+              <div className="flex items-center justify-between gap-4">
+                <Label htmlFor="spouse-studied" className="font-normal">
+                  {t('form.spouseStudiedInCanada')}
+                </Label>
+                <Switch
+                  id="spouse-studied"
+                  checked={profile.spouse.studiedInCanada}
+                  onCheckedChange={(on) =>
+                    set({ spouse: { ...profile.spouse!, studiedInCanada: on } })
                   }
                 />
               </div>

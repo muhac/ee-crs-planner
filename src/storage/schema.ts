@@ -1,10 +1,10 @@
 import type { ClbScores, Profile } from '@/engine/types'
 import type { Scenario } from '@/engine/simulate'
 
-export const SCHEMA_VERSION = 4
+export const SCHEMA_VERSION = 5
 
 /** Schema versions this build can read (older ones are upgraded on load). */
-const READABLE_VERSIONS: number[] = [1, 2, 3, 4]
+const READABLE_VERSIONS: number[] = [1, 2, 3, 4, 5]
 
 export interface StoredProfile {
   id: string
@@ -37,6 +37,8 @@ export function emptyAppData(): AppData {
  * v2 → v3: spouse language and spouse-language-update events hold a full
  * LanguageTestResult instead of bare CLB scores.
  * v3 → v4: SpouseProfile gains a workingInCanada flag (defaults false).
+ * v4 → v5: pool-eligibility fields (TEER, job offer, funds, relative,
+ * spouse studied in Canada) with permissive defaults.
  */
 export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
   const scenarios = sp.scenarios as Array<
@@ -60,12 +62,18 @@ export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
       workingAbroad:
         (sp.profile.workingAbroad as boolean | undefined) ??
         scenarios.some((s) => s.workingAbroad === true),
+      canadianWorkTeer: sp.profile.canadianWorkTeer ?? 'teer-0-1',
+      jobOffer: (sp.profile.jobOffer as boolean | undefined) ?? false,
+      settlementFunds: (sp.profile.settlementFunds as boolean | undefined) ?? true,
+      relativeInCanada: (sp.profile.relativeInCanada as boolean | undefined) ?? false,
       spouse: spouse
         ? {
             ...spouse,
             language: spouseLanguage,
             workingInCanada:
               (spouse.workingInCanada as boolean | undefined) ?? false,
+            studiedInCanada:
+              (spouse.studiedInCanada as boolean | undefined) ?? false,
           }
         : null,
     },

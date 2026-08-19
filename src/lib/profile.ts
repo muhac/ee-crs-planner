@@ -21,6 +21,10 @@ export function defaultProfile(): Profile {
     foreignWorkMonths: 0,
     workingInCanada: false,
     workingAbroad: false,
+    canadianWorkTeer: 'teer-0-1',
+    jobOffer: false,
+    settlementFunds: true,
+    relativeInCanada: false,
     certificateOfQualification: false,
     provincialNomination: false,
     siblingInCanada: false,
@@ -29,7 +33,13 @@ export function defaultProfile(): Profile {
 }
 
 export function defaultSpouse(): SpouseProfile {
-  return { education: 'bachelors', language: null, canadianWorkMonths: 0, workingInCanada: false }
+  return {
+    education: 'bachelors',
+    language: null,
+    canadianWorkMonths: 0,
+    workingInCanada: false,
+    studiedInCanada: false,
+  }
 }
 
 export function defaultScenario(name: string): Scenario {

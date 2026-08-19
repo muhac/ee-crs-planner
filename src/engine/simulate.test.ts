@@ -16,6 +16,10 @@ function profile(overrides: Partial<Profile> = {}): Profile {
     foreignWorkMonths: 0,
     workingInCanada: false,
     workingAbroad: false,
+    canadianWorkTeer: 'teer-0-1',
+    jobOffer: false,
+    settlementFunds: true,
+    relativeInCanada: false,
     certificateOfQualification: false,
     provincialNomination: false,
     siblingInCanada: false,
@@ -103,6 +107,7 @@ describe('simulate', () => {
         language: null,
         canadianWorkMonths: 0,
         workingInCanada: true,
+      studiedInCanada: false,
       },
     })
     const sc = scenario({
@@ -172,7 +177,7 @@ describe('simulate', () => {
   it('applies second-language and spouse events', () => {
     const points = simulate(
       profile({
-        spouse: { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false },
+        spouse: { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false },
       }),
       scenario({
         events: [

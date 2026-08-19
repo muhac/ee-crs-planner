@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
 import { calculateCrs, swapGain, swapLanguages } from '@/engine/crs'
+import { checkEligibility } from '@/engine/eligibility'
 import { projectProfile } from '@/engine/simulate'
 import type { ProjectionSelection } from './Projection'
 import { addMonths, todayIso } from '@/engine/dates'
@@ -36,13 +37,20 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
     const scenario = stored.scenarios.find((s) => s.id === selected.scenarioId)
     if (!scenario || selected.monthOffset > scenario.horizonMonths) return null
     const date = addMonths(today, selected.monthOffset)
+    const projected = projectProfile(stored.profile, scenario, today, selected.monthOffset)
     return {
       label: `${scenario.name} · ${date.slice(0, 7)}`,
-      score: calculateCrs(projectProfile(stored.profile, scenario, today, selected.monthOffset), date),
+      score: calculateCrs(projected, date),
+      eligibility: checkEligibility(projected, date),
     }
   }, [selected, stored.profile, stored.scenarios, today])
 
+  const currentEligibility = useMemo(
+    () => checkEligibility(stored.profile, today),
+    [stored.profile, today],
+  )
   const displayedScore = projection?.score ?? score
+  const displayedEligibility = projection?.eligibility ?? currentEligibility
   const contextLabel = projection?.label
   const clearSelection = () => setSelected(null)
 
@@ -117,6 +125,7 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
               onSwap={swap}
               contextLabel={contextLabel}
               onClearContext={clearSelection}
+              eligibility={displayedEligibility}
             />
           </div>
         </div>
@@ -128,6 +137,7 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
         onSwap={swap}
         contextLabel={contextLabel}
         onClearContext={clearSelection}
+        eligibility={displayedEligibility}
       />
     </div>
   )

@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
 import type { ScoreBreakdown } from '@/engine/types'
+import type { EligibilityResult } from '@/engine/eligibility'
+import { EligibilityCard } from './EligibilityCard'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
@@ -66,9 +68,17 @@ interface Props {
   /** When set, the panel shows a projected month instead of the current score. */
   contextLabel?: string
   onClearContext?: () => void
+  eligibility?: EligibilityResult
 }
 
-export function ScorePanel({ score, swapGain = 0, onSwap, contextLabel, onClearContext }: Props) {
+export function ScorePanel({
+  score,
+  swapGain = 0,
+  onSwap,
+  contextLabel,
+  onClearContext,
+  eligibility,
+}: Props) {
   const { t } = useTranslation()
   return (
     <Card>
@@ -111,6 +121,12 @@ export function ScorePanel({ score, swapGain = 0, onSwap, contextLabel, onClearC
         )}
       </CardHeader>
       <CardContent className="space-y-4">
+        {eligibility && (
+          <EligibilityCard
+            result={eligibility}
+            pnp={score.additional.provincialNomination > 0}
+          />
+        )}
         <Section title={t('score.core')} subtotal={score.core.subtotal}>
           <Row label={t('score.age')} value={score.core.age} muted />
           <Row label={t('score.education')} value={score.core.education} muted />
