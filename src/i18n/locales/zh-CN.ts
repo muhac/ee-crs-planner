@@ -146,11 +146,18 @@ export const zhCN = {
     add: '添加',
     types: {
       'language-update': '语言重考',
+      'work-status-update': '工作状态变化',
       'education-update': '学历提升',
       'provincial-nomination': '获得省提名',
       'certificate-of-qualification': '获得技工证书',
       'sibling-in-canada': '兄弟姐妹成为公民/PR',
       'spouse-language-update': '配偶语言重考',
+    },
+    workStatus: {
+      'canada-start': '开始在加拿大工作',
+      'canada-stop': '停止在加拿大工作',
+      'abroad-start': '开始海外工作',
+      'abroad-stop': '停止海外工作',
     },
     descLanguage: '{{which}}重考（{{lang}}）：听 {{l}} / 读 {{r}} / 写 {{w}} / 说 {{s}}',
     descEducation: '学历提升为「{{education}}」',

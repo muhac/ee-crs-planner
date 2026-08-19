@@ -149,11 +149,18 @@ export const es = {
     add: 'Añadir',
     types: {
       'language-update': 'Repetir examen de idioma',
+      'work-status-update': 'Cambio de situación laboral',
       'education-update': 'Mejora educativa',
       'provincial-nomination': 'Nominación provincial obtenida',
       'certificate-of-qualification': 'Certificado de cualificación obtenido',
       'sibling-in-canada': 'Hermano/a se hace ciudadano/RP',
       'spouse-language-update': 'Cónyuge repite examen de idioma',
+    },
+    workStatus: {
+      'canada-start': 'Empezar a trabajar en Canadá',
+      'canada-stop': 'Dejar de trabajar en Canadá',
+      'abroad-start': 'Empezar a trabajar en el extranjero',
+      'abroad-stop': 'Dejar de trabajar en el extranjero',
     },
     descLanguage: 'Nuevo examen — {{which}} ({{lang}}): CO {{l}} / L {{r}} / E {{w}} / EO {{s}}',
     descEducation: 'Educación mejorada a «{{education}}»',

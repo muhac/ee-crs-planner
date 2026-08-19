@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import type { Profile } from './types'
 import type { Scenario } from './simulate'
-import { simulate } from './simulate'
+import { projectProfile, simulate } from './simulate'
 
 const START = '2026-08-18'
 
@@ -65,6 +65,35 @@ describe('simulate', () => {
     // 30 → 36 months at offset 6: foreign×language tier moves from 1-2yr (13) to 3+yr (25)
     expect(points[5].score.transferability.foreignWorkLanguage).toBe(13)
     expect(points[6].score.transferability.foreignWorkLanguage).toBe(25)
+  })
+
+  it('starts accruing Canadian experience from a start-working event', () => {
+    const sc = scenario({
+      events: [
+        { id: 'e1', date: '2027-02-01', type: 'work-status-update', target: 'canada', working: true },
+      ],
+    })
+    // Event lands between offsets 5 (2027-01-18) and 6 (2027-02-18):
+    // months accrue from the offset-6 boundary onward.
+    expect(projectProfile(profile(), sc, START, 6).canadianWorkMonths).toBe(0)
+    expect(projectProfile(profile(), sc, START, 7).canadianWorkMonths).toBe(1)
+    expect(projectProfile(profile(), sc, START, 18).canadianWorkMonths).toBe(12)
+    expect(projectProfile(profile(), sc, START, 18).workingInCanada).toBe(true)
+    const points = simulate(profile(), sc, START)
+    expect(points[17].score.core.canadianWork).toBe(0)
+    expect(points[18].score.core.canadianWork).toBe(40)
+  })
+
+  it('stops accruing after a stop-working event', () => {
+    const sc = scenario({
+      events: [
+        { id: 'e1', date: '2027-02-01', type: 'work-status-update', target: 'canada', working: false },
+      ],
+    })
+    const base = profile({ workingInCanada: true })
+    expect(projectProfile(base, sc, START, 6).canadianWorkMonths).toBe(6)
+    expect(projectProfile(base, sc, START, 36).canadianWorkMonths).toBe(6)
+    expect(projectProfile(base, sc, START, 36).workingInCanada).toBe(false)
   })
 
   it('drops age points after a birthday', () => {

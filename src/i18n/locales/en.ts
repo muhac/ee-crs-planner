@@ -149,11 +149,18 @@ export const en = {
     add: 'Add',
     types: {
       'language-update': 'Language retest',
+      'work-status-update': 'Work status change',
       'education-update': 'Education upgrade',
       'provincial-nomination': 'Provincial nomination',
       'certificate-of-qualification': 'Certificate of qualification',
       'sibling-in-canada': 'Sibling becomes citizen/PR',
       'spouse-language-update': 'Spouse language retest',
+    },
+    workStatus: {
+      'canada-start': 'Start working in Canada',
+      'canada-stop': 'Stop working in Canada',
+      'abroad-start': 'Start working abroad',
+      'abroad-stop': 'Stop working abroad',
     },
     descLanguage: '{{which}} retest ({{lang}}): L {{l}} / R {{r}} / W {{w}} / S {{s}}',
     descEducation: 'Education upgraded to "{{education}}"',

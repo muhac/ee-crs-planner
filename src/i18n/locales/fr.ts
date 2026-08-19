@@ -149,11 +149,18 @@ export const fr = {
     add: 'Ajouter',
     types: {
       'language-update': 'Nouveau test de langue',
+      'work-status-update': 'Changement de statut de travail',
       'education-update': 'Progression scolaire',
       'provincial-nomination': 'Candidature provinciale obtenue',
       'certificate-of-qualification': 'Certificat de compétence obtenu',
       'sibling-in-canada': 'Fratrie devient citoyen/RP',
       'spouse-language-update': 'Nouveau test de langue du conjoint',
+    },
+    workStatus: {
+      'canada-start': 'Commencer à travailler au Canada',
+      'canada-stop': 'Cesser de travailler au Canada',
+      'abroad-start': 'Commencer à travailler à l’étranger',
+      'abroad-stop': 'Cesser de travailler à l’étranger',
     },
     descLanguage: 'Nouveau test — {{which}} ({{lang}}) : É {{l}} / L {{r}} / Éc {{w}} / O {{s}}',
     descEducation: 'Scolarité portée à « {{education}} »',

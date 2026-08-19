@@ -148,11 +148,18 @@ export const zhTW = {
     add: '新增',
     types: {
       'language-update': '語言重考',
+      'work-status-update': '工作狀態變化',
       'education-update': '學歷提升',
       'provincial-nomination': '獲得省提名',
       'certificate-of-qualification': '獲得技工證書',
       'sibling-in-canada': '兄弟姊妹成為公民/PR',
       'spouse-language-update': '配偶語言重考',
+    },
+    workStatus: {
+      'canada-start': '開始在加拿大工作',
+      'canada-stop': '停止在加拿大工作',
+      'abroad-start': '開始海外工作',
+      'abroad-stop': '停止海外工作',
     },
     descLanguage: '{{which}}重考（{{lang}}）：聽 {{l}} / 讀 {{r}} / 寫 {{w}} / 說 {{s}}',
     descEducation: '學歷提升為「{{education}}」',

@@ -10,6 +10,7 @@ import { calculateCrs } from './crs'
 
 export type FutureEvent =
   | { id: string; date: string; type: 'language-update'; target: 'first' | 'second'; test: LanguageTestResult }
+  | { id: string; date: string; type: 'work-status-update'; target: 'canada' | 'abroad'; working: boolean }
   | { id: string; date: string; type: 'education-update'; education: EducationLevel; canadianEducationCredential?: CanadianEducationCredential }
   | { id: string; date: string; type: 'provincial-nomination' }
   | { id: string; date: string; type: 'certificate-of-qualification' }
@@ -35,6 +36,10 @@ function applyEvent(profile: Profile, event: FutureEvent): Profile {
       return event.target === 'first'
         ? { ...profile, firstLanguage: event.test }
         : { ...profile, secondLanguage: event.test }
+    case 'work-status-update':
+      return event.target === 'canada'
+        ? { ...profile, workingInCanada: event.working }
+        : { ...profile, workingAbroad: event.working }
     case 'education-update':
       return {
         ...profile,
@@ -63,11 +68,29 @@ export function projectProfile(
   monthOffset: number,
 ): Profile {
   const date = addMonths(startDate, monthOffset)
-  let profile: Profile = {
-    ...base,
-    canadianWorkMonths: base.canadianWorkMonths + (base.workingInCanada ? monthOffset : 0),
-    foreignWorkMonths: base.foreignWorkMonths + (base.workingAbroad ? monthOffset : 0),
+
+  // Work experience accrues per the working status in effect during each
+  // month; status events flip it from their date onward.
+  const statusEvents = scenario.events
+    .filter((e) => e.type === 'work-status-update')
+    .sort((a, b) => a.date.localeCompare(b.date))
+  let workingInCanada = base.workingInCanada
+  let workingAbroad = base.workingAbroad
+  let canadianWorkMonths = base.canadianWorkMonths
+  let foreignWorkMonths = base.foreignWorkMonths
+  let next = 0
+  for (let k = 0; k < monthOffset; k++) {
+    const monthStart = addMonths(startDate, k)
+    while (next < statusEvents.length && statusEvents[next].date <= monthStart) {
+      const e = statusEvents[next++]
+      if (e.target === 'canada') workingInCanada = e.working
+      else workingAbroad = e.working
+    }
+    if (workingInCanada) canadianWorkMonths++
+    if (workingAbroad) foreignWorkMonths++
   }
+
+  let profile: Profile = { ...base, canadianWorkMonths, foreignWorkMonths }
   const dueEvents = scenario.events
     .filter((e) => e.date <= date)
     .sort((a, b) => a.date.localeCompare(b.date))

@@ -32,12 +32,15 @@ import {
 
 const EVENT_TYPES: Array<FutureEvent['type']> = [
   'language-update',
+  'work-status-update',
   'education-update',
   'provincial-nomination',
   'certificate-of-qualification',
   'sibling-in-canada',
   'spouse-language-update',
 ]
+
+const WORK_STATUS_OPTIONS = ['canada-start', 'canada-stop', 'abroad-start', 'abroad-stop'] as const
 
 const DEFAULT_TEST: LanguageTestResult = {
   language: 'english',
@@ -59,6 +62,7 @@ export function EventDialog({ profile, onAdd }: Props) {
   const [spouseTest, setSpouseTest] = useState<LanguageTestResult>(
     profile.spouse?.language ?? DEFAULT_TEST,
   )
+  const [workStatus, setWorkStatus] = useState<(typeof WORK_STATUS_OPTIONS)[number]>('canada-start')
   const [education, setEducation] = useState<EducationLevel>(profile.education)
   const [canadianEducation, setCanadianEducation] = useState<CanadianEducationCredential>(
     profile.canadianEducationCredential,
@@ -73,6 +77,15 @@ export function EventDialog({ profile, onAdd }: Props) {
     switch (type) {
       case 'language-update':
         return { ...base, type, target, test }
+      case 'work-status-update': {
+        const [place, action] = workStatus.split('-')
+        return {
+          ...base,
+          type,
+          target: place as 'canada' | 'abroad',
+          working: action === 'start',
+        }
+      }
       case 'education-update':
         return { ...base, type, education, canadianEducationCredential: canadianEducation }
       case 'spouse-language-update':
@@ -150,6 +163,24 @@ export function EventDialog({ profile, onAdd }: Props) {
                 lockLanguage={target === 'second'}
               />
             </>
+          )}
+
+          {type === 'work-status-update' && (
+            <Select
+              value={workStatus}
+              onValueChange={(v) => setWorkStatus(v as (typeof WORK_STATUS_OPTIONS)[number])}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {WORK_STATUS_OPTIONS.map((v) => (
+                  <SelectItem key={v} value={v}>
+                    {t(`events.workStatus.${v}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           )}
 
           {type === 'spouse-language-update' && (

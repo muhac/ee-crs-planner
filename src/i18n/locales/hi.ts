@@ -149,11 +149,18 @@ export const hi = {
     add: 'जोड़ें',
     types: {
       'language-update': 'भाषा परीक्षा दोबारा',
+      'work-status-update': 'कार्य स्थिति में बदलाव',
       'education-update': 'शिक्षा उन्नयन',
       'provincial-nomination': 'प्रांतीय नामांकन प्राप्त',
       'certificate-of-qualification': 'योग्यता प्रमाणपत्र प्राप्त',
       'sibling-in-canada': 'भाई/बहन नागरिक/PR बने',
       'spouse-language-update': 'जीवनसाथी की भाषा परीक्षा दोबारा',
+    },
+    workStatus: {
+      'canada-start': 'कनाडा में काम शुरू करें',
+      'canada-stop': 'कनाडा में काम बंद करें',
+      'abroad-start': 'विदेश में काम शुरू करें',
+      'abroad-stop': 'विदेश में काम बंद करें',
     },
     descLanguage: '{{which}} पुनः परीक्षा ({{lang}}): श्र {{l}} / प {{r}} / ले {{w}} / वा {{s}}',
     descEducation: 'शिक्षा «{{education}}» तक उन्नत',
