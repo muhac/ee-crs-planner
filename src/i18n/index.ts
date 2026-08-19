@@ -41,9 +41,12 @@ void i18n
     },
   })
 
+// The static HTML carries the full SEO title; keep it for English and use the
+// localized short name elsewhere.
+const seoTitle = document.title
 i18n.on('languageChanged', (lng) => {
   document.documentElement.lang = lng
-  document.title = i18n.t('common.appTitle')
+  document.title = lng === 'en' ? seoTitle : i18n.t('common.appTitle')
 })
 
 export default i18n

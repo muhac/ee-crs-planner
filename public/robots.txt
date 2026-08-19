@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://muhac.github.io/ee-crs-planner/sitemap.xml
