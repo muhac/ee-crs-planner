@@ -82,7 +82,15 @@ export default function App() {
           current ? 'pb-24 lg:pb-8' : 'pb-8'
         }`}
       >
-        {t('common.footer')}
+        {t('common.footer')}{' '}
+        <a
+          href="https://github.com/muhac/ee-crs-planner"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-foreground underline underline-offset-2"
+        >
+          GitHub
+        </a>
       </footer>
 
       <Dialog open={shared !== null} onOpenChange={(open) => !open && setShared(null)}>
