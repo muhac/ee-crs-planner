@@ -8,7 +8,9 @@ import { todayIso } from '@/engine/dates'
 import { newId } from '@/lib/profile'
 import { ProfileList } from '@/components/ProfileList'
 import { ProfilePage } from '@/components/ProfilePage'
+import { HomeOverview } from '@/components/HomeOverview'
 import { LanguageSwitcher } from '@/components/LanguageSwitcher'
+import type { ProjectionSelection } from '@/components/Projection'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -23,7 +25,13 @@ export default function App() {
   const { t } = useTranslation()
   const { data, addProfile, updateProfile, removeProfile } = useAppData()
   const [openId, setOpenId] = useState<string | null>(null)
+  const [pendingSelection, setPendingSelection] = useState<ProjectionSelection | null>(null)
   const [shared, setShared] = useState<StoredProfile | null>(null)
+
+  const openProfile = (id: string, selection?: ProjectionSelection) => {
+    setPendingSelection(selection ?? null)
+    setOpenId(id)
+  }
 
   useEffect(() => {
     const fromHash = parseShareHash(location.hash)
@@ -47,17 +55,25 @@ export default function App() {
       <main className="mx-auto max-w-6xl px-4 py-6">
         {current ? (
           <ProfilePage
+            key={current.id}
             stored={current}
+            initialSelection={pendingSelection}
             onChange={(fn) => updateProfile(current.id, fn)}
-            onBack={() => setOpenId(null)}
+            onBack={() => {
+              setOpenId(null)
+              setPendingSelection(null)
+            }}
           />
         ) : (
-          <ProfileList
-            profiles={data.profiles}
-            onOpen={setOpenId}
-            onAdd={addProfile}
-            onRemove={removeProfile}
-          />
+          <div className="space-y-6">
+            <HomeOverview profiles={data.profiles} onOpen={openProfile} />
+            <ProfileList
+              profiles={data.profiles}
+              onOpen={(id) => openProfile(id)}
+              onAdd={addProfile}
+              onRemove={removeProfile}
+            />
+          </div>
         )}
       </main>
 
@@ -91,7 +107,7 @@ export default function App() {
                 }
                 addProfile(copy)
                 setShared(null)
-                setOpenId(copy.id)
+                openProfile(copy.id)
               }}
             >
               {t('shareDialog.save')}

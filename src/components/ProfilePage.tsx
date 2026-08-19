@@ -20,9 +20,11 @@ interface Props {
   stored: StoredProfile
   onChange: (fn: (prev: StoredProfile) => StoredProfile) => void
   onBack: () => void
+  /** Preselected projection point (e.g. clicked on the home overview). */
+  initialSelection?: ProjectionSelection | null
 }
 
-export function ProfilePage({ stored, onChange, onBack }: Props) {
+export function ProfilePage({ stored, onChange, onBack, initialSelection }: Props) {
   const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const today = useMemo(todayIso, [])
@@ -31,7 +33,7 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
   const swap = () =>
     onChange((p) => ({ ...p, profile: swapLanguages(p.profile) ?? p.profile }))
 
-  const [selected, setSelected] = useState<ProjectionSelection | null>(null)
+  const [selected, setSelected] = useState<ProjectionSelection | null>(initialSelection ?? null)
   const projection = useMemo(() => {
     if (!selected) return null
     const scenario = stored.scenarios.find((s) => s.id === selected.scenarioId)
@@ -95,7 +97,7 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
       </div>
 
       <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-6">
-        <Tabs defaultValue="profile">
+        <Tabs defaultValue={initialSelection ? 'projection' : 'profile'}>
           <TabsList className="mb-2">
             <TabsTrigger value="profile">{t('page.tabProfile')}</TabsTrigger>
             <TabsTrigger value="projection">{t('page.tabProjection')}</TabsTrigger>

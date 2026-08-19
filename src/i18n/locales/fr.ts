@@ -133,6 +133,8 @@ export const fr = {
     plusMonths: '+{{m}} mois',
     peak: 'Sommet',
     earliestEntry: 'Entrée au bassin',
+    showOnHome: 'Afficher sur l’accueil',
+    homeCap: 'Seules les 8 premières courbes sont affichées ; les autres scénarios sont masqués',
     scenarios: 'Scénarios',
     addScenario: '+ Ajouter un scénario',
     scenarioName: 'Nom du scénario',

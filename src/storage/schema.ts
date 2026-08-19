@@ -1,10 +1,10 @@
 import type { ClbScores, Profile } from '@/engine/types'
 import type { Scenario } from '@/engine/simulate'
 
-export const SCHEMA_VERSION = 5
+export const SCHEMA_VERSION = 6
 
 /** Schema versions this build can read (older ones are upgraded on load). */
-const READABLE_VERSIONS: number[] = [1, 2, 3, 4, 5]
+const READABLE_VERSIONS: number[] = [1, 2, 3, 4, 5, 6]
 
 export interface StoredProfile {
   id: string
@@ -39,6 +39,7 @@ export function emptyAppData(): AppData {
  * v3 → v4: SpouseProfile gains a workingInCanada flag (defaults false).
  * v4 → v5: pool-eligibility fields (TEER, job offer, funds, relative,
  * spouse studied in Canada) with permissive defaults.
+ * v5 → v6: Scenario gains a pinned flag (defaults true).
  */
 export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
   const scenarios = sp.scenarios as Array<
@@ -79,6 +80,7 @@ export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
     },
     scenarios: scenarios.map(({ workingInCanada: _wic, workingAbroad: _wa, ...rest }) => ({
       ...rest,
+      pinned: (rest.pinned as boolean | undefined) ?? true,
       events: rest.events.map((event) =>
         event.type === 'spouse-language-update' && 'clb' in event
           ? {

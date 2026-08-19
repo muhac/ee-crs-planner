@@ -132,6 +132,8 @@ export const zhTW = {
     plusMonths: '+{{m}} 月',
     peak: '峰值',
     earliestEntry: '最早入池',
+    showOnHome: '顯示在主頁',
+    homeCap: '最多同時顯示 8 條曲線，多餘的方案已隱藏',
     scenarios: '推演方案',
     addScenario: '+ 新增方案',
     scenarioName: '方案名稱',

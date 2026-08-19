@@ -133,6 +133,8 @@ export const en = {
     plusMonths: '+{{m}} mo',
     peak: 'Peak',
     earliestEntry: 'Pool entry',
+    showOnHome: 'Show on home page',
+    homeCap: 'Showing the first 8 curves; remaining scenarios are hidden',
     scenarios: 'Scenarios',
     addScenario: '+ Add scenario',
     scenarioName: 'Scenario name',

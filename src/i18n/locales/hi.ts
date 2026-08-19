@@ -133,6 +133,8 @@ export const hi = {
     plusMonths: '+{{m}} माह',
     peak: 'शिखर',
     earliestEntry: 'पूल में प्रवेश',
+    showOnHome: 'मुखपृष्ठ पर दिखाएँ',
+    homeCap: 'केवल पहली 8 रेखाएँ दिखाई गई हैं; शेष परिदृश्य छिपे हैं',
     scenarios: 'परिदृश्य',
     addScenario: '+ परिदृश्य जोड़ें',
     scenarioName: 'परिदृश्य का नाम',

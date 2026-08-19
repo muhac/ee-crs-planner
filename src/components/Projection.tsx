@@ -1,16 +1,5 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import {
-  CartesianGrid,
-  Legend,
-  Line,
-  LineChart,
-  ReferenceDot,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from 'recharts'
 import type { Profile } from '@/engine/types'
 import type { Scenario, SimulationPoint } from '@/engine/simulate'
 import { projectProfile, simulate } from '@/engine/simulate'
@@ -20,10 +9,12 @@ import { addMonths, todayIso } from '@/engine/dates'
 import { defaultScenario } from '@/lib/profile'
 import { describeEvent } from '@/lib/labels'
 import { EventDialog } from './EventDialog'
+import { ProjectionChart, seriesColor } from './ProjectionChart'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Switch } from '@/components/ui/switch'
 import {
   Select,
   SelectContent,
@@ -34,8 +25,6 @@ import {
 
 const MAX_SCENARIOS = 5
 const MILESTONES = [6, 12, 24, 36]
-
-const seriesColor = (index: number) => `var(--series-${index + 1})`
 
 export interface ProjectionSelection {
   scenarioId: string
@@ -86,32 +75,17 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
     return map
   }, [profile, scenarios, start])
 
-  const maxHorizon = Math.max(0, ...scenarios.map((s) => s.horizonMonths))
-  const chartData = useMemo(() => {
-    const rows: Array<Record<string, number | string | null>> = []
-    for (let offset = 0; offset <= maxHorizon; offset++) {
-      const row: Record<string, number | string | null> = {
-        date: simulations[0]?.points[Math.min(offset, simulations[0].points.length - 1)]?.date ?? '',
-        offset,
-      }
-      for (const { scenario, points } of simulations) {
-        if (offset >= points.length) continue
-        const total = points[offset].score.total
-        const flags = eligibilityByScenario.get(scenario.id) ?? []
-        const ok = flags[offset] ?? true
-        const last = points.length - 1
-        // Solid line while eligible; dashed while not, extended one point into
-        // eligible territory at each boundary so the segments connect.
-        row[scenario.id] = ok ? total : null
-        const boundary =
-          (offset > 0 && flags[offset - 1] === false) ||
-          (offset < last && flags[offset + 1] === false)
-        row[`${scenario.id}:no`] = !ok || boundary ? total : null
-      }
-      rows.push(row)
-    }
-    return rows
-  }, [simulations, maxHorizon, eligibilityByScenario])
+  const chartSeries = useMemo(
+    () =>
+      simulations.map(({ scenario, points }, i) => ({
+        id: scenario.id,
+        name: scenario.name,
+        colorIndex: i,
+        points,
+        eligible: eligibilityByScenario.get(scenario.id) ?? [],
+      })),
+    [simulations, eligibilityByScenario],
+  )
 
   const earliestEntry = (scenarioId: string): number | null => {
     const flags = eligibilityByScenario.get(scenarioId) ?? []
@@ -131,15 +105,6 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
     )
   }
 
-  const selectedPoint = useMemo(() => {
-    if (!selected) return null
-    const sim = simulations.find((s) => s.scenario.id === selected.scenarioId)
-    const point = sim?.points[selected.monthOffset]
-    return point ? { ...selected, date: point.date, total: point.score.total } : null
-  }, [selected, simulations])
-
-  const seriesIndex = (scenarioId: string) => scenarios.findIndex((s) => s.id === scenarioId)
-
   const peak = (points: SimulationPoint[]) =>
     points.reduce((best, p) => (p.score.total > best.score.total ? p : best), points[0])
 
@@ -156,103 +121,13 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
           )}
         </CardHeader>
         <CardContent>
-          <div className="h-64 sm:h-80">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chartData} margin={{ top: 8, right: 16, bottom: 0, left: -16 }}>
-                <CartesianGrid stroke="var(--border)" vertical={false} />
-                <XAxis
-                  dataKey="date"
-                  tickFormatter={(d: string) => d.slice(0, 7)}
-                  minTickGap={48}
-                  tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={{ stroke: 'var(--border)' }}
-                />
-                <YAxis
-                  domain={['auto', 'auto']}
-                  tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <Tooltip
-                  formatter={(value, name) => [
-                    value,
-                    scenarios.find((s) => s.id === name)?.name ?? String(name),
-                  ]}
-                  labelFormatter={(d) => String(d).slice(0, 7)}
-                  contentStyle={{
-                    background: 'var(--popover)',
-                    border: '1px solid var(--border)',
-                    borderRadius: 8,
-                    color: 'var(--popover-foreground)',
-                  }}
-                />
-                {scenarios.length > 1 && (
-                  <Legend formatter={(id) => scenarios.find((s) => s.id === id)?.name ?? id} />
-                )}
-                {scenarios.map((s, i) => (
-                  <Line
-                    key={`${s.id}:no`}
-                    type="stepAfter"
-                    dataKey={`${s.id}:no`}
-                    stroke={seriesColor(i)}
-                    strokeWidth={2}
-                    strokeDasharray="4 4"
-                    strokeOpacity={0.55}
-                    dot={false}
-                    legendType="none"
-                    tooltipType="none"
-                    activeDot={{
-                      r: 5,
-                      stroke: 'var(--background)',
-                      strokeWidth: 2,
-                      cursor: 'pointer',
-                      onClick: (...args: unknown[]) => {
-                        const dot = args.find(
-                          (a): a is { payload: { offset: number } } =>
-                            typeof a === 'object' && a !== null && 'payload' in a,
-                        )
-                        if (dot) select(s.id, dot.payload.offset)
-                      },
-                    }}
-                  />
-                ))}
-                {scenarios.map((s, i) => (
-                  <Line
-                    key={s.id}
-                    type="stepAfter"
-                    dataKey={s.id}
-                    stroke={seriesColor(i)}
-                    strokeWidth={2}
-                    dot={false}
-                    activeDot={{
-                      r: 5,
-                      stroke: 'var(--background)',
-                      strokeWidth: 2,
-                      cursor: 'pointer',
-                      onClick: (...args: unknown[]) => {
-                        const dot = args.find(
-                          (a): a is { payload: { offset: number } } =>
-                            typeof a === 'object' && a !== null && 'payload' in a,
-                        )
-                        if (dot) select(s.id, dot.payload.offset)
-                      },
-                    }}
-                  />
-                ))}
-                {selectedPoint && (
-                  <ReferenceDot
-                    x={selectedPoint.date}
-                    y={selectedPoint.total}
-                    r={7}
-                    fill={seriesColor(seriesIndex(selectedPoint.scenarioId))}
-                    stroke="var(--background)"
-                    strokeWidth={2}
-                  />
-                )}
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <ProjectionChart
+            series={chartSeries}
+            selected={
+              selected ? { seriesId: selected.scenarioId, monthOffset: selected.monthOffset } : null
+            }
+            onSelectPoint={(id, offset) => select(id, offset)}
+          />
 
           <div className="mt-4 overflow-x-auto">
             <table className="w-full min-w-105 text-sm">
@@ -361,6 +236,17 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                   aria-label={t('projection.scenarioName')}
                 />
                 <div className="flex items-center gap-2 sm:ml-auto">
+                  <Label
+                    htmlFor={`pin-${scenario.id}`}
+                    className="text-muted-foreground whitespace-nowrap text-xs"
+                  >
+                    {t('projection.showOnHome')}
+                  </Label>
+                  <Switch
+                    id={`pin-${scenario.id}`}
+                    checked={scenario.pinned}
+                    onCheckedChange={(on) => updateScenario(scenario.id, { pinned: on })}
+                  />
                   <Label className="text-muted-foreground whitespace-nowrap text-xs">
                     {t('projection.horizon')}
                   </Label>

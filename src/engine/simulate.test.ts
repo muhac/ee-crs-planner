@@ -34,6 +34,7 @@ function scenario(overrides: Partial<Scenario> = {}): Scenario {
     name: 'test',
     events: [],
     horizonMonths: 36,
+    pinned: true,
     ...overrides,
   }
 }

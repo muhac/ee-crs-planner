@@ -24,6 +24,8 @@ export interface Scenario {
   name: string
   events: FutureEvent[]
   horizonMonths: number
+  /** Show this scenario's curve on the home-page overview. */
+  pinned: boolean
 }
 
 export interface SimulationPoint {

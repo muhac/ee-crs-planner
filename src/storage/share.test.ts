@@ -26,7 +26,7 @@ const stored: StoredProfile = {
     siblingInCanada: false,
     spouse: null,
   },
-  scenarios: [{ id: 's1', name: '继续工作', events: [], horizonMonths: 36 }],
+  scenarios: [{ id: 's1', name: '继续工作', events: [], horizonMonths: 36, pinned: true }],
 }
 
 describe('share encoding', () => {

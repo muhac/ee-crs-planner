@@ -133,6 +133,8 @@ export const es = {
     plusMonths: '+{{m}} m',
     peak: 'Máximo',
     earliestEntry: 'Entrada al pool',
+    showOnHome: 'Mostrar en la página principal',
+    homeCap: 'Se muestran las primeras 8 curvas; el resto de escenarios está oculto',
     scenarios: 'Escenarios',
     addScenario: '+ Añadir escenario',
     scenarioName: 'Nombre del escenario',

@@ -130,6 +130,8 @@ export const zhCN = {
     plusMonths: '+{{m}} 月',
     peak: '峰值',
     earliestEntry: '最早入池',
+    showOnHome: '显示在主页',
+    homeCap: '最多同时显示 8 条曲线，多余的方案已隐藏',
     scenarios: '推演方案',
     addScenario: '+ 新增方案',
     scenarioName: '方案名称',

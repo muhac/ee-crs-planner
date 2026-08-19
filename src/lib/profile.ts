@@ -48,6 +48,7 @@ export function defaultScenario(name: string): Scenario {
     name,
     events: [],
     horizonMonths: 36,
+    pinned: true,
   }
 }
 
