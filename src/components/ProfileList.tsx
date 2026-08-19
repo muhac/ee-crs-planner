@@ -1,8 +1,11 @@
 import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { Trash2 } from 'lucide-react'
 import type { StoredProfile } from '@/storage/schema'
 import { isShareEnvelope, upgradeStoredProfile } from '@/storage/schema'
 import { calculateCrs } from '@/engine/crs'
+import { checkEligibility } from '@/engine/eligibility'
+import { simulate } from '@/engine/simulate'
 import { todayIso } from '@/engine/dates'
 import { newId, newStoredProfile } from '@/lib/profile'
 import { Button } from '@/components/ui/button'
@@ -75,33 +78,57 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
       <div className="grid gap-3 sm:grid-cols-2">
         {profiles.map((p) => {
           const score = calculateCrs(p.profile, today)
+          const eligibility = checkEligibility(p.profile, today)
+          const programs = (
+            [
+              ['CEC', eligibility.cec.eligible],
+              ['FSW', eligibility.fsw.eligible],
+              ['FST', eligibility.fst.eligible],
+            ] as const
+          )
+            .filter(([, ok]) => ok)
+            .map(([name]) => name)
+          // First month the score moves, in the first pinned scenario.
+          const scenario = p.scenarios.find((s) => s.pinned) ?? p.scenarios[0]
+          const points = scenario ? simulate(p.profile, scenario, today) : []
+          const change = points.find((pt) => pt.score.total !== points[0].score.total)
           return (
             <Card
               key={p.id}
               className="hover:border-ring cursor-pointer transition-colors"
               onClick={() => onOpen(p.id)}
             >
-              <CardContent className="flex items-center justify-between py-4">
-                <div>
-                  <p className="font-medium">{p.name}</p>
+              <CardContent className="flex items-stretch justify-between gap-3 py-4">
+                <div className="flex min-w-0 flex-col">
+                  <p className="truncate font-medium">{p.name}</p>
                   <p className="text-muted-foreground text-xs">
-                    {t('list.updatedAt', { date: p.updatedAt })} ·{' '}
-                    {t(score.withSpouse ? 'list.withSpouse' : 'list.withoutSpouse')}
+                    {programs.length > 0 ? (
+                      programs.join(' / ')
+                    ) : (
+                      <span className="text-red-600 dark:text-red-500">NONE</span>
+                    )}
                   </p>
+                  <span className="mt-2 text-3xl font-bold tabular-nums">{score.total}</span>
                 </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl font-bold tabular-nums">{score.total}</span>
+                <div className="flex shrink-0 flex-col items-end justify-between">
                   <Button
                     variant="ghost"
-                    size="sm"
-                    className="text-muted-foreground"
+                    size="icon"
+                    aria-label={t('list.delete')}
+                    className="text-muted-foreground -mr-2 -mt-1 size-8"
                     onClick={(e) => {
                       e.stopPropagation()
                       if (confirm(t('list.deleteConfirm', { name: p.name }))) onRemove(p.id)
                     }}
                   >
-                    {t('list.delete')}
+                    <Trash2 className="size-4" />
                   </Button>
+                  {change && (
+                    <div className="text-muted-foreground text-right text-xs leading-5">
+                      <p className="tabular-nums">{change.date.slice(0, 7)}</p>
+                      <p className="tabular-nums">→ {change.score.total}</p>
+                    </div>
+                  )}
                 </div>
               </CardContent>
             </Card>
