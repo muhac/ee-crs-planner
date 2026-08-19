@@ -66,6 +66,14 @@ export const en = {
     monthsAria: 'months',
     belowLevel: 'Below {{scale}} 4',
   },
+  tests: {
+    direct: 'Enter {{scale}} levels directly',
+    celpip: 'CELPIP-General',
+    ielts: 'IELTS (General Training)',
+    pte: 'PTE Core',
+    tef: 'TEF Canada',
+    tcf: 'TCF Canada',
+  },
   abilities: {
     listening: 'Listening',
     reading: 'Reading',

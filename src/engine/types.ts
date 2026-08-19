@@ -12,9 +12,13 @@ export interface ClbScores {
 
 export type OfficialLanguage = 'english' | 'french'
 
+export type LanguageTestType = 'celpip' | 'ielts' | 'pte' | 'tef' | 'tcf'
+
 export interface LanguageTestResult {
   language: OfficialLanguage
   clb: ClbScores
+  /** Raw scores from an approved test, when the CLB was derived by conversion. */
+  raw?: { test: LanguageTestType; scores: ClbScores }
 }
 
 export type EducationLevel =

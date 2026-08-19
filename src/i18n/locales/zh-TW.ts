@@ -65,6 +65,14 @@ export const zhTW = {
     monthsAria: '月',
     belowLevel: '低於 {{scale}} 4',
   },
+  tests: {
+    direct: '直接填 {{scale}} 等級',
+    celpip: '思培 CELPIP-General',
+    ielts: '雅思 IELTS（G 類）',
+    pte: 'PTE Core',
+    tef: 'TEF Canada',
+    tcf: 'TCF Canada',
+  },
   abilities: {
     listening: '聽力',
     reading: '閱讀',

@@ -3,6 +3,7 @@ import type { OfficialLanguage, Profile } from '@/engine/types'
 import { defaultSpouse } from '@/lib/profile'
 import { EDUCATION_ORDER } from '@/lib/labels'
 import { ClbInput } from './ClbInput'
+import { LanguageScoreInput } from './LanguageScoreInput'
 import { MonthsInput } from './MonthsInput'
 import {
   Accordion,
@@ -135,14 +136,14 @@ export function ProfileForm({ profile, onChange }: Props) {
               <LanguagePicker
                 value={profile.firstLanguage.language}
                 onChange={(language) =>
-                  set({ firstLanguage: { ...profile.firstLanguage, language } })
+                  // Raw test scores are language-specific — drop them on switch.
+                  set({ firstLanguage: { language, clb: profile.firstLanguage.clb } })
                 }
               />
             </div>
-            <ClbInput
-              value={profile.firstLanguage.clb}
-              scaleName={profile.firstLanguage.language === 'french' ? 'NCLC' : 'CLB'}
-              onChange={(clb) => set({ firstLanguage: { ...profile.firstLanguage, clb } })}
+            <LanguageScoreInput
+              value={profile.firstLanguage}
+              onChange={(firstLanguage) => set({ firstLanguage })}
             />
           </div>
 
@@ -170,14 +171,13 @@ export function ProfileForm({ profile, onChange }: Props) {
                   <LanguagePicker
                     value={profile.secondLanguage.language}
                     onChange={(language) =>
-                      set({ secondLanguage: { ...profile.secondLanguage!, language } })
+                      set({ secondLanguage: { language, clb: profile.secondLanguage!.clb } })
                     }
                   />
                 </div>
-                <ClbInput
-                  value={profile.secondLanguage.clb}
-                  scaleName={profile.secondLanguage.language === 'french' ? 'NCLC' : 'CLB'}
-                  onChange={(clb) => set({ secondLanguage: { ...profile.secondLanguage!, clb } })}
+                <LanguageScoreInput
+                  value={profile.secondLanguage}
+                  onChange={(secondLanguage) => set({ secondLanguage })}
                 />
               </>
             )}

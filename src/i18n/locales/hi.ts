@@ -66,6 +66,14 @@ export const hi = {
     monthsAria: 'माह',
     belowLevel: '{{scale}} 4 से कम',
   },
+  tests: {
+    direct: '{{scale}} स्तर सीधे भरें',
+    celpip: 'CELPIP-General',
+    ielts: 'IELTS (General Training)',
+    pte: 'PTE Core',
+    tef: 'TEF Canada',
+    tcf: 'TCF Canada',
+  },
   abilities: {
     listening: 'श्रवण',
     reading: 'पठन',
