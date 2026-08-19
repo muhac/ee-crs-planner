@@ -73,7 +73,7 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
         </Card>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {profiles.map((p) => {
           const score = calculateCrs(p.profile, today)
           const eligibility = checkEligibility(p.profile, today)
@@ -96,9 +96,9 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
               className="hover:border-ring cursor-pointer transition-colors"
               onClick={() => onOpen(p.id)}
             >
-              <CardContent className="flex items-center justify-between gap-3 py-4">
+              <CardContent className="flex h-36 flex-col justify-between py-4">
                 <div className="min-w-0">
-                  <p className="text-muted-foreground truncate text-lg font-semibold">{p.name}</p>
+                  <p className="text-muted-foreground truncate text-3xl font-bold">{p.name}</p>
                   <p className="text-muted-foreground text-xs">
                     {programs.length > 0 ? (
                       programs.join(' / ')
@@ -107,7 +107,7 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
                     )}
                   </p>
                 </div>
-                <div className="flex shrink-0 flex-col items-end">
+                <div className="flex flex-col items-end self-end text-right">
                   <span className="text-3xl font-bold tabular-nums">{score.total}</span>
                   {change && (
                     <p className="text-muted-foreground text-xs tabular-nums">
