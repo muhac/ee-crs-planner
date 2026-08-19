@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
 import { parseShareHash } from '@/storage/share'
 import { useAppData } from '@/hooks/useAppData'
@@ -83,14 +83,18 @@ export default function App() {
         }`}
       >
         {t('common.footer')}{' '}
-        <a
-          href="https://github.com/muhac/ee-crs-planner"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-foreground underline underline-offset-2"
-        >
-          GitHub
-        </a>
+        <Trans
+          i18nKey="common.sourceLink"
+          components={[
+            <a
+              key="gh"
+              href="https://github.com/muhac/ee-crs-planner"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground underline underline-offset-2"
+            />,
+          ]}
+        />
       </footer>
 
       <Dialog open={shared !== null} onOpenChange={(open) => !open && setShared(null)}>

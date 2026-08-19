@@ -4,6 +4,7 @@ export const zhTW = {
   common: {
     appTitle: 'EE CRS 計算器',
     footer: '非官方工具，分數依 IRCC 官方 CRS 標準計算，僅供參考。資料僅儲存在本機瀏覽器。',
+    sourceLink: '源代碼見 <0>GitHub</0>。',
     english: '英語',
     french: '法語',
   },

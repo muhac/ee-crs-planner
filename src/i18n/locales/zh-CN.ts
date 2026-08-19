@@ -2,6 +2,7 @@ export const zhCN = {
   common: {
     appTitle: 'EE CRS 计算器',
     footer: '非官方工具，分数按 IRCC 官方 CRS 标准计算，仅供参考。数据仅保存在本机浏览器。',
+    sourceLink: '源代码见 <0>GitHub</0>。',
     english: '英语',
     french: '法语',
   },

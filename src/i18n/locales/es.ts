@@ -5,6 +5,7 @@ export const es = {
     appTitle: 'Planificador CRS de EE',
     footer:
       'Herramienta no oficial. Las puntuaciones siguen los criterios oficiales CRS de IRCC; solo como referencia. Los datos permanecen en tu navegador.',
+    sourceLink: 'Código fuente en <0>GitHub</0>.',
     english: 'Inglés',
     french: 'Francés',
   },

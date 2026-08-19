@@ -5,6 +5,7 @@ export const fr = {
     appTitle: 'Planificateur SCG EE',
     footer:
       'Outil non officiel. Les scores suivent les critères officiels du SCG d’IRCC, à titre indicatif seulement. Les données restent dans votre navigateur.',
+    sourceLink: 'Code source sur <0>GitHub</0>.',
     english: 'Anglais',
     french: 'Français',
   },
