@@ -100,6 +100,8 @@ export const es = {
     spouseFactors: 'Factores del cónyuge',
     language: 'Idioma',
     transferability: 'Transferibilidad de habilidades (máx. 100)',
+    eduGroup: 'Combinaciones de educación (máx. 50)',
+    foreignGroup: 'Combinaciones de exp. extranjera (máx. 50)',
     eduLang: 'Educación × idioma',
     eduCdnWork: 'Educación × exp. canadiense',
     foreignLang: 'Exp. extranjera × idioma',

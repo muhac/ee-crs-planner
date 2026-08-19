@@ -13,20 +13,43 @@ function Row({ label, value, muted = false }: { label: string; value: number; mu
   )
 }
 
+/** Shows "raw → capped" when a cap clipped the sum, so items still add up visibly. */
+function CappedValue({ raw, capped, className = '' }: { raw: number; capped: number; className?: string }) {
+  if (raw <= capped) return <span className={`tabular-nums ${className}`}>{capped}</span>
+  return (
+    <span className={`tabular-nums ${className}`}>
+      <span className="text-muted-foreground mr-1.5 font-normal line-through">{raw}</span>
+      {capped}
+    </span>
+  )
+}
+
+/** Sub-group header inside a section (e.g. a capped transferability combination). */
+function GroupRow({ label, raw, capped }: { label: string; raw: number; capped: number }) {
+  return (
+    <div className="flex items-baseline justify-between text-sm">
+      <span>{label}</span>
+      <CappedValue raw={raw} capped={capped} className="font-medium" />
+    </div>
+  )
+}
+
 function Section({
   title,
   subtotal,
+  raw,
   children,
 }: {
   title: string
   subtotal: number
+  raw?: number
   children: React.ReactNode
 }) {
   return (
     <div className="space-y-1.5">
       <div className="flex items-baseline justify-between">
         <h4 className="text-sm font-semibold">{title}</h4>
-        <span className="tabular-nums text-sm font-semibold">{subtotal}</span>
+        <CappedValue raw={raw ?? subtotal} capped={subtotal} className="text-sm font-semibold" />
       </div>
       <div className="space-y-1 pl-3">{children}</div>
     </div>
@@ -108,18 +131,51 @@ export function ScorePanel({ score, swapGain = 0, onSwap, contextLabel, onClearC
         )}
 
         <Separator />
-        <Section title={t('score.transferability')} subtotal={score.transferability.subtotal}>
-          <Row label={t('score.eduLang')} value={score.transferability.educationLanguage} muted />
-          <Row label={t('score.eduCdnWork')} value={score.transferability.educationCanadianWork} muted />
-          <Row label={t('score.foreignLang')} value={score.transferability.foreignWorkLanguage} muted />
-          <Row label={t('score.foreignCdnWork')} value={score.transferability.foreignWorkCanadianWork} muted />
+        <Section
+          title={t('score.transferability')}
+          subtotal={score.transferability.subtotal}
+          raw={
+            score.transferability.educationSubtotal +
+            score.transferability.foreignWorkSubtotal +
+            score.transferability.certificate
+          }
+        >
+          <GroupRow
+            label={t('score.eduGroup')}
+            raw={score.transferability.educationLanguage + score.transferability.educationCanadianWork}
+            capped={score.transferability.educationSubtotal}
+          />
+          <div className="space-y-1 pl-3">
+            <Row label={t('score.eduLang')} value={score.transferability.educationLanguage} muted />
+            <Row label={t('score.eduCdnWork')} value={score.transferability.educationCanadianWork} muted />
+          </div>
+          <GroupRow
+            label={t('score.foreignGroup')}
+            raw={
+              score.transferability.foreignWorkLanguage + score.transferability.foreignWorkCanadianWork
+            }
+            capped={score.transferability.foreignWorkSubtotal}
+          />
+          <div className="space-y-1 pl-3">
+            <Row label={t('score.foreignLang')} value={score.transferability.foreignWorkLanguage} muted />
+            <Row label={t('score.foreignCdnWork')} value={score.transferability.foreignWorkCanadianWork} muted />
+          </div>
           {score.transferability.certificate > 0 && (
-            <Row label={t('score.certLang')} value={score.transferability.certificate} muted />
+            <Row label={t('score.certLang')} value={score.transferability.certificate} />
           )}
         </Section>
 
         <Separator />
-        <Section title={t('score.additional')} subtotal={score.additional.subtotal}>
+        <Section
+          title={t('score.additional')}
+          subtotal={score.additional.subtotal}
+          raw={
+            score.additional.provincialNomination +
+            score.additional.sibling +
+            score.additional.french +
+            score.additional.canadianEducation
+          }
+        >
           {score.additional.provincialNomination > 0 && (
             <Row label={t('score.pnp')} value={score.additional.provincialNomination} muted />
           )}

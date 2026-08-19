@@ -97,6 +97,8 @@ export const zhCN = {
     spouseFactors: '配偶因素',
     language: '语言',
     transferability: '技能迁移性（上限 100）',
+    eduGroup: '教育组合（上限 50）',
+    foreignGroup: '海外经验组合（上限 50）',
     eduLang: '教育 × 语言',
     eduCdnWork: '教育 × 加国经验',
     foreignLang: '海外经验 × 语言',

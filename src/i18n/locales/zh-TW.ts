@@ -99,6 +99,8 @@ export const zhTW = {
     spouseFactors: '配偶因素',
     language: '語言',
     transferability: '技能可轉移性（上限 100）',
+    eduGroup: '教育組合（上限 50）',
+    foreignGroup: '海外經驗組合（上限 50）',
     eduLang: '教育 × 語言',
     eduCdnWork: '教育 × 加國經驗',
     foreignLang: '海外經驗 × 語言',

@@ -100,6 +100,8 @@ export const hi = {
     spouseFactors: 'जीवनसाथी कारक',
     language: 'भाषा',
     transferability: 'कौशल हस्तांतरणीयता (अधिकतम 100)',
+    eduGroup: 'शिक्षा संयोजन (अधिकतम 50)',
+    foreignGroup: 'विदेशी अनुभव संयोजन (अधिकतम 50)',
     eduLang: 'शिक्षा × भाषा',
     eduCdnWork: 'शिक्षा × कनाडाई अनुभव',
     foreignLang: 'विदेशी अनुभव × भाषा',
