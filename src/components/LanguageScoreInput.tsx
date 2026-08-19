@@ -8,6 +8,7 @@ import type {
 } from '@/engine/types'
 import { ABILITIES } from '@/engine/types'
 import {
+  TESTS_FOR_LANGUAGE,
   TEST_LABELS,
   clbToMinScore,
   scoreToClb,
@@ -28,25 +29,11 @@ import {
 interface Props {
   value: LanguageTestResult
   onChange: (next: LanguageTestResult) => void
+  /** Hide the English/French picker when the language is implied (e.g. second official language). */
+  hideLanguagePicker?: boolean
 }
 
-interface Mode {
-  id: string
-  label: string
-  language: OfficialLanguage
-  test?: LanguageTestType
-}
-
-/** One unified selector: the choice implies the official language. */
-const MODES: Mode[] = [
-  { id: 'clb', label: 'CLB', language: 'english' },
-  { id: 'celpip', label: TEST_LABELS.celpip, language: 'english', test: 'celpip' },
-  { id: 'ielts', label: TEST_LABELS.ielts, language: 'english', test: 'ielts' },
-  { id: 'pte', label: TEST_LABELS.pte, language: 'english', test: 'pte' },
-  { id: 'nclc', label: 'NCLC', language: 'french' },
-  { id: 'tef', label: TEST_LABELS.tef, language: 'french', test: 'tef' },
-  { id: 'tcf', label: TEST_LABELS.tcf, language: 'french', test: 'tcf' },
-]
+const DIRECT = 'direct'
 
 function convertAll(test: LanguageTestType, scores: ClbScores): ClbScores {
   return {
@@ -61,25 +48,29 @@ function convertAll(test: LanguageTestType, scores: ClbScores): ClbScores {
  * Language input with two modes: direct CLB/NCLC levels (default), or raw
  * scores from an approved test converted per the official IRCC charts.
  */
-export function LanguageScoreInput({ value, onChange }: Props) {
+export function LanguageScoreInput({ value, onChange, hideLanguagePicker = false }: Props) {
   const { t } = useTranslation()
   const scale = value.language === 'french' ? 'NCLC' : 'CLB'
-  const modeId = value.raw?.test ?? (value.language === 'french' ? 'nclc' : 'clb')
+  const mode = value.raw?.test ?? DIRECT
 
-  const switchMode = (id: string) => {
-    const mode = MODES.find((m) => m.id === id)!
-    if (!mode.test) {
-      onChange({ language: mode.language, clb: value.clb })
+  const switchLanguage = (language: OfficialLanguage) => {
+    // Raw test scores are language-specific — fall back to direct levels.
+    onChange({ language, clb: value.clb })
+  }
+
+  const switchMode = (m: string) => {
+    if (m === DIRECT) {
+      onChange({ language: value.language, clb: value.clb })
       return
     }
-    const test = mode.test
+    const test = m as LanguageTestType
     const scores: ClbScores = {
       listening: clbToMinScore(test, 'listening', value.clb.listening),
       reading: clbToMinScore(test, 'reading', value.clb.reading),
       writing: clbToMinScore(test, 'writing', value.clb.writing),
       speaking: clbToMinScore(test, 'speaking', value.clb.speaking),
     }
-    onChange({ language: mode.language, raw: { test, scores }, clb: convertAll(test, scores) })
+    onChange({ ...value, raw: { test, scores }, clb: convertAll(test, scores) })
   }
 
   const setScore = (ability: Ability, score: number) => {
@@ -90,18 +81,35 @@ export function LanguageScoreInput({ value, onChange }: Props) {
 
   return (
     <div className="space-y-3">
-      <Select value={modeId} onValueChange={switchMode}>
-        <SelectTrigger className="w-full sm:w-56">
-          <SelectValue />
-        </SelectTrigger>
-        <SelectContent>
-          {MODES.map((mode) => (
-            <SelectItem key={mode.id} value={mode.id}>
-              {mode.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex flex-wrap gap-2">
+        {!hideLanguagePicker && (
+          <Select
+            value={value.language}
+            onValueChange={(v) => switchLanguage(v as OfficialLanguage)}
+          >
+            <SelectTrigger className="w-28">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="english">{t('common.english')}</SelectItem>
+              <SelectItem value="french">{t('common.french')}</SelectItem>
+            </SelectContent>
+          </Select>
+        )}
+        <Select value={mode} onValueChange={switchMode}>
+          <SelectTrigger className="w-44">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={DIRECT}>{scale}</SelectItem>
+            {TESTS_FOR_LANGUAGE[value.language].map((test) => (
+              <SelectItem key={test} value={test}>
+                {TEST_LABELS[test]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
 
       {!value.raw ? (
         <ClbInput

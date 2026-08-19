@@ -144,7 +144,11 @@ export function EventDialog({ profile, onAdd }: Props) {
                   </SelectContent>
                 </Select>
               </div>
-              <LanguageScoreInput value={test} onChange={setTest} />
+              <LanguageScoreInput
+                value={test}
+                onChange={setTest}
+                hideLanguagePicker={target === 'second'}
+              />
             </>
           )}
 

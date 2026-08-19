@@ -112,7 +112,17 @@ export function ProfileForm({ profile, onChange }: Props) {
             <Label>{t('form.firstLanguage')}</Label>
             <LanguageScoreInput
               value={profile.firstLanguage}
-              onChange={(firstLanguage) => set({ firstLanguage })}
+              onChange={(firstLanguage) => {
+                const patch: Partial<Profile> = { firstLanguage }
+                // The second language is always the other official language.
+                if (profile.secondLanguage?.language === firstLanguage.language) {
+                  patch.secondLanguage = {
+                    language: firstLanguage.language === 'english' ? 'french' : 'english',
+                    clb: profile.secondLanguage.clb,
+                  }
+                }
+                set(patch)
+              }}
             />
           </div>
 
@@ -138,6 +148,7 @@ export function ProfileForm({ profile, onChange }: Props) {
               <LanguageScoreInput
                 value={profile.secondLanguage}
                 onChange={(secondLanguage) => set({ secondLanguage })}
+                hideLanguagePicker
               />
             )}
           </div>
