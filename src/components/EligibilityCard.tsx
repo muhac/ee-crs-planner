@@ -3,9 +3,7 @@ import type { EligibilityReason, EligibilityResult, ProgramStatus } from '@/engi
 
 function Badge({ eligible }: { eligible: boolean }) {
   return (
-    <span className={eligible ? 'text-emerald-600 dark:text-emerald-500' : 'text-muted-foreground'}>
-      {eligible ? '✓' : '✗'}
-    </span>
+    <span className={eligible ? '' : 'text-muted-foreground'}>{eligible ? '✓' : '✗'}</span>
   )
 }
 
@@ -66,9 +64,7 @@ export function EligibilityCard({ result, pnp }: Props) {
       <div className="flex items-baseline justify-between">
         <h4 className="text-sm font-semibold">{t('eligibility.title')}</h4>
         {eligiblePrograms.length > 0 ? (
-          <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-500">
-            {eligiblePrograms.join(' / ')}
-          </span>
+          <span className="text-sm font-semibold">{eligiblePrograms.join(' / ')}</span>
         ) : (
           <span className="text-sm font-semibold text-red-600 dark:text-red-500">NONE</span>
         )}
