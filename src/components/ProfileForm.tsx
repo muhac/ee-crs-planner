@@ -26,7 +26,7 @@ interface Props {
   onChange: (next: Profile) => void
 }
 
-const SECTIONS = ['basics', 'education', 'language', 'work', 'extra', 'spouse']
+const SECTIONS = ['basics', 'education', 'language', 'work', 'extra', 'eligibility', 'spouse']
 
 function EducationSelect({
   value,
@@ -219,9 +219,6 @@ export function ProfileForm({ profile, onChange }: Props) {
               ['certificateOfQualification', t('form.certificate')],
               ['provincialNomination', t('form.pnp')],
               ['siblingInCanada', t('form.sibling')],
-              ['relativeInCanada', t('form.relativeInCanada')],
-              ['jobOffer', t('form.jobOffer')],
-              ['settlementFunds', t('form.settlementFunds')],
             ] as const
           ).map(([key, label]) => (
             <div key={key} className="flex items-center justify-between gap-4">
@@ -231,6 +228,32 @@ export function ProfileForm({ profile, onChange }: Props) {
                 checked={profile[key]}
                 onCheckedChange={(on) => set({ [key]: on })}
               />
+            </div>
+          ))}
+        </AccordionContent>
+      </AccordionItem>
+
+      <AccordionItem value="eligibility">
+        <AccordionTrigger className="text-base">{t('form.eligibilitySection')}</AccordionTrigger>
+        <AccordionContent className="space-y-4 pt-1">
+          <p className="text-muted-foreground text-xs">{t('form.eligibilityHint')}</p>
+          {(
+            [
+              ['jobOffer', t('form.jobOffer'), t('form.jobOfferHint')],
+              ['settlementFunds', t('form.settlementFunds'), t('form.settlementFundsHint')],
+              ['relativeInCanada', t('form.relativeInCanada'), t('form.relativeInCanadaHint')],
+            ] as const
+          ).map(([key, label, hint]) => (
+            <div key={key} className="space-y-1">
+              <div className="flex items-center justify-between gap-4">
+                <Label htmlFor={key} className="font-normal">{label}</Label>
+                <Switch
+                  id={key}
+                  checked={profile[key]}
+                  onCheckedChange={(on) => set({ [key]: on })}
+                />
+              </div>
+              <p className="text-muted-foreground text-xs">{hint}</p>
             </div>
           ))}
         </AccordionContent>

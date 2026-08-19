@@ -68,8 +68,17 @@ export const en = {
     teer01: 'TEER 0 or 1',
     teer23: 'TEER 2 or 3',
     relativeInCanada: 'Other adult relative in Canada (citizen or PR)',
+    eligibilitySection: 'Program eligibility details',
+    eligibilityHint:
+      'These do not affect the CRS score — they are only used to determine pool eligibility.',
     jobOffer: 'Valid job offer (arranged employment)',
+    jobOfferHint:
+      'Arranged employment as defined by IRCC: a full-time, non-seasonal TEER 0-3 job of at least one year, usually LMIA-backed — an ordinary offer does not count. Waives the FSW/FST funds requirement and counts in the FSW 67-point grid.',
     settlementFunds: 'Meets the settlement funds requirement',
+    settlementFundsHint:
+      'Only affects FSW/FST eligibility; the amount depends on family size (about CAD 15k for one person). CEC requires no proof of funds.',
+    relativeInCanadaHint:
+      'A citizen/PR relative of you or your accompanying spouse who is 18+ and living in Canada: parent, grandparent, child, grandchild, sibling, aunt/uncle, niece/nephew. Only counts toward FSW 67-point adaptability.',
     spouseStudiedInCanada: 'Spouse studied in Canada (2+ academic years)',
     belowLevel: 'Below {{scale}} 4',
   },
