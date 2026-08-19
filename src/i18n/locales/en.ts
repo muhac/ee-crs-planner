@@ -85,7 +85,7 @@ export const en = {
   canadianEdu: {
     'none': 'None',
     'one-or-two-year': 'One- or two-year credential',
-    'three-plus-year': 'Credential of three years or longer',
+    'three-plus-year': "Credential of 3+ years, or a master's/professional/doctoral degree (at least one academic year)",
   },
   score: {
     total: 'CRS total',

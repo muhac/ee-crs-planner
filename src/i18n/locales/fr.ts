@@ -85,7 +85,7 @@ export const fr = {
   canadianEdu: {
     'none': 'Aucun',
     'one-or-two-year': 'Diplôme d’un ou deux ans',
-    'three-plus-year': 'Diplôme de trois ans ou plus',
+    'three-plus-year': 'Diplôme de 3 ans ou plus, ou maîtrise/diplôme professionnel/doctorat (au moins une année scolaire)',
   },
   score: {
     total: 'Total SCG',

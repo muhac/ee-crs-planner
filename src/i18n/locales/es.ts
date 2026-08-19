@@ -85,7 +85,7 @@ export const es = {
   canadianEdu: {
     'none': 'Ninguno',
     'one-or-two-year': 'Título de uno o dos años',
-    'three-plus-year': 'Título de tres años o más',
+    'three-plus-year': 'Título de 3+ años, o maestría/título profesional/doctorado (mínimo un año académico)',
   },
   score: {
     total: 'Total CRS',
