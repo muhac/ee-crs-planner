@@ -9,7 +9,7 @@
 - 多档案、多方案对比;数据只存在本机浏览器(localStorage)
 - 支持 JSON 导出/导入备份,以及把档案编码进 URL hash 的分享链接(数据不经过任何服务器)
 - 桌面端双栏工作台布局;移动端单栏 + 底部悬浮分数条
-- 多语言界面:English / Français / 简体中文 / 繁體中文 / हिन्दी / Español,首次访问跟随浏览器语言
+- 多语言界面:English / Français / Español / 简体中文 / 繁體中文 / हिन्दी,首次访问跟随浏览器语言
 
 分数表转录自 [IRCC 官方 CRS 标准](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/eligibility/criteria-comprehensive-ranking-system/grid.html)(2026-06 版,不含已于 2025-03-25 取消的 job offer 加分)。结果仅供参考,以官方为准。
 
