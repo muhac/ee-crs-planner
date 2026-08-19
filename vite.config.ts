@@ -3,10 +3,36 @@ import path from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), tailwindcss()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['apple-touch-icon.png'],
+      manifest: {
+        name: 'EE CRS Planner',
+        short_name: 'EE CRS',
+        description:
+          'Unofficial Express Entry CRS calculator: score your profile, project future changes, and check pool eligibility.',
+        theme_color: '#fdf6ec',
+        background_color: '#fdf6ec',
+        display: 'standalone',
+        icons: [
+          { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },
+          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+        ],
+      },
+      workbox: {
+        // fav.farm favicon is the only cross-origin asset; don't cache it.
+        globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+      },
+    }),
+  ],
   resolve: {
     alias: {
       '@': path.resolve(import.meta.dirname, './src'),
