@@ -8,7 +8,9 @@ function Row({ label, value, muted = false }: { label: string; value: number; mu
   return (
     <div className="flex items-baseline justify-between text-sm">
       <span className={muted ? 'text-muted-foreground' : ''}>{label}</span>
-      <span className="tabular-nums font-medium">{value}</span>
+      <span className={`tabular-nums ${muted ? 'text-muted-foreground' : 'font-medium'}`}>
+        {value}
+      </span>
     </div>
   )
 }
