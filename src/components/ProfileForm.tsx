@@ -279,6 +279,18 @@ export function ProfileForm({ profile, onChange }: Props) {
                   }
                 />
               </div>
+              <div className="flex items-center justify-between gap-4">
+                <Label htmlFor="spouse-working" className="font-normal">
+                  {t('form.spouseWorkingInCanada')}
+                </Label>
+                <Switch
+                  id="spouse-working"
+                  checked={profile.spouse.workingInCanada}
+                  onCheckedChange={(on) =>
+                    set({ spouse: { ...profile.spouse!, workingInCanada: on } })
+                  }
+                />
+              </div>
             </div>
           )}
         </AccordionContent>

@@ -1,10 +1,10 @@
 import type { ClbScores, Profile } from '@/engine/types'
 import type { Scenario } from '@/engine/simulate'
 
-export const SCHEMA_VERSION = 3
+export const SCHEMA_VERSION = 4
 
 /** Schema versions this build can read (older ones are upgraded on load). */
-const READABLE_VERSIONS: number[] = [1, 2, 3]
+const READABLE_VERSIONS: number[] = [1, 2, 3, 4]
 
 export interface StoredProfile {
   id: string
@@ -36,6 +36,7 @@ export function emptyAppData(): AppData {
  * set in any v1 scenario carries over to the profile.
  * v2 → v3: spouse language and spouse-language-update events hold a full
  * LanguageTestResult instead of bare CLB scores.
+ * v3 → v4: SpouseProfile gains a workingInCanada flag (defaults false).
  */
 export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
   const scenarios = sp.scenarios as Array<
@@ -59,7 +60,14 @@ export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
       workingAbroad:
         (sp.profile.workingAbroad as boolean | undefined) ??
         scenarios.some((s) => s.workingAbroad === true),
-      spouse: spouse ? { ...spouse, language: spouseLanguage } : null,
+      spouse: spouse
+        ? {
+            ...spouse,
+            language: spouseLanguage,
+            workingInCanada:
+              (spouse.workingInCanada as boolean | undefined) ?? false,
+          }
+        : null,
     },
     scenarios: scenarios.map(({ workingInCanada: _wic, workingAbroad: _wa, ...rest }) => ({
       ...rest,

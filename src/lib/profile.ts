@@ -29,7 +29,7 @@ export function defaultProfile(): Profile {
 }
 
 export function defaultSpouse(): SpouseProfile {
-  return { education: 'bachelors', language: null, canadianWorkMonths: 0 }
+  return { education: 'bachelors', language: null, canadianWorkMonths: 0, workingInCanada: false }
 }
 
 export function defaultScenario(name: string): Scenario {

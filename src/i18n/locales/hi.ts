@@ -61,6 +61,7 @@ export const hi = {
     spouseEducation: 'जीवनसाथी की उच्चतम शिक्षा',
     spouseLanguage: 'जीवनसाथी की भाषा परीक्षा',
     spouseWork: 'जीवनसाथी का कनाडाई कार्य अनुभव',
+    spouseWorkingInCanada: 'जीवनसाथी वर्तमान में कनाडा में कार्यरत (प्रोजेक्शन में अनुभव जुड़ता रहता है)',
     years: 'वर्ष',
     months: 'माह',
     monthsAria: 'माह',
@@ -155,7 +156,14 @@ export const hi = {
       'certificate-of-qualification': 'योग्यता प्रमाणपत्र प्राप्त',
       'sibling-in-canada': 'भाई/बहन नागरिक/PR बने',
       'spouse-language-update': 'जीवनसाथी की भाषा परीक्षा दोबारा',
+      'spouse-education-update': 'जीवनसाथी की शिक्षा उन्नयन',
+      'spouse-work-status-update': 'जीवनसाथी की कार्य स्थिति में बदलाव',
     },
+    spouseWorkStatus: {
+      start: 'जीवनसाथी कनाडा में काम शुरू करे',
+      stop: 'जीवनसाथी कनाडा में काम बंद करे',
+    },
+    descSpouseEducation: 'जीवनसाथी की शिक्षा «{{education}}» तक उन्नत',
     workStatus: {
       'canada-start': 'कनाडा में काम शुरू करें',
       'canada-stop': 'कनाडा में काम बंद करें',

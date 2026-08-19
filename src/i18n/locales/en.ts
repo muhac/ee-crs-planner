@@ -61,6 +61,7 @@ export const en = {
     spouseEducation: "Spouse's highest education",
     spouseLanguage: "Spouse's language test",
     spouseWork: "Spouse's Canadian work experience",
+    spouseWorkingInCanada: 'Spouse currently working in Canada (experience accrues in projections)',
     years: 'yr',
     months: 'mo',
     monthsAria: 'months',
@@ -155,7 +156,14 @@ export const en = {
       'certificate-of-qualification': 'Certificate of qualification',
       'sibling-in-canada': 'Sibling becomes citizen/PR',
       'spouse-language-update': 'Spouse language retest',
+      'spouse-education-update': 'Spouse education upgrade',
+      'spouse-work-status-update': 'Spouse work status change',
     },
+    spouseWorkStatus: {
+      start: 'Spouse starts working in Canada',
+      stop: 'Spouse stops working in Canada',
+    },
+    descSpouseEducation: 'Spouse education upgraded to "{{education}}"',
     workStatus: {
       'canada-start': 'Start working in Canada',
       'canada-stop': 'Stop working in Canada',

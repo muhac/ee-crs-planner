@@ -60,6 +60,7 @@ export const zhTW = {
     spouseEducation: '配偶最高學歷',
     spouseLanguage: '配偶語言成績',
     spouseWork: '配偶加拿大工作經驗',
+    spouseWorkingInCanada: '配偶正在加拿大工作（推演時經驗持續累積）',
     years: '年',
     months: '個月',
     monthsAria: '月',
@@ -154,7 +155,14 @@ export const zhTW = {
       'certificate-of-qualification': '獲得技工證書',
       'sibling-in-canada': '兄弟姊妹成為公民/PR',
       'spouse-language-update': '配偶語言重考',
+      'spouse-education-update': '配偶學歷提升',
+      'spouse-work-status-update': '配偶工作狀態變化',
     },
+    spouseWorkStatus: {
+      start: '配偶開始在加拿大工作',
+      stop: '配偶停止在加拿大工作',
+    },
+    descSpouseEducation: '配偶學歷提升為「{{education}}」',
     workStatus: {
       'canada-start': '開始在加拿大工作',
       'canada-stop': '停止在加拿大工作',

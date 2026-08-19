@@ -38,6 +38,8 @@ export interface SpouseProfile {
   /** Spouse's first official language test; null if not tested. */
   language: LanguageTestResult | null
   canadianWorkMonths: number
+  /** Spouse currently working in Canada — experience accrues during projection. */
+  workingInCanada: boolean
 }
 
 export interface Profile {

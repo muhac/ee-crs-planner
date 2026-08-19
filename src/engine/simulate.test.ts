@@ -96,6 +96,33 @@ describe('simulate', () => {
     expect(projectProfile(base, sc, START, 36).workingInCanada).toBe(false)
   })
 
+  it('accrues spouse Canadian experience and applies spouse events', () => {
+    const base = profile({
+      spouse: {
+        education: 'secondary',
+        language: null,
+        canadianWorkMonths: 0,
+        workingInCanada: true,
+      },
+    })
+    const sc = scenario({
+      events: [
+        { id: 'e1', date: '2027-06-01', type: 'spouse-education-update', education: 'masters-or-professional' },
+        { id: 'e2', date: '2027-08-01', type: 'spouse-work-status-update', working: false },
+      ],
+    })
+    // Spouse works from month 0; stops after 2027-08-18 boundary (offset 12).
+    expect(projectProfile(base, sc, START, 12).spouse?.canadianWorkMonths).toBe(12)
+    expect(projectProfile(base, sc, START, 36).spouse?.canadianWorkMonths).toBe(12)
+    expect(projectProfile(base, sc, START, 36).spouse?.workingInCanada).toBe(false)
+    const points = simulate(base, sc, START)
+    expect(points[11].score.spouse.canadianWork).toBe(0)
+    expect(points[12].score.spouse.canadianWork).toBe(5)
+    // Spouse education upgrades between offsets 9 and 10.
+    expect(points[9].score.spouse.education).toBe(2)
+    expect(points[10].score.spouse.education).toBe(10)
+  })
+
   it('drops age points after a birthday', () => {
     // 30th birthday on 2026-11-05, between offsets 2 and 3
     const points = simulate(profile({ dateOfBirth: '1996-11-05' }), scenario(), START)
@@ -145,7 +172,7 @@ describe('simulate', () => {
   it('applies second-language and spouse events', () => {
     const points = simulate(
       profile({
-        spouse: { education: 'secondary', language: null, canadianWorkMonths: 0 },
+        spouse: { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false },
       }),
       scenario({
         events: [

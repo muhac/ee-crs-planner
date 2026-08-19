@@ -16,6 +16,8 @@ export type FutureEvent =
   | { id: string; date: string; type: 'certificate-of-qualification' }
   | { id: string; date: string; type: 'sibling-in-canada' }
   | { id: string; date: string; type: 'spouse-language-update'; test: LanguageTestResult }
+  | { id: string; date: string; type: 'spouse-education-update'; education: EducationLevel }
+  | { id: string; date: string; type: 'spouse-work-status-update'; working: boolean }
 
 export interface Scenario {
   id: string
@@ -57,6 +59,14 @@ function applyEvent(profile: Profile, event: FutureEvent): Profile {
       return profile.spouse
         ? { ...profile, spouse: { ...profile.spouse, language: event.test } }
         : profile
+    case 'spouse-education-update':
+      return profile.spouse
+        ? { ...profile, spouse: { ...profile.spouse, education: event.education } }
+        : profile
+    case 'spouse-work-status-update':
+      return profile.spouse
+        ? { ...profile, spouse: { ...profile.spouse, workingInCanada: event.working } }
+        : profile
   }
 }
 
@@ -72,25 +82,34 @@ export function projectProfile(
   // Work experience accrues per the working status in effect during each
   // month; status events flip it from their date onward.
   const statusEvents = scenario.events
-    .filter((e) => e.type === 'work-status-update')
+    .filter((e) => e.type === 'work-status-update' || e.type === 'spouse-work-status-update')
     .sort((a, b) => a.date.localeCompare(b.date))
   let workingInCanada = base.workingInCanada
   let workingAbroad = base.workingAbroad
+  let spouseWorking = base.spouse?.workingInCanada ?? false
   let canadianWorkMonths = base.canadianWorkMonths
   let foreignWorkMonths = base.foreignWorkMonths
+  let spouseWorkMonths = base.spouse?.canadianWorkMonths ?? 0
   let next = 0
   for (let k = 0; k < monthOffset; k++) {
     const monthStart = addMonths(startDate, k)
     while (next < statusEvents.length && statusEvents[next].date <= monthStart) {
       const e = statusEvents[next++]
-      if (e.target === 'canada') workingInCanada = e.working
+      if (e.type === 'spouse-work-status-update') spouseWorking = e.working
+      else if (e.target === 'canada') workingInCanada = e.working
       else workingAbroad = e.working
     }
     if (workingInCanada) canadianWorkMonths++
     if (workingAbroad) foreignWorkMonths++
+    if (spouseWorking) spouseWorkMonths++
   }
 
-  let profile: Profile = { ...base, canadianWorkMonths, foreignWorkMonths }
+  let profile: Profile = {
+    ...base,
+    canadianWorkMonths,
+    foreignWorkMonths,
+    spouse: base.spouse ? { ...base.spouse, canadianWorkMonths: spouseWorkMonths } : null,
+  }
   const dueEvents = scenario.events
     .filter((e) => e.date <= date)
     .sort((a, b) => a.date.localeCompare(b.date))

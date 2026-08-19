@@ -38,6 +38,14 @@ const EVENT_TYPES: Array<FutureEvent['type']> = [
   'certificate-of-qualification',
   'sibling-in-canada',
   'spouse-language-update',
+  'spouse-education-update',
+  'spouse-work-status-update',
+]
+
+const SPOUSE_EVENT_TYPES: Array<FutureEvent['type']> = [
+  'spouse-language-update',
+  'spouse-education-update',
+  'spouse-work-status-update',
 ]
 
 const WORK_STATUS_OPTIONS = ['canada-start', 'canada-stop', 'abroad-start', 'abroad-stop'] as const
@@ -63,13 +71,17 @@ export function EventDialog({ profile, onAdd }: Props) {
     profile.spouse?.language ?? DEFAULT_TEST,
   )
   const [workStatus, setWorkStatus] = useState<(typeof WORK_STATUS_OPTIONS)[number]>('canada-start')
+  const [spouseWorking, setSpouseWorking] = useState(true)
   const [education, setEducation] = useState<EducationLevel>(profile.education)
+  const [spouseEducation, setSpouseEducation] = useState<EducationLevel>(
+    profile.spouse?.education ?? 'bachelors',
+  )
   const [canadianEducation, setCanadianEducation] = useState<CanadianEducationCredential>(
     profile.canadianEducationCredential,
   )
 
   const types = EVENT_TYPES.filter(
-    (v) => v !== 'spouse-language-update' || profile.spouse !== null,
+    (v) => !SPOUSE_EVENT_TYPES.includes(v) || profile.spouse !== null,
   )
 
   const build = (): FutureEvent => {
@@ -90,6 +102,10 @@ export function EventDialog({ profile, onAdd }: Props) {
         return { ...base, type, education, canadianEducationCredential: canadianEducation }
       case 'spouse-language-update':
         return { ...base, type, test: spouseTest }
+      case 'spouse-education-update':
+        return { ...base, type, education: spouseEducation }
+      case 'spouse-work-status-update':
+        return { ...base, type, working: spouseWorking }
       default:
         return { ...base, type }
     }
@@ -185,6 +201,42 @@ export function EventDialog({ profile, onAdd }: Props) {
 
           {type === 'spouse-language-update' && (
             <LanguageScoreInput value={spouseTest} onChange={setSpouseTest} />
+          )}
+
+          {type === 'spouse-education-update' && (
+            <div className="space-y-1.5">
+              <Label>{t('events.newEducation')}</Label>
+              <Select
+                value={spouseEducation}
+                onValueChange={(v) => setSpouseEducation(v as EducationLevel)}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {EDUCATION_ORDER.map((level) => (
+                    <SelectItem key={level} value={level}>
+                      {t(`education.${level}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+
+          {type === 'spouse-work-status-update' && (
+            <Select
+              value={spouseWorking ? 'start' : 'stop'}
+              onValueChange={(v) => setSpouseWorking(v === 'start')}
+            >
+              <SelectTrigger className="w-full">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="start">{t('events.spouseWorkStatus.start')}</SelectItem>
+                <SelectItem value="stop">{t('events.spouseWorkStatus.stop')}</SelectItem>
+              </SelectContent>
+            </Select>
           )}
 
           {type === 'education-update' && (
