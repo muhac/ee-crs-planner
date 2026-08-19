@@ -130,7 +130,7 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
           />
 
           <div className="mt-4 overflow-x-auto">
-            <table className="w-full min-w-105 text-sm">
+            <table className="w-full text-sm sm:min-w-105">
               <thead>
                 <tr className="text-muted-foreground border-b text-left text-xs">
                   <th className="py-2 pr-3 font-medium">{t('projection.scenarioCol')}</th>
@@ -138,8 +138,8 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                   {MILESTONES.map((m) => (
                     <th key={m} className="py-2 pr-3 font-medium">{t('projection.plusMonths', { m })}</th>
                   ))}
-                  <th className="py-2 pr-3 font-medium">{t('projection.peak')}</th>
-                  <th className="py-2 font-medium">{t('projection.earliestEntry')}</th>
+                  <th className="hidden py-2 pr-3 font-medium sm:table-cell">{t('projection.peak')}</th>
+                  <th className="hidden py-2 font-medium sm:table-cell">{t('projection.earliestEntry')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -174,7 +174,7 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                           {m < points.length ? cell(m, points[m].score.total) : '—'}
                         </td>
                       ))}
-                      <td className="py-1.5 pr-3 font-medium">
+                      <td className="hidden py-1.5 pr-3 font-medium sm:table-cell">
                         {cell(
                           p.monthOffset,
                           <>
@@ -185,7 +185,7 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                           </>,
                         )}
                       </td>
-                      <td className="py-1.5">
+                      <td className="hidden py-1.5 sm:table-cell">
                         {(() => {
                           const entry = earliestEntry(scenario.id)
                           if (entry === null) return <span className="text-muted-foreground">—</span>
