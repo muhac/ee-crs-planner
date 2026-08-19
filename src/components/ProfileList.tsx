@@ -108,14 +108,11 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
                       <span className="text-red-600 dark:text-red-500">NONE</span>
                     )}
                   </p>
-                  <span className="mt-2 text-3xl font-bold tabular-nums">{score.total}</span>
-                </div>
-                <div className="flex shrink-0 flex-col items-end justify-between">
                   <Button
                     variant="ghost"
                     size="icon"
                     aria-label={t('list.delete')}
-                    className="text-muted-foreground -mr-2 -mt-1 size-8"
+                    className="text-muted-foreground -mb-1 -ml-2 mt-auto size-8 self-start pt-2"
                     onClick={(e) => {
                       e.stopPropagation()
                       if (confirm(t('list.deleteConfirm', { name: p.name }))) onRemove(p.id)
@@ -123,11 +120,13 @@ export function ProfileList({ profiles, onOpen, onAdd, onRemove }: Props) {
                   >
                     <Trash2 className="size-4" />
                   </Button>
+                </div>
+                <div className="flex shrink-0 flex-col items-end justify-between">
+                  <span className="text-3xl font-bold tabular-nums">{score.total}</span>
                   {change && (
-                    <div className="text-muted-foreground text-right text-xs leading-5">
-                      <p className="tabular-nums">{change.date.slice(0, 7)}</p>
-                      <p className="tabular-nums">→ {change.score.total}</p>
-                    </div>
+                    <p className="text-muted-foreground text-xs tabular-nums">
+                      {change.date.slice(0, 7)} → {change.score.total}
+                    </p>
                   )}
                 </div>
               </CardContent>
