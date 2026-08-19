@@ -40,7 +40,7 @@ export const zhCN = {
     dobHint: '年龄按打分日精确计算，推演时会自动随时间增长。',
     educationSection: '教育',
     highestEducation: '最高学历',
-    canadianEducation: '加拿大境内学历（额外加分）',
+    canadianEducation: '加拿大境内学历',
     languageSection: '语言成绩',
     firstLanguage: '第一官方语言',
     secondLanguage: '第二官方语言',

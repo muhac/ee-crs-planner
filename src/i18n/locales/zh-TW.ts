@@ -42,7 +42,7 @@ export const zhTW = {
     dobHint: '年齡按評分日精確計算，推演時會自動隨時間增長。',
     educationSection: '教育',
     highestEducation: '最高學歷',
-    canadianEducation: '加拿大境內學歷（額外加分）',
+    canadianEducation: '加拿大境內學歷',
     languageSection: '語言成績',
     firstLanguage: '第一官方語言',
     secondLanguage: '第二官方語言',

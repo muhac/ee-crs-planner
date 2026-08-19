@@ -43,7 +43,7 @@ export const en = {
     dobHint: 'Age is calculated exactly as of the scoring date and advances automatically in projections.',
     educationSection: 'Education',
     highestEducation: 'Highest level of education',
-    canadianEducation: 'Canadian education credential (bonus points)',
+    canadianEducation: 'Canadian education credential',
     languageSection: 'Language tests',
     firstLanguage: 'First official language',
     secondLanguage: 'Second official language',

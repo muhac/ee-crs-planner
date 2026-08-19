@@ -43,7 +43,7 @@ export const fr = {
     dobHint: 'L’âge est calculé exactement à la date d’évaluation et avance automatiquement dans les projections.',
     educationSection: 'Études',
     highestEducation: 'Niveau de scolarité le plus élevé',
-    canadianEducation: 'Diplôme canadien (points supplémentaires)',
+    canadianEducation: 'Diplôme canadien',
     languageSection: 'Tests de langue',
     firstLanguage: 'Première langue officielle',
     secondLanguage: 'Seconde langue officielle',

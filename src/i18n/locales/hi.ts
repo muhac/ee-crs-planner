@@ -43,7 +43,7 @@ export const hi = {
     dobHint: 'आयु स्कोरिंग तिथि के अनुसार सटीक गणना की जाती है और प्रोजेक्शन में स्वतः बढ़ती है।',
     educationSection: 'शिक्षा',
     highestEducation: 'उच्चतम शिक्षा स्तर',
-    canadianEducation: 'कनाडाई शिक्षा प्रमाणपत्र (अतिरिक्त अंक)',
+    canadianEducation: 'कनाडाई शिक्षा प्रमाणपत्र',
     languageSection: 'भाषा परीक्षा',
     firstLanguage: 'पहली आधिकारिक भाषा',
     secondLanguage: 'दूसरी आधिकारिक भाषा',
