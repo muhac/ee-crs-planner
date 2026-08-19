@@ -5,6 +5,8 @@ export const zhTW = {
     appTitle: 'EE CRS 計算器',
     footer: '非官方工具，分數依 IRCC 官方 CRS 標準計算，僅供參考。資料僅儲存在本機瀏覽器。',
     sourceLink: '源代碼見 <0>GitHub</0>。',
+    metaDescription:
+      '免費的加拿大 EE 快速通道 CRS 分數計算器：填寫檔案即時評分，雅思/思培/PTE/TEF/TCF 成績自動換算 CLB，逐月推演未來分數，判定 CEC/FSW/FST 入池資格。資料僅存本機，支援離線使用。',
     english: '英語',
     french: '法語',
   },

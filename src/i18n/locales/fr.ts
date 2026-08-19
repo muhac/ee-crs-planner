@@ -6,6 +6,8 @@ export const fr = {
     footer:
       'Outil non officiel. Les scores suivent les critères officiels du SCG d’IRCC, à titre indicatif seulement. Les données restent dans votre navigateur.',
     sourceLink: 'Code source sur <0>GitHub</0>.',
+    metaDescription:
+      'Calculateur SCG gratuit et non officiel pour Entrée express Canada : évaluez votre profil, convertissez IELTS/CELPIP/PTE/TEF/TCF en NCLC, projetez votre score mois par mois et vérifiez l’admissibilité au bassin CEC/TQF/MQF. Fonctionne hors ligne ; données locales.',
     english: 'Anglais',
     french: 'Français',
   },

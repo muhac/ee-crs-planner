@@ -17,6 +17,23 @@ export const LANGUAGES = [
   { code: 'hi', name: 'हिन्दी' },
 ] as const
 
+// The static HTML carries the full SEO title; keep it for English and use the
+// localized short name elsewhere. Description and canonical follow the active
+// language so each ?lang= URL is indexable as its own hreflang variant.
+const seoTitle = document.title
+const BASE_URL = 'https://muhac.github.io/ee-crs-planner/'
+const applyLanguage = (lng: string) => {
+  document.documentElement.lang = lng
+  document.title = lng === 'en' ? seoTitle : i18n.t('common.appTitle')
+  document
+    .querySelector('meta[name="description"]')
+    ?.setAttribute('content', i18n.t('common.metaDescription'))
+  document
+    .querySelector('link[rel="canonical"]')
+    ?.setAttribute('href', lng === 'en' ? BASE_URL : `${BASE_URL}?lang=${lng}`)
+}
+i18n.on('languageChanged', applyLanguage)
+
 void i18n
   .use(LanguageDetector)
   .use(initReactI18next)
@@ -33,20 +50,14 @@ void i18n
     fallbackLng: 'en',
     interpolation: { escapeValue: false },
     detection: {
-      order: ['localStorage', 'navigator'],
+      order: ['querystring', 'localStorage', 'navigator'],
       caches: ['localStorage'],
+      lookupQuerystring: 'lang',
       lookupLocalStorage: 'ee-crs-lang',
       convertDetectedLanguage: (lng: string) =>
         lng.startsWith('zh') ? (/tw|hk|mo|hant/i.test(lng) ? 'zh-TW' : 'zh-CN') : lng,
     },
   })
-
-// The static HTML carries the full SEO title; keep it for English and use the
-// localized short name elsewhere.
-const seoTitle = document.title
-i18n.on('languageChanged', (lng) => {
-  document.documentElement.lang = lng
-  document.title = lng === 'en' ? seoTitle : i18n.t('common.appTitle')
-})
+  .then(() => applyLanguage(i18n.language))
 
 export default i18n
