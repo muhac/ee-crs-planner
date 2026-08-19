@@ -2,8 +2,7 @@ export const zhCN = {
   common: {
     appTitle: 'EE CRS 计算器',
     localNote: '数据仅保存在本机浏览器',
-    disclaimer:
-      '非官方工具,分数按 IRCC 官方 CRS 标准(2026-06 版,不含 job offer 加分)计算,仅供参考。',
+    disclaimer: '非官方工具,分数按 IRCC 官方 CRS 标准计算,仅供参考。',
     english: '英语',
     french: '法语',
   },

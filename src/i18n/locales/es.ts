@@ -5,7 +5,7 @@ export const es = {
     appTitle: 'Planificador CRS de EE',
     localNote: 'Los datos permanecen en tu navegador',
     disclaimer:
-      'Herramienta no oficial. Las puntuaciones siguen los criterios oficiales CRS de IRCC (edición junio 2026, sin puntos por oferta de empleo). Solo como referencia.',
+      'Herramienta no oficial. Las puntuaciones siguen los criterios oficiales CRS de IRCC; solo como referencia.',
     english: 'Inglés',
     french: 'Francés',
   },

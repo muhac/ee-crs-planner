@@ -5,7 +5,7 @@ export const en = {
     appTitle: 'EE CRS Planner',
     localNote: 'Data stays in your browser',
     disclaimer:
-      'Unofficial tool. Scores follow the official IRCC CRS criteria (June 2026 edition, job-offer points removed). For reference only.',
+      'Unofficial tool. Scores follow the official IRCC CRS criteria; for reference only.',
     english: 'English',
     french: 'French',
   },

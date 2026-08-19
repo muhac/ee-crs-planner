@@ -40,12 +40,7 @@ export default function App() {
       <header className="border-b">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
           <h1 className="text-base font-bold">🍁 {t('common.appTitle')}</h1>
-          <div className="flex items-center gap-3">
-            <span className="text-muted-foreground hidden text-xs sm:inline">
-              {t('common.localNote')}
-            </span>
-            <LanguageSwitcher />
-          </div>
+          <LanguageSwitcher />
         </div>
       </header>
 
@@ -67,7 +62,7 @@ export default function App() {
       </main>
 
       <footer className="text-muted-foreground mx-auto max-w-6xl px-4 pb-24 pt-8 text-xs lg:pb-8">
-        {t('common.disclaimer')}
+        {t('common.disclaimer')} {t('common.localNote')}
       </footer>
 
       <Dialog open={shared !== null} onOpenChange={(open) => !open && setShared(null)}>

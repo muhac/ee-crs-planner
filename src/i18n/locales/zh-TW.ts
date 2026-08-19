@@ -4,8 +4,7 @@ export const zhTW = {
   common: {
     appTitle: 'EE CRS 計算器',
     localNote: '資料僅儲存在本機瀏覽器',
-    disclaimer:
-      '非官方工具,分數依 IRCC 官方 CRS 標準(2026-06 版,不含 job offer 加分)計算,僅供參考。',
+    disclaimer: '非官方工具,分數依 IRCC 官方 CRS 標準計算,僅供參考。',
     english: '英語',
     french: '法語',
   },

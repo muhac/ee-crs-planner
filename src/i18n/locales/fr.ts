@@ -5,7 +5,7 @@ export const fr = {
     appTitle: 'Planificateur SCG EE',
     localNote: 'Les données restent dans votre navigateur',
     disclaimer:
-      'Outil non officiel. Les scores suivent les critères officiels du SCG d’IRCC (édition juin 2026, points d’offre d’emploi supprimés). À titre indicatif seulement.',
+      'Outil non officiel. Les scores suivent les critères officiels du SCG d’IRCC; à titre indicatif seulement.',
     english: 'Anglais',
     french: 'Français',
   },
