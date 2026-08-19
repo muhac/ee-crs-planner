@@ -147,7 +147,7 @@ export function EventDialog({ profile, onAdd }: Props) {
               <LanguageScoreInput
                 value={test}
                 onChange={setTest}
-                hideLanguagePicker={target === 'second'}
+                lockLanguage={target === 'second'}
               />
             </>
           )}

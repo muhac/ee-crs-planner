@@ -29,8 +29,8 @@ import {
 interface Props {
   value: LanguageTestResult
   onChange: (next: LanguageTestResult) => void
-  /** Hide the English/French picker when the language is implied (e.g. second official language). */
-  hideLanguagePicker?: boolean
+  /** Disable the English/French picker when the language is implied (e.g. second official language). */
+  lockLanguage?: boolean
 }
 
 const DIRECT = 'direct'
@@ -48,7 +48,7 @@ function convertAll(test: LanguageTestType, scores: ClbScores): ClbScores {
  * Language input with two modes: direct CLB/NCLC levels (default), or raw
  * scores from an approved test converted per the official IRCC charts.
  */
-export function LanguageScoreInput({ value, onChange, hideLanguagePicker = false }: Props) {
+export function LanguageScoreInput({ value, onChange, lockLanguage = false }: Props) {
   const { t } = useTranslation()
   const scale = value.language === 'french' ? 'NCLC' : 'CLB'
   const mode = value.raw?.test ?? DIRECT
@@ -82,20 +82,19 @@ export function LanguageScoreInput({ value, onChange, hideLanguagePicker = false
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-2">
-        {!hideLanguagePicker && (
-          <Select
-            value={value.language}
-            onValueChange={(v) => switchLanguage(v as OfficialLanguage)}
-          >
-            <SelectTrigger className="w-28">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="english">{t('common.english')}</SelectItem>
-              <SelectItem value="french">{t('common.french')}</SelectItem>
-            </SelectContent>
-          </Select>
-        )}
+        <Select
+          value={value.language}
+          onValueChange={(v) => switchLanguage(v as OfficialLanguage)}
+          disabled={lockLanguage}
+        >
+          <SelectTrigger className="w-28">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="english">{t('common.english')}</SelectItem>
+            <SelectItem value="french">{t('common.french')}</SelectItem>
+          </SelectContent>
+        </Select>
         <Select value={mode} onValueChange={switchMode}>
           <SelectTrigger className="w-44">
             <SelectValue />

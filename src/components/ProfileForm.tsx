@@ -148,7 +148,7 @@ export function ProfileForm({ profile, onChange }: Props) {
               <LanguageScoreInput
                 value={profile.secondLanguage}
                 onChange={(secondLanguage) => set({ secondLanguage })}
-                hideLanguagePicker
+                lockLanguage
               />
             )}
           </div>
