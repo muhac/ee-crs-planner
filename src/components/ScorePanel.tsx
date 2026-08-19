@@ -203,10 +203,13 @@ export function ScorePanel({
         </Section>
 
         {eligibility && (
-          <EligibilityCard
-            result={eligibility}
-            pnp={score.additional.provincialNomination > 0}
-          />
+          <>
+            <Separator />
+            <EligibilityCard
+              result={eligibility}
+              pnp={score.additional.provincialNomination > 0}
+            />
+          </>
         )}
       </CardContent>
     </Card>
