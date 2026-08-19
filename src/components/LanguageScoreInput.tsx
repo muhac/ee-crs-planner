@@ -125,6 +125,7 @@ export function LanguageScoreInput({ value, onChange, lockLanguage = false }: Pr
               <div key={ability} className="space-y-1.5">
                 <Label className="text-muted-foreground text-xs">
                   {t(`abilities.${ability}`)}
+                  <span className="font-normal">→ {clbLevelLabel(t, value.clb[ability], scale)}</span>
                 </Label>
                 {spec.kind === 'select' ? (
                   <Select
@@ -156,9 +157,6 @@ export function LanguageScoreInput({ value, onChange, lockLanguage = false }: Pr
                     }}
                   />
                 )}
-                <p className="text-muted-foreground text-xs">
-                  → {clbLevelLabel(t, value.clb[ability], scale)}
-                </p>
               </div>
             )
           })}
