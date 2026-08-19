@@ -112,6 +112,7 @@ export const zhTW = {
     noAdditional: '暫無附加分',
     swapHint: '⚠ 交換第一/第二語言可得 +{{n}} 分',
     swapAction: '一鍵交換',
+    backToNow: '回到當前',
     viewDetails: '查看明細',
     detailsTitle: '分數明細',
   },

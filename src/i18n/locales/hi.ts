@@ -113,6 +113,7 @@ export const hi = {
     noAdditional: 'अभी कोई अतिरिक्त अंक नहीं',
     swapHint: '⚠ पहली/दूसरी भाषा की अदला-बदली से +{{n}} अंक मिलेंगे',
     swapAction: 'अदला-बदली करें',
+    backToNow: 'वर्तमान पर लौटें',
     viewDetails: 'विवरण',
     detailsTitle: 'स्कोर विवरण',
   },

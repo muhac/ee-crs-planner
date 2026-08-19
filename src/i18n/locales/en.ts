@@ -113,6 +113,7 @@ export const en = {
     noAdditional: 'No additional points yet',
     swapHint: '⚠ Swapping your first/second language designations gains +{{n}} points',
     swapAction: 'Swap now',
+    backToNow: 'Back to now',
     viewDetails: 'Details',
     detailsTitle: 'Score breakdown',
   },

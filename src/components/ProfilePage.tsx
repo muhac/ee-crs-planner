@@ -2,7 +2,9 @@ import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
 import { calculateCrs, swapGain, swapLanguages } from '@/engine/crs'
-import { todayIso } from '@/engine/dates'
+import { projectProfile } from '@/engine/simulate'
+import type { ProjectionSelection } from './Projection'
+import { addMonths, todayIso } from '@/engine/dates'
 import { buildShareUrl } from '@/storage/share'
 import { makeEnvelope } from '@/storage/share'
 import { ProfileForm } from './ProfileForm'
@@ -27,6 +29,22 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
   const gain = useMemo(() => swapGain(stored.profile, today), [stored.profile, today])
   const swap = () =>
     onChange((p) => ({ ...p, profile: swapLanguages(p.profile) ?? p.profile }))
+
+  const [selected, setSelected] = useState<ProjectionSelection | null>(null)
+  const projection = useMemo(() => {
+    if (!selected) return null
+    const scenario = stored.scenarios.find((s) => s.id === selected.scenarioId)
+    if (!scenario || selected.monthOffset > scenario.horizonMonths) return null
+    const date = addMonths(today, selected.monthOffset)
+    return {
+      label: `${scenario.name} · ${date}`,
+      score: calculateCrs(projectProfile(stored.profile, scenario, today, selected.monthOffset), date),
+    }
+  }, [selected, stored.profile, stored.scenarios, today])
+
+  const displayedScore = projection?.score ?? score
+  const contextLabel = projection?.label
+  const clearSelection = () => setSelected(null)
 
   const share = async () => {
     await navigator.clipboard.writeText(buildShareUrl(stored))
@@ -85,18 +103,32 @@ export function ProfilePage({ stored, onChange, onBack }: Props) {
               profile={stored.profile}
               scenarios={stored.scenarios}
               onChange={(scenarios) => onChange((p) => ({ ...p, scenarios }))}
+              selected={selected}
+              onSelect={setSelected}
             />
           </TabsContent>
         </Tabs>
 
         <div className="hidden lg:block">
           <div className="sticky top-4">
-            <ScorePanel score={score} swapGain={gain} onSwap={swap} />
+            <ScorePanel
+              score={displayedScore}
+              swapGain={gain}
+              onSwap={swap}
+              contextLabel={contextLabel}
+              onClearContext={clearSelection}
+            />
           </div>
         </div>
       </div>
 
-      <MobileScoreBar score={score} swapGain={gain} onSwap={swap} />
+      <MobileScoreBar
+        score={displayedScore}
+        swapGain={gain}
+        onSwap={swap}
+        contextLabel={contextLabel}
+        onClearContext={clearSelection}
+      />
     </div>
   )
 }

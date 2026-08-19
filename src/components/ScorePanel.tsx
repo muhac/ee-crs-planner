@@ -38,13 +38,31 @@ interface Props {
   /** Extra points available by swapping the first/second language designations. */
   swapGain?: number
   onSwap?: () => void
+  /** When set, the panel shows a projected month instead of the current score. */
+  contextLabel?: string
+  onClearContext?: () => void
 }
 
-export function ScorePanel({ score, swapGain = 0, onSwap }: Props) {
+export function ScorePanel({ score, swapGain = 0, onSwap, contextLabel, onClearContext }: Props) {
   const { t } = useTranslation()
   return (
     <Card>
       <CardHeader className="pb-2">
+        {contextLabel && (
+          <div className="mb-1 flex items-center justify-between gap-2 rounded-md bg-sky-500/10 px-2.5 py-1.5">
+            <p className="text-xs text-sky-700 dark:text-sky-400">📍 {contextLabel}</p>
+            {onClearContext && (
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-7 shrink-0 text-xs"
+                onClick={onClearContext}
+              >
+                {t('score.backToNow')}
+              </Button>
+            )}
+          </div>
+        )}
         <CardTitle className="flex items-baseline justify-between">
           <span>{t('score.total')}</span>
           <span className="text-3xl tabular-nums">{score.total}</span>
@@ -54,7 +72,7 @@ export function ScorePanel({ score, swapGain = 0, onSwap }: Props) {
             age: score.age,
           })}
         </p>
-        {swapGain > 0 && (
+        {swapGain > 0 && !contextLabel && (
           <div className="mt-1 flex items-center justify-between gap-2 rounded-md bg-amber-500/10 px-2.5 py-1.5">
             <p className="text-xs text-amber-700 dark:text-amber-500">
               {t('score.swapHint', { n: swapGain })}

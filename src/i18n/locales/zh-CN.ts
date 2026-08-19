@@ -110,6 +110,7 @@ export const zhCN = {
     noAdditional: '暂无附加分',
     swapHint: '⚠ 交换第一/第二语言可得 +{{n}} 分',
     swapAction: '一键交换',
+    backToNow: '回到当前',
     viewDetails: '查看明细',
     detailsTitle: '分数明细',
   },

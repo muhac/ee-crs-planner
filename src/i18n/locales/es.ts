@@ -113,6 +113,7 @@ export const es = {
     noAdditional: 'Sin puntos adicionales por ahora',
     swapHint: '⚠ Intercambiar el primer/segundo idioma oficial suma +{{n}} puntos',
     swapAction: 'Intercambiar',
+    backToNow: 'Volver a hoy',
     viewDetails: 'Detalles',
     detailsTitle: 'Desglose de la puntuación',
   },

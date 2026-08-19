@@ -5,6 +5,7 @@ import {
   Legend,
   Line,
   LineChart,
+  ReferenceDot,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -35,13 +36,20 @@ const MILESTONES = [6, 12, 24, 36]
 
 const seriesColor = (index: number) => `var(--series-${index + 1})`
 
+export interface ProjectionSelection {
+  scenarioId: string
+  monthOffset: number
+}
+
 interface Props {
   profile: Profile
   scenarios: Scenario[]
   onChange: (scenarios: Scenario[]) => void
+  selected?: ProjectionSelection | null
+  onSelect?: (selection: ProjectionSelection | null) => void
 }
 
-export function Projection({ profile, scenarios, onChange }: Props) {
+export function Projection({ profile, scenarios, onChange, selected, onSelect }: Props) {
   const { t } = useTranslation()
   const [start] = useState(todayIso)
 
@@ -81,6 +89,24 @@ export function Projection({ profile, scenarios, onChange }: Props) {
 
   const updateScenario = (id: string, patch: Partial<Scenario>) =>
     onChange(scenarios.map((s) => (s.id === id ? { ...s, ...patch } : s)))
+
+  const select = (scenarioId: string, monthOffset: number) => {
+    if (!onSelect) return
+    onSelect(
+      selected?.scenarioId === scenarioId && selected.monthOffset === monthOffset
+        ? null
+        : { scenarioId, monthOffset },
+    )
+  }
+
+  const selectedPoint = useMemo(() => {
+    if (!selected) return null
+    const sim = simulations.find((s) => s.scenario.id === selected.scenarioId)
+    const point = sim?.points[selected.monthOffset]
+    return point ? { ...selected, date: point.date, total: point.score.total } : null
+  }, [selected, simulations])
+
+  const seriesIndex = (scenarioId: string) => scenarios.findIndex((s) => s.id === scenarioId)
 
   const peak = (points: SimulationPoint[]) =>
     points.reduce((best, p) => (p.score.total > best.score.total ? p : best), points[0])
@@ -140,9 +166,31 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                     stroke={seriesColor(i)}
                     strokeWidth={2}
                     dot={false}
-                    activeDot={{ r: 4, stroke: 'var(--background)', strokeWidth: 2 }}
+                    activeDot={{
+                      r: 5,
+                      stroke: 'var(--background)',
+                      strokeWidth: 2,
+                      cursor: 'pointer',
+                      onClick: (...args: unknown[]) => {
+                        const dot = args.find(
+                          (a): a is { payload: { offset: number } } =>
+                            typeof a === 'object' && a !== null && 'payload' in a,
+                        )
+                        if (dot) select(s.id, dot.payload.offset)
+                      },
+                    }}
                   />
                 ))}
+                {selectedPoint && (
+                  <ReferenceDot
+                    x={selectedPoint.date}
+                    y={selectedPoint.total}
+                    r={7}
+                    fill={seriesColor(seriesIndex(selectedPoint.scenarioId))}
+                    stroke="var(--background)"
+                    strokeWidth={2}
+                  />
+                )}
               </LineChart>
             </ResponsiveContainer>
           </div>
@@ -162,6 +210,20 @@ export function Projection({ profile, scenarios, onChange }: Props) {
               <tbody>
                 {simulations.map(({ scenario, points }, i) => {
                   const p = peak(points)
+                  const cell = (offset: number, label: React.ReactNode) => {
+                    const isSelected =
+                      selected?.scenarioId === scenario.id && selected.monthOffset === offset
+                    return (
+                      <button
+                        className={`cursor-pointer rounded px-1 py-0.5 tabular-nums hover:bg-muted ${
+                          isSelected ? 'bg-sky-500/10 font-medium text-sky-700 dark:text-sky-400' : ''
+                        }`}
+                        onClick={() => select(scenario.id, offset)}
+                      >
+                        {label}
+                      </button>
+                    )
+                  }
                   return (
                     <tr key={scenario.id} className="border-b last:border-0">
                       <td className="py-2 pr-3">
@@ -171,17 +233,22 @@ export function Projection({ profile, scenarios, onChange }: Props) {
                         />
                         {scenario.name}
                       </td>
-                      <td className="py-2 pr-3 tabular-nums">{points[0].score.total}</td>
+                      <td className="py-1.5 pr-3">{cell(0, points[0].score.total)}</td>
                       {MILESTONES.map((m) => (
-                        <td key={m} className="py-2 pr-3 tabular-nums">
-                          {m < points.length ? points[m].score.total : '—'}
+                        <td key={m} className="py-1.5 pr-3">
+                          {m < points.length ? cell(m, points[m].score.total) : '—'}
                         </td>
                       ))}
-                      <td className="py-2 tabular-nums font-medium">
-                        {p.score.total}
-                        <span className="text-muted-foreground ml-1 text-xs">
-                          @{p.date.slice(0, 7)}
-                        </span>
+                      <td className="py-1.5 font-medium">
+                        {cell(
+                          p.monthOffset,
+                          <>
+                            {p.score.total}
+                            <span className="text-muted-foreground ml-1 text-xs font-normal">
+                              @{p.date.slice(0, 7)}
+                            </span>
+                          </>,
+                        )}
                       </td>
                     </tr>
                   )

@@ -14,10 +14,12 @@ interface Props {
   score: ScoreBreakdown
   swapGain?: number
   onSwap?: () => void
+  contextLabel?: string
+  onClearContext?: () => void
 }
 
 /** Fixed bottom bar on small screens showing the live total, expandable to the full breakdown. */
-export function MobileScoreBar({ score, swapGain, onSwap }: Props) {
+export function MobileScoreBar({ score, swapGain, onSwap, contextLabel, onClearContext }: Props) {
   const { t } = useTranslation()
   return (
     <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur lg:hidden">
@@ -35,7 +37,13 @@ export function MobileScoreBar({ score, swapGain, onSwap }: Props) {
               <DrawerTitle>{t('score.detailsTitle')}</DrawerTitle>
             </DrawerHeader>
             <div className="max-h-[75vh] overflow-y-auto px-4 pb-6">
-              <ScorePanel score={score} swapGain={swapGain} onSwap={onSwap} />
+              <ScorePanel
+                score={score}
+                swapGain={swapGain}
+                onSwap={onSwap}
+                contextLabel={contextLabel}
+                onClearContext={onClearContext}
+              />
             </div>
           </DrawerContent>
         </Drawer>
