@@ -1,5 +1,8 @@
 # EE CRS Planner
 
+[![Deploy](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml/badge.svg)](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 **Live app: https://muhac.github.io/ee-crs-planner/**
 
 An unofficial **CRS (Comprehensive Ranking System) calculator & planner** for Canada Express Entry:
@@ -14,7 +17,9 @@ An unofficial **CRS (Comprehensive Ranking System) calculator & planner** for Ca
 - Responsive: two-column workbench on desktop, single column with a floating score bar on mobile
 - Six-language UI: English / Français / Español / 简体中文 / 繁體中文 / हिन्दी, auto-detected from the browser on first visit
 
-Point tables are transcribed from the [official IRCC CRS criteria](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/eligibility/criteria-comprehensive-ranking-system/grid.html) (June 2026 edition; job-offer points removed as of 2025-03-25). For reference only — always defer to IRCC.
+![EE CRS Planner — profile with live score breakdown and pool eligibility](docs/screenshot.jpg)
+
+Point tables are transcribed from the [official IRCC CRS criteria](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html) (June 2026 edition; job-offer points removed as of 2025-03-25) and verified value-by-value against the live IRCC pages — the CRS grid, the language-test equivalency charts, and the program eligibility rules (August 2026). For reference only — always defer to IRCC.
 
 ## Development
 
