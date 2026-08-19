@@ -12,9 +12,9 @@ function Badge({ eligible }: { eligible: boolean }) {
 function ReasonList({ reasons }: { reasons: EligibilityReason[] }) {
   const { t } = useTranslation()
   return (
-    <ul className="text-muted-foreground space-y-0.5 pl-3 text-xs">
+    <ul className="text-muted-foreground space-y-1 pl-3 text-sm">
       {reasons.map((r) => (
-        <li key={r.key}>· {t(`eligibility.reasons.${r.key}`, r.params)}</li>
+        <li key={r.key}>{t(`eligibility.reasons.${r.key}`, r.params)}</li>
       ))}
     </ul>
   )
@@ -30,9 +30,9 @@ function ProgramRow({
   detail?: string
 }) {
   return (
-    <div>
+    <div className="space-y-1">
       <div className="flex items-baseline justify-between text-sm">
-        <span className="text-muted-foreground">{name}</span>
+        <span>{name}</span>
         <span className="flex items-baseline gap-1.5">
           {detail && <span className="text-muted-foreground text-xs tabular-nums">{detail}</span>}
           <Badge eligible={status.eligible} />
@@ -52,11 +52,26 @@ interface Props {
 /** Rendered as a section of the score panel, matching its visual structure. */
 export function EligibilityCard({ result, pnp }: Props) {
   const { t } = useTranslation()
+  const eligiblePrograms = (
+    [
+      ['CEC', result.cec.eligible],
+      ['FSW', result.fsw.eligible],
+      ['FST', result.fst.eligible],
+    ] as const
+  )
+    .filter(([, ok]) => ok)
+    .map(([name]) => name)
   return (
     <div className="space-y-1.5">
       <div className="flex items-baseline justify-between">
         <h4 className="text-sm font-semibold">{t('eligibility.title')}</h4>
-        <Badge eligible={result.anyEligible} />
+        {eligiblePrograms.length > 0 ? (
+          <span className="text-sm font-semibold text-emerald-600 dark:text-emerald-500">
+            {eligiblePrograms.join(' / ')}
+          </span>
+        ) : (
+          <span className="text-muted-foreground text-sm font-semibold">—</span>
+        )}
       </div>
       <div className="space-y-1 pl-3">
         <ProgramRow name={t('eligibility.cec')} status={result.cec} />
