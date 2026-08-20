@@ -43,7 +43,7 @@ export function MobileScoreBar({
           <button
             type="button"
             aria-label={t('score.viewDetails')}
-            className="mx-auto block w-full max-w-2xl px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-1.5 text-left"
+            className="mx-auto block w-full max-w-2xl px-4 pb-[max(1rem,calc(env(safe-area-inset-bottom)+0.375rem))] pt-1.5 text-left"
           >
             <div className="bg-border mx-auto mb-1.5 h-1 w-10 rounded-full" />
             <div className="flex items-center justify-between gap-4">
@@ -73,7 +73,7 @@ export function MobileScoreBar({
             <DrawerHeader className="sr-only">
               <DrawerTitle>{t('score.detailsTitle')}</DrawerTitle>
             </DrawerHeader>
-            <div className="max-h-[75vh] overflow-y-auto px-4 pb-6 pt-2 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:ring-0">
+            <div className="max-h-[75vh] overflow-y-auto px-4 pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] pt-2 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:ring-0">
               <ScorePanel
                 score={score}
                 swapGain={swapGain}
