@@ -11,13 +11,13 @@ Score your Express Entry profile today — and see what it becomes after a year 
 
 ![Home dashboard — every pinned scenario across all profiles on one chart, dashed while ineligible](docs/home.jpg)
 
+![Profile — live score breakdown with transferability caps and pool eligibility](docs/profile.jpg)
+
 - **Score** — full per-factor CRS breakdown, updated live. Language results go in as CLB/NCLC levels or as raw IELTS / CELPIP / PTE / TEF / TCF scores, converted per the official IRCC charts.
 - **Project** — age advances, work experience accrues month by month, and dated events (language retest, education upgrade, provincial nomination) take effect on schedule, plotted as monthly score curves.
 - **Plan** — multiple profiles and side-by-side what-if scenarios; pool eligibility (CEC / FSW with the 67-point grid / FST) with reasons for every miss, plus the earliest entry month per scenario.
 
 Also an installable PWA that works fully offline, responsive down to phones, with a six-language UI (English / Français / Español / 简体中文 / 繁體中文 / हिन्दी).
-
-![Profile — live score breakdown with transferability caps and pool eligibility](docs/profile.jpg)
 
 ## Private by design
 
