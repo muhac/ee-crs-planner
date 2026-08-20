@@ -73,6 +73,7 @@ export function MobileScoreBar({
         </DrawerTrigger>
           <DrawerContent
             onOpenAutoFocus={() => scrollRef.current?.scrollTo({ top: 0 })}
+            onCloseAutoFocus={(e) => e.preventDefault()}
           >
             <DrawerHeader className="sr-only">
               <DrawerTitle>{t('score.detailsTitle')}</DrawerTitle>
