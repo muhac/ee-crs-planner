@@ -1,5 +1,4 @@
 import { useTranslation } from 'react-i18next'
-import { ChevronUp } from 'lucide-react'
 import type { ScoreBreakdown } from '@/engine/types'
 import type { EligibilityResult } from '@/engine/eligibility'
 import { eligibleProgramNames } from '@/engine/eligibility'
@@ -17,6 +16,8 @@ interface Props {
   swapGain?: number
   onSwap?: () => void
   contextLabel?: string
+  /** Short month label (YYYY-MM) shown in the bar while viewing a projection. */
+  contextDate?: string
   onClearContext?: () => void
   eligibility?: EligibilityResult
   nowTotal?: number
@@ -28,6 +29,7 @@ export function MobileScoreBar({
   swapGain,
   onSwap,
   contextLabel,
+  contextDate,
   onClearContext,
   eligibility,
   nowTotal,
@@ -46,27 +48,24 @@ export function MobileScoreBar({
             <div className="bg-border mx-auto mb-1.5 h-1 w-10 rounded-full" />
             <div className="flex items-center justify-between gap-4">
               <div className="min-w-0">
-                <p className="text-muted-foreground truncate text-xs">
-                  {contextLabel ?? t('score.total')}
-                  {programs && (
-                    <>
-                      {' · '}
-                      {programs.length > 0 ? (
-                        programs.join(' / ')
-                      ) : (
-                        <span className="text-red-600 dark:text-red-500">NONE</span>
-                      )}
-                    </>
-                  )}
+                <p
+                  className={`text-muted-foreground truncate text-xs ${contextDate ? 'font-mono' : ''}`}
+                >
+                  {contextDate ?? t('score.total')}
                 </p>
                 <p className="font-heading text-2xl font-bold tabular-nums leading-tight">
                   {score.total}
                 </p>
               </div>
-              <span className="text-muted-foreground flex shrink-0 items-center gap-1 text-sm">
-                {t('score.viewDetails')}
-                <ChevronUp className="size-4" />
-              </span>
+              <div className="flex shrink-0 flex-col items-end gap-0.5">
+                {programs &&
+                  (programs.length > 0 ? (
+                    <p className="text-sm font-medium">{programs.join(' / ')}</p>
+                  ) : (
+                    <p className="text-muted-foreground text-sm">{t('eligibility.none')}</p>
+                  ))}
+                <p className="text-muted-foreground text-xs">{t('score.tapHint')}</p>
+              </div>
             </div>
           </button>
         </DrawerTrigger>

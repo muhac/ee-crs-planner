@@ -130,6 +130,7 @@ export const zhCN = {
     swapAction: '一键交换',
     backToNow: '回到当前',
     viewDetails: '查看明细',
+    tapHint: '点击查看明细',
     detailsTitle: '分数明细',
   },
   projection: {
@@ -159,6 +160,7 @@ export const zhCN = {
     fst: 'FST 联邦技工类',
     fswPoints: '{{points}}/67',
     pnpWarning: '⚠ 省提名 +600 仅在可入池时有效；当前不符合任何 EE 项目资格',
+    none: '暂不可入池',
     reasons: {
       cecExperience: '加国技术类经验不足 12 个月（当前 {{have}}）',
       cecLanguage: '语言未达门槛（需全部 CLB {{need}}）',

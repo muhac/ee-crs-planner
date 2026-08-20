@@ -134,6 +134,7 @@ export const fr = {
     swapAction: 'Inverser',
     backToNow: 'Revenir à aujourd’hui',
     viewDetails: 'Détails',
+    tapHint: 'Toucher pour le détail',
     detailsTitle: 'Détail du score',
   },
   projection: {
@@ -163,6 +164,7 @@ export const fr = {
     fst: 'FST (métiers spécialisés)',
     fswPoints: '{{points}}/67',
     pnpWarning: '⚠ Les +600 du PCP ne comptent qu’une fois admissible au bassin ; aucun programme EE n’est actuellement satisfait',
+    none: 'Pas encore admissible',
     reasons: {
       cecExperience: 'Moins de 12 mois d’expérience canadienne qualifiée ({{have}} actuellement)',
       cecLanguage: 'Langue sous le seuil (NCLC {{need}} dans toutes les habiletés)',

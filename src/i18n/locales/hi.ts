@@ -134,6 +134,7 @@ export const hi = {
     swapAction: 'अदला-बदली करें',
     backToNow: 'वर्तमान पर लौटें',
     viewDetails: 'विवरण',
+    tapHint: 'विवरण के लिए टैप करें',
     detailsTitle: 'स्कोर विवरण',
   },
   projection: {
@@ -163,6 +164,7 @@ export const hi = {
     fst: 'FST (कुशल ट्रेड)',
     fswPoints: '{{points}}/67',
     pnpWarning: '⚠ PNP के +600 केवल पूल में प्रवेश योग्य होने पर गिने जाते हैं; वर्तमान में कोई EE कार्यक्रम मानदंड पूरा नहीं है',
+    none: 'अभी पात्र नहीं',
     reasons: {
       cecExperience: '12 माह से कम कुशल कनाडाई अनुभव (अभी {{have}})',
       cecLanguage: 'भाषा सीमा से नीचे (सभी में CLB {{need}} चाहिए)',

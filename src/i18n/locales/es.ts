@@ -134,6 +134,7 @@ export const es = {
     swapAction: 'Intercambiar',
     backToNow: 'Volver a hoy',
     viewDetails: 'Detalles',
+    tapHint: 'Toca para ver detalles',
     detailsTitle: 'Desglose de la puntuación',
   },
   projection: {
@@ -163,6 +164,7 @@ export const es = {
     fst: 'FST (oficios calificados)',
     fswPoints: '{{points}}/67',
     pnpWarning: '⚠ Los +600 del PNP solo cuentan al poder entrar al pool; actualmente no se cumple ningún programa EE',
+    none: 'Aún no elegible',
     reasons: {
       cecExperience: 'Menos de 12 meses de experiencia canadiense calificada ({{have}} actualmente)',
       cecLanguage: 'Idioma por debajo del umbral (CLB {{need}} en todas las habilidades)',

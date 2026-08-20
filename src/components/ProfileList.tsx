@@ -93,11 +93,7 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
                     {p.name}
                   </p>
                   <p className="text-muted-foreground text-xs">
-                    {programs.length > 0 ? (
-                      programs.join(' / ')
-                    ) : (
-                      <span className="text-red-600 dark:text-red-500">NONE</span>
-                    )}
+                    {programs.length > 0 ? programs.join(' / ') : t('eligibility.none')}
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-col items-end text-right sm:self-end">

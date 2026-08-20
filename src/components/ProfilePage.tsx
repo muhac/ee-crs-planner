@@ -44,6 +44,7 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
     const projected = projectProfile(stored.profile, scenario, today, selected.monthOffset)
     return {
       label: `${scenario.name} · ${date.slice(0, 7)}`,
+      date: date.slice(0, 7),
       score: calculateCrs(projected, date),
       eligibility: checkEligibility(projected, date),
     }
@@ -177,6 +178,7 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
         swapGain={gain}
         onSwap={swap}
         contextLabel={contextLabel}
+        contextDate={projection?.date}
         onClearContext={clearSelection}
         eligibility={displayedEligibility}
         nowTotal={score.total}

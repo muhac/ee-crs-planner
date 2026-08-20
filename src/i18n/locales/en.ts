@@ -134,6 +134,7 @@ export const en = {
     swapAction: 'Swap now',
     backToNow: 'Back to now',
     viewDetails: 'Details',
+    tapHint: 'Tap for details',
     detailsTitle: 'Score breakdown',
   },
   projection: {
@@ -163,6 +164,7 @@ export const en = {
     fst: 'FST (Skilled Trades)',
     fswPoints: '{{points}}/67',
     pnpWarning: '⚠ The PNP +600 only counts once you can enter the pool; no EE program criteria are currently met',
+    none: 'Not yet eligible',
     reasons: {
       cecExperience: 'Under 12 months of skilled Canadian experience ({{have}} now)',
       cecLanguage: 'Language below the threshold (CLB {{need}} in all abilities)',

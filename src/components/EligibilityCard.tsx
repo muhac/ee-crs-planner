@@ -57,7 +57,7 @@ export function EligibilityCard({ result, pnp }: Props) {
         {eligiblePrograms.length > 0 ? (
           <span className="text-sm font-semibold">{eligiblePrograms.join(' / ')}</span>
         ) : (
-          <span className="text-sm font-semibold text-red-600 dark:text-red-500">NONE</span>
+          <span className="text-muted-foreground text-sm">{t('eligibility.none')}</span>
         )}
       </div>
       <div className="space-y-1 pl-3">

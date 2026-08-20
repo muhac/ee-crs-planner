@@ -132,6 +132,7 @@ export const zhTW = {
     swapAction: '一鍵交換',
     backToNow: '回到當前',
     viewDetails: '查看明細',
+    tapHint: '點按查看明細',
     detailsTitle: '分數明細',
   },
   projection: {
@@ -161,6 +162,7 @@ export const zhTW = {
     fst: 'FST 聯邦技工類',
     fswPoints: '{{points}}/67',
     pnpWarning: '⚠ 省提名 +600 僅在可入池時有效；當前不符合任何 EE 項目資格',
+    none: '暫不可入池',
     reasons: {
       cecExperience: '加國技術類經驗不足 12 個月（當前 {{have}}）',
       cecLanguage: '語言未達門檻（需全部 CLB {{need}}）',
