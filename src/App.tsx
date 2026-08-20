@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
-import { Moon, Sun } from 'lucide-react'
+import { ArrowLeft, Moon, Sun } from 'lucide-react'
 import type { StoredProfile } from '@/storage/schema'
 import { parseShareHash } from '@/storage/share'
 import { useAppData } from '@/hooks/useAppData'
@@ -41,6 +41,11 @@ export default function App() {
     setOpenId(id)
   }
 
+  const goHome = () => {
+    setOpenId(null)
+    setPendingSelection(null)
+  }
+
   useEffect(() => {
     const fromHash = parseShareHash(location.hash)
     if (fromHash) {
@@ -55,7 +60,31 @@ export default function App() {
     <div className="min-h-dvh">
       <header className="bg-background sticky top-0 z-[60] border-b pt-[env(safe-area-inset-top)]">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
-          <h1 className="font-heading text-base font-bold">🍁 {t('common.appTitle')}</h1>
+          <div className="flex items-center gap-2">
+            <h1 className="font-heading text-base font-bold">
+              <button type="button" className="flex cursor-pointer items-center" onClick={goHome}>
+                <span
+                  className={`overflow-hidden transition-all duration-300 sm:hidden ${
+                    current ? 'mr-1.5 w-5 opacity-100' : 'mr-0 w-0 opacity-0'
+                  }`}
+                >
+                  <ArrowLeft className="size-4" />
+                </span>
+                🍁 {t('common.appTitle')}
+              </button>
+            </h1>
+            {current && (
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground animate-in fade-in-0 hidden sm:flex"
+                onClick={goHome}
+              >
+                <ArrowLeft className="size-4" />
+                {t('page.back')}
+              </Button>
+            )}
+          </div>
           <div className="flex items-center gap-1">
             <Button
               variant="ghost"
@@ -81,14 +110,9 @@ export default function App() {
             stored={current}
             initialSelection={pendingSelection}
             onChange={(fn) => updateProfile(current.id, fn)}
-            onBack={() => {
-              setOpenId(null)
-              setPendingSelection(null)
-            }}
             onRemove={() => {
               removeProfile(current.id)
-              setOpenId(null)
-              setPendingSelection(null)
+              goHome()
             }}
           />
         ) : (

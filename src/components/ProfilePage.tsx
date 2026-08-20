@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { ArrowLeft, Check, Download, Share2, Trash2 } from 'lucide-react'
+import { Check, Download, Share2, Trash2 } from 'lucide-react'
 import type { StoredProfile } from '@/storage/schema'
 import { calculateCrs, swapGain, swapLanguages } from '@/engine/crs'
 import { checkEligibility } from '@/engine/eligibility'
@@ -20,13 +20,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 interface Props {
   stored: StoredProfile
   onChange: (fn: (prev: StoredProfile) => StoredProfile) => void
-  onBack: () => void
   onRemove: () => void
   /** Preselected projection point (e.g. clicked on the home overview). */
   initialSelection?: ProjectionSelection | null
 }
 
-export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelection }: Props) {
+export function ProfilePage({ stored, onChange, onRemove, initialSelection }: Props) {
   const { t } = useTranslation()
   const [copied, setCopied] = useState(false)
   const today = useMemo(todayIso, [])
@@ -81,15 +80,6 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
     <div className="pb-28 lg:pb-0">
       <Tabs defaultValue={initialSelection ? 'projection' : 'profile'}>
         <div className="mb-4 flex flex-wrap items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-muted-foreground"
-            onClick={onBack}
-          >
-            <ArrowLeft className="size-4" />
-            <span className="hidden sm:inline">{t('page.back')}</span>
-          </Button>
           <Input
             value={stored.name}
             className="min-w-0 flex-1 font-medium sm:max-w-48 sm:flex-none"
