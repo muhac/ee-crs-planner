@@ -98,7 +98,8 @@ export function HomeOverview({ profiles, onOpen }: Props) {
                 <th className="py-2 pr-2 font-medium sm:pr-3">{t('projection.current')}</th>
                 {MILESTONES.map((m) => (
                   <th key={m} className="py-2 pr-2 font-medium sm:pr-3">
-                    {t('projection.plusMonths', { m })}
+                    <span className="sm:hidden">{t('projection.plusMonths', { m })}</span>
+                    <span className="hidden sm:inline">{t('projection.plusMonthsLong', { m })}</span>
                   </th>
                 ))}
                 <th className="hidden py-2 pr-2 font-medium sm:pr-3 sm:table-cell">{t('projection.peak')}</th>

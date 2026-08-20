@@ -143,6 +143,7 @@ export const hi = {
     scenarioCol: 'परिदृश्य',
     current: 'अभी',
     plusMonths: '+{{m}}',
+    plusMonthsLong: '+{{m}} माह',
     peak: 'शिखर',
     earliestEntry: 'पूल में प्रवेश',
     showOnHome: 'मुखपृष्ठ पर दिखाएँ',

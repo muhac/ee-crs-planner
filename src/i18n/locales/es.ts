@@ -143,6 +143,7 @@ export const es = {
     scenarioCol: 'Escenario',
     current: 'Actual',
     plusMonths: '+{{m}}',
+    plusMonthsLong: '+{{m}} m',
     peak: 'Máximo',
     earliestEntry: 'Entrada al pool',
     showOnHome: 'Mostrar en la página principal',

@@ -141,6 +141,7 @@ export const zhTW = {
     scenarioCol: '方案',
     current: '目前',
     plusMonths: '+{{m}}',
+    plusMonthsLong: '+{{m}} 月',
     peak: '峰值',
     earliestEntry: '最早入池',
     showOnHome: '顯示在主頁',
