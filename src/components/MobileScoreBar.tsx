@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ScoreBreakdown } from '@/engine/types'
 import type { EligibilityResult } from '@/engine/eligibility'
@@ -35,10 +36,19 @@ export function MobileScoreBar({
   nowTotal,
 }: Props) {
   const { t } = useTranslation()
+  const [open, setOpen] = useState(false)
   const programs = eligibility ? eligibleProgramNames(eligibility) : null
   return (
     <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur lg:hidden">
-      <Drawer>
+      {/* Non-modal drawer + our own overlay below the header, so the header
+          and status bar stay crisp and usable while the content dims. */}
+      {open && (
+        <div
+          className="animate-in fade-in-0 supports-[backdrop-filter]:backdrop-blur-xs fixed inset-0 z-50 bg-black/10"
+          onClick={() => setOpen(false)}
+        />
+      )}
+      <Drawer open={open} onOpenChange={setOpen} modal={false}>
         <DrawerTrigger asChild>
           <button
             type="button"
