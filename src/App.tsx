@@ -104,8 +104,8 @@ export default function App() {
       </main>
 
       <footer
-        className={`text-muted-foreground mx-auto max-w-6xl px-4 pt-8 text-xs ${
-          current ? 'pb-24 lg:pb-8' : 'pb-8'
+        className={`text-muted-foreground mx-auto max-w-6xl px-4 pb-8 pt-8 text-xs ${
+          current ? 'hidden lg:block' : ''
         }`}
       >
         {t('common.footer')}{' '}
