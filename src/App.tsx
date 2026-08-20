@@ -73,7 +73,12 @@ export default function App() {
                 >
                   <ArrowLeft className="size-4" />
                 </span>
-                🍁 {t('common.appTitle')}
+                <img
+                  src={`${import.meta.env.BASE_URL}favicon.svg`}
+                  alt=""
+                  className="mr-2 size-4.5"
+                />
+                {t('common.appTitle')}
               </button>
             </h1>
             {current && (
