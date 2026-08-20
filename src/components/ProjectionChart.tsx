@@ -14,6 +14,9 @@ import type { SimulationPoint } from '@/engine/simulate'
 
 export const seriesColor = (index: number) => `var(--series-${(index % 8) + 1})`
 
+const REDUCED_MOTION =
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
 export interface ChartSeries {
   id: string
   name: string
@@ -131,6 +134,9 @@ export function ProjectionChart({ series, selected, onSelectPoint }: Props) {
               dot={false}
               legendType="none"
               tooltipType="none"
+              isAnimationActive={!REDUCED_MOTION}
+              animationDuration={400}
+              animationEasing="ease-out"
               activeDot={activeDot(s.id)}
             />
           ))}
@@ -142,6 +148,9 @@ export function ProjectionChart({ series, selected, onSelectPoint }: Props) {
               stroke={seriesColor(s.colorIndex)}
               strokeWidth={2}
               dot={false}
+              isAnimationActive={!REDUCED_MOTION}
+              animationDuration={400}
+              animationEasing="ease-out"
               activeDot={activeDot(s.id)}
             />
           ))}

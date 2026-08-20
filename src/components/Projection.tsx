@@ -165,11 +165,13 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                   return (
                     <tr key={scenario.id} className="border-b last:border-0">
                       <td className="py-2 pr-3">
-                        <span
-                          className="mr-2 inline-block size-2.5 rounded-full align-middle"
-                          style={{ background: seriesColor(i) }}
-                        />
-                        {scenario.name}
+                        <span className="flex max-w-36 items-center sm:max-w-none">
+                          <span
+                            className="mr-2 inline-block size-2.5 shrink-0 rounded-full"
+                            style={{ background: seriesColor(i) }}
+                          />
+                          <span className="truncate">{scenario.name}</span>
+                        </span>
                       </td>
                       <td className="py-1.5 pr-3">{cell(0, points[0].score.total)}</td>
                       {MILESTONES.map((m) => (

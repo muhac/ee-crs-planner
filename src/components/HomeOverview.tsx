@@ -112,14 +112,14 @@ export function HomeOverview({ profiles, onOpen }: Props) {
                   <tr key={s.id} className="border-b last:border-0">
                     <td className="py-2 pr-3">
                       <button
-                        className="cursor-pointer hover:underline"
+                        className="flex max-w-36 cursor-pointer items-center hover:underline sm:max-w-none"
                         onClick={() => open(s.id)}
                       >
                         <span
-                          className="mr-2 inline-block size-2.5 rounded-full align-middle"
+                          className="mr-2 inline-block size-2.5 shrink-0 rounded-full"
                           style={{ background: seriesColor(s.colorIndex) }}
                         />
-                        {s.name}
+                        <span className="truncate">{s.name}</span>
                       </button>
                     </td>
                     <td className="py-1.5 pr-3">{cell(s.id, 0, s.points[0].score.total)}</td>

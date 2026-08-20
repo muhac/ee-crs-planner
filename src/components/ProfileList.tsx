@@ -89,9 +89,7 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
             >
               <CardContent className="flex items-center justify-between gap-3 py-4 sm:h-36 sm:flex-col sm:items-stretch">
                 <div className="min-w-0">
-                  <p className="font-heading sm:text-muted-foreground truncate text-3xl font-bold">
-                    {p.name}
-                  </p>
+                  <p className="font-heading truncate text-3xl font-bold">{p.name}</p>
                   <p className="text-muted-foreground text-xs">
                     {programs.length > 0 ? programs.join(' / ') : t('eligibility.none')}
                   </p>
