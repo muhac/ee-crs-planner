@@ -78,7 +78,7 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
   }
 
   return (
-    <div>
+    <div className="pb-28 lg:pb-0">
       <Tabs defaultValue={initialSelection ? 'projection' : 'profile'}>
         <div className="mb-4 flex flex-wrap items-center gap-2">
           <Button

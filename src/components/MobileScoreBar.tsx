@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ScoreBreakdown } from '@/engine/types'
 import type { EligibilityResult } from '@/engine/eligibility'
@@ -35,6 +36,7 @@ export function MobileScoreBar({
   nowTotal,
 }: Props) {
   const { t } = useTranslation()
+  const scrollRef = useRef<HTMLDivElement>(null)
   const programs = eligibility ? eligibleProgramNames(eligibility) : null
   return (
     <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur lg:hidden">
@@ -69,11 +71,16 @@ export function MobileScoreBar({
             </div>
           </button>
         </DrawerTrigger>
-          <DrawerContent>
+          <DrawerContent
+            onOpenAutoFocus={() => scrollRef.current?.scrollTo({ top: 0 })}
+          >
             <DrawerHeader className="sr-only">
               <DrawerTitle>{t('score.detailsTitle')}</DrawerTitle>
             </DrawerHeader>
-            <div className="max-h-[75vh] overflow-y-auto px-4 pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] pt-4 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:ring-0">
+            <div
+              ref={scrollRef}
+              className="max-h-[75vh] overflow-y-auto px-4 pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] pt-4 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:ring-0"
+            >
               <ScorePanel
                 score={score}
                 swapGain={swapGain}
