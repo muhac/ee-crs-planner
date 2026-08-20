@@ -122,8 +122,8 @@ export function ScorePanel({
     <Card>
       <CardHeader className="pb-2">
         {contextLabel && (
-          <div className="mb-1 flex items-center justify-between gap-2 rounded-md bg-sky-500/10 px-2.5 py-1.5">
-            <p className="text-xs text-sky-700 dark:text-sky-400">📍 {contextLabel}</p>
+          <div className="bg-muted/70 mb-1 flex items-center justify-between gap-2 rounded-md px-2.5 py-1.5">
+            <p className="text-xs font-medium">📍 {contextLabel}</p>
             {onClearContext && (
               <Button
                 variant="outline"

@@ -151,8 +151,10 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                       selected?.scenarioId === scenario.id && selected.monthOffset === offset
                     return (
                       <button
-                        className={`cursor-pointer rounded px-1 py-0.5 tabular-nums hover:bg-muted ${
-                          isSelected ? 'bg-sky-500/10 font-medium text-sky-700 dark:text-sky-400' : ''
+                        className={`cursor-pointer rounded px-1 py-0.5 tabular-nums ${
+                          isSelected
+                            ? 'bg-primary text-primary-foreground font-medium'
+                            : 'hover:bg-muted'
                         }`}
                         onClick={() => select(scenario.id, offset)}
                       >
