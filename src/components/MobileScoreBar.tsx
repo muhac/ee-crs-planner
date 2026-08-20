@@ -47,7 +47,7 @@ export function MobileScoreBar({
           <button
             type="button"
             aria-label={t('score.viewDetails')}
-            className="mx-auto block w-full max-w-2xl px-4 pb-[max(1rem,calc(env(safe-area-inset-bottom)+0.375rem))] pt-1.5 text-left"
+            className="mx-auto block w-full max-w-2xl touch-none px-4 pb-[max(1rem,calc(env(safe-area-inset-bottom)+0.375rem))] pt-1.5 text-left"
             onTouchStart={(e) => {
               touchY.current = e.touches[0].clientY
             }}
