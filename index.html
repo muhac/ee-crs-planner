@@ -2,10 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="https://fav.farm/🍁" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
     <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#fdf6ec" />
+    <meta name="theme-color" content="#fafbfc" />
+    <script>
+      // Apply the stored theme before first paint to avoid a light flash.
+      try {
+        var dark = localStorage.getItem('ee-crs-theme') === 'dark'
+        if (dark) document.documentElement.classList.add('dark')
+        document
+          .querySelector('meta[name="theme-color"]')
+          .setAttribute('content', dark ? '#131c30' : '#fafbfc')
+      } catch (e) {}
+    </script>
     <title>EE CRS Planner — Express Entry CRS Calculator & Score Projection</title>
     <meta
       name="description"

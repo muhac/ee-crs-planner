@@ -30,6 +30,9 @@ export default function App() {
   useEffect(() => {
     document.documentElement.classList.toggle('dark', dark)
     localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light')
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', dark ? '#131c30' : '#fafbfc')
   }, [dark])
   const { data, addProfile, updateProfile, removeProfile } = useAppData()
   const [openId, setOpenId] = useState<string | null>(null)

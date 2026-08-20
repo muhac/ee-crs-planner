@@ -18,17 +18,16 @@ export default defineConfig({
         short_name: 'EE CRS',
         description:
           'Unofficial Express Entry CRS calculator: score your profile, project future changes, and check pool eligibility.',
-        theme_color: '#fdf6ec',
-        background_color: '#fdf6ec',
+        theme_color: '#fafbfc',
+        background_color: '#fafbfc',
         display: 'standalone',
         icons: [
           { src: 'pwa-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'pwa-512.png', sizes: '512x512', type: 'image/png' },
-          { src: 'pwa-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: 'pwa-512-maskable.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {
-        // fav.farm favicon is the only cross-origin asset; don't cache it.
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
       },
     }),
