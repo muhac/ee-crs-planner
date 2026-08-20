@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ScoreBreakdown } from '@/engine/types'
 import type { EligibilityResult } from '@/engine/eligibility'
@@ -37,15 +37,30 @@ export function MobileScoreBar({
 }: Props) {
   const { t } = useTranslation()
   const scrollRef = useRef<HTMLDivElement>(null)
+  const touchY = useRef<number | null>(null)
+  const [open, setOpen] = useState(false)
   const programs = eligibility ? eligibleProgramNames(eligibility) : null
   return (
     <div className="bg-background/95 supports-[backdrop-filter]:bg-background/80 fixed inset-x-0 bottom-0 z-40 border-t backdrop-blur lg:hidden">
-      <Drawer>
+      <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
           <button
             type="button"
             aria-label={t('score.viewDetails')}
             className="mx-auto block w-full max-w-2xl px-4 pb-[max(1rem,calc(env(safe-area-inset-bottom)+0.375rem))] pt-1.5 text-left"
+            onTouchStart={(e) => {
+              touchY.current = e.touches[0].clientY
+            }}
+            onTouchMove={(e) => {
+              // Swipe up on the bar opens the drawer.
+              if (touchY.current !== null && touchY.current - e.touches[0].clientY > 24) {
+                touchY.current = null
+                setOpen(true)
+              }
+            }}
+            onTouchEnd={() => {
+              touchY.current = null
+            }}
           >
             <div className="bg-border mx-auto mb-1.5 h-1 w-10 rounded-full" />
             <div className="flex items-center justify-between gap-4">
