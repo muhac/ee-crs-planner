@@ -49,16 +49,19 @@ export function MobileScoreBar({
             aria-label={t('score.viewDetails')}
             className="mx-auto block w-full max-w-2xl touch-none px-4 pb-[max(1rem,calc(env(safe-area-inset-bottom)+0.375rem))] pt-1.5 text-left"
             onTouchStart={(e) => {
-              touchY.current = e.touches[0].clientY
+              // Swipes starting on the home-indicator edge belong to the system.
+              const y = e.touches[0].clientY
+              touchY.current = y > window.innerHeight - 24 ? null : y
             }}
-            onTouchMove={(e) => {
-              // Swipe up on the bar opens the drawer.
-              if (touchY.current !== null && touchY.current - e.touches[0].clientY > 24) {
-                touchY.current = null
+            onTouchEnd={(e) => {
+              // Decide on release: the system app-switch gesture ends in
+              // touchcancel, so it can no longer pull the drawer open.
+              if (touchY.current !== null && touchY.current - e.changedTouches[0].clientY > 32) {
                 setOpen(true)
               }
+              touchY.current = null
             }}
-            onTouchEnd={() => {
+            onTouchCancel={() => {
               touchY.current = null
             }}
           >
