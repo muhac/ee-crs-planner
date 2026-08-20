@@ -7,7 +7,7 @@ export const es = {
     themeDark: 'Oscuro',
     themeLight: 'Claro',
     footer:
-      'Herramienta no oficial. Las puntuaciones siguen los criterios oficiales CRS de IRCC; solo como referencia. Los datos permanecen en tu navegador.',
+      'Herramienta no oficial. Las puntuaciones siguen los <0>criterios oficiales CRS de IRCC</0>; solo como referencia. Los datos permanecen en tu navegador y la herramienta funciona sin conexión.',
     sourceLink: 'Código fuente en <0>GitHub</0>.',
     metaDescription:
       'Calculadora CRS gratuita y no oficial para Express Entry de Canadá: puntúa tu perfil, convierte IELTS/CELPIP/PTE/TEF/TCF a CLB, proyecta tu puntaje mes a mes y verifica la elegibilidad CEC/FSW/FST. Funciona sin conexión; los datos quedan en tu navegador.',

@@ -4,7 +4,7 @@ export const zhCN = {
     toggleTheme: '切换深色模式',
     themeDark: '深色',
     themeLight: '浅色',
-    footer: '非官方工具，分数按 IRCC 官方 CRS 标准计算，仅供参考。数据仅保存在本机浏览器。',
+    footer: '非官方工具，分数按 <0>IRCC 官方 CRS 标准</0>计算，仅供参考。数据仅保存在本机浏览器，离线亦可使用。',
     sourceLink: '源代码见 <0>GitHub</0>。',
     metaDescription:
       '免费的加拿大 EE 快速通道 CRS 分数计算器：填写档案即时打分，雅思/思培/PTE/TEF/TCF 成绩自动换算 CLB，逐月推演未来分数，判定 CEC/FSW/FST 入池资格。数据仅存本机，支持离线使用。',

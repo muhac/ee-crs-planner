@@ -140,7 +140,18 @@ export default function App() {
           current ? 'hidden lg:block' : ''
         }`}
       >
-        {t('common.footer')}{' '}
+        <Trans
+          i18nKey="common.footer"
+          components={[
+            <a
+              key="crs"
+              href="https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground underline underline-offset-2"
+            />,
+          ]}
+        />{' '}
         <Trans
           i18nKey="common.sourceLink"
           components={[

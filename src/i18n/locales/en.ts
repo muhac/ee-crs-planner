@@ -7,7 +7,7 @@ export const en = {
     themeDark: 'Dark',
     themeLight: 'Light',
     footer:
-      'Unofficial tool. Scores follow the official IRCC CRS criteria; for reference only. Data stays in your browser.',
+      'Unofficial tool. Scores follow the official <0>IRCC CRS criteria</0>; for reference only. Data stays in your browser; works offline.',
     sourceLink: 'Source code on <0>GitHub</0>.',
     metaDescription:
       'Free unofficial Canada Express Entry CRS calculator. Score your profile, convert IELTS/CELPIP/PTE/TEF/TCF results to CLB, project your future score month by month, and check CEC/FSW/FST pool eligibility. Works offline; data stays in your browser.',
