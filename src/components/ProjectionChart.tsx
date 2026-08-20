@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import {
   CartesianGrid,
-  Legend,
   Line,
   LineChart,
   ReferenceDot,
@@ -119,9 +118,6 @@ export function ProjectionChart({ series, selected, onSelectPoint }: Props) {
               color: 'var(--popover-foreground)',
             }}
           />
-          {series.length > 1 && (
-            <Legend formatter={(id) => series.find((s) => s.id === id)?.name ?? id} />
-          )}
           {series.map((s) => (
             <Line
               key={`${s.id}:no`}
