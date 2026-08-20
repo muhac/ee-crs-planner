@@ -6,10 +6,19 @@ import { cn } from "@/lib/utils"
 function Drawer({
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) {
-  // noBodyStyles skips vaul's iOS body-position:fixed hack, whose scroll
-  // compensation can fail and visually jump the page to the top while the
-  // drawer is open. Radix's overflow-based scroll lock keeps the position.
-  return <DrawerPrimitive.Root data-slot="drawer" noBodyStyles {...props} />
+  // Disable both of vaul's iOS body hacks: the position:fixed lock
+  // (noBodyStyles) and the keyboard-repositioning usePreventScroll, whose
+  // mobile-Safari path force-scrolls the window to (0,0) while the drawer is
+  // open. Our drawers contain no inputs, and Radix's own scroll lock keeps
+  // the page position intact.
+  return (
+    <DrawerPrimitive.Root
+      data-slot="drawer"
+      noBodyStyles
+      repositionInputs={false}
+      {...props}
+    />
+  )
 }
 
 function DrawerTrigger({

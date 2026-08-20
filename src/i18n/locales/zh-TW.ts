@@ -140,7 +140,7 @@ export const zhTW = {
     chartHint: '從今天起逐月推演：年齡自動增長，工作經驗按檔案中的工作狀態累積，事件按日期生效。',
     scenarioCol: '方案',
     current: '目前',
-    plusMonths: '+{{m}} 月',
+    plusMonths: '+{{m}}',
     peak: '峰值',
     earliestEntry: '最早入池',
     showOnHome: '顯示在主頁',

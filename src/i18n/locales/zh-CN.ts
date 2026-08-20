@@ -138,7 +138,7 @@ export const zhCN = {
     chartHint: '从今天起逐月推演：年龄自动增长，工作经验按档案中的工作状态累积，事件按日期生效。',
     scenarioCol: '方案',
     current: '当前',
-    plusMonths: '+{{m}} 月',
+    plusMonths: '+{{m}}',
     peak: '峰值',
     earliestEntry: '最早入池',
     showOnHome: '显示在主页',

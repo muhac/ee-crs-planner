@@ -142,7 +142,7 @@ export const en = {
     chartHint: "Projected month by month from today: age advances automatically, work experience accrues per the profile's work status, events take effect on their dates.",
     scenarioCol: 'Scenario',
     current: 'Now',
-    plusMonths: '+{{m}} mo',
+    plusMonths: '+{{m}}',
     peak: 'Peak',
     earliestEntry: 'Pool entry',
     showOnHome: 'Show on home page',

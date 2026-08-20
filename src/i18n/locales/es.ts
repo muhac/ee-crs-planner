@@ -142,7 +142,7 @@ export const es = {
     chartHint: 'Proyección mes a mes desde hoy: la edad avanza automáticamente, la experiencia se acumula según el estado laboral del perfil y los eventos surten efecto en su fecha.',
     scenarioCol: 'Escenario',
     current: 'Actual',
-    plusMonths: '+{{m}} m',
+    plusMonths: '+{{m}}',
     peak: 'Máximo',
     earliestEntry: 'Entrada al pool',
     showOnHome: 'Mostrar en la página principal',
