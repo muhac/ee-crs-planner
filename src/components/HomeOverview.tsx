@@ -94,14 +94,14 @@ export function HomeOverview({ profiles, onOpen }: Props) {
           <table className="w-full text-sm sm:min-w-105">
             <thead>
               <tr className="text-muted-foreground border-b text-left text-xs">
-                <th className="py-2 pr-3 font-medium">{t('projection.scenarioCol')}</th>
-                <th className="py-2 pr-3 font-medium">{t('projection.current')}</th>
+                <th className="py-2 pr-2 font-medium sm:pr-3">{t('projection.scenarioCol')}</th>
+                <th className="py-2 pr-2 font-medium sm:pr-3">{t('projection.current')}</th>
                 {MILESTONES.map((m) => (
-                  <th key={m} className="py-2 pr-3 font-medium">
+                  <th key={m} className="py-2 pr-2 font-medium sm:pr-3">
                     {t('projection.plusMonths', { m })}
                   </th>
                 ))}
-                <th className="hidden py-2 pr-3 font-medium sm:table-cell">{t('projection.peak')}</th>
+                <th className="hidden py-2 pr-2 font-medium sm:pr-3 sm:table-cell">{t('projection.peak')}</th>
                 <th className="hidden py-2 font-medium sm:table-cell">{t('projection.earliestEntry')}</th>
               </tr>
             </thead>
@@ -110,9 +110,9 @@ export function HomeOverview({ profiles, onOpen }: Props) {
                 const p = peak(s.points)
                 return (
                   <tr key={s.id} className="border-b last:border-0">
-                    <td className="py-2 pr-3">
+                    <td className="py-2 pr-2 sm:pr-3">
                       <button
-                        className="flex max-w-36 cursor-pointer items-center hover:underline sm:max-w-none"
+                        className="flex max-w-24 cursor-pointer items-center hover:underline sm:max-w-none"
                         onClick={() => open(s.id)}
                       >
                         <span
@@ -122,13 +122,13 @@ export function HomeOverview({ profiles, onOpen }: Props) {
                         <span className="truncate">{s.name}</span>
                       </button>
                     </td>
-                    <td className="py-1.5 pr-3">{cell(s.id, 0, s.points[0].score.total)}</td>
+                    <td className="py-1.5 pr-2 sm:pr-3">{cell(s.id, 0, s.points[0].score.total)}</td>
                     {MILESTONES.map((m) => (
-                      <td key={m} className="py-1.5 pr-3">
+                      <td key={m} className="py-1.5 pr-2 sm:pr-3">
                         {m < s.points.length ? cell(s.id, m, s.points[m].score.total) : '—'}
                       </td>
                     ))}
-                    <td className="hidden py-1.5 pr-3 font-medium sm:table-cell">
+                    <td className="hidden py-1.5 pr-2 sm:pr-3 font-medium sm:table-cell">
                       {cell(
                         s.id,
                         p.monthOffset,

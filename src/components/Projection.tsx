@@ -134,12 +134,12 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
             <table className="w-full text-sm sm:min-w-105">
               <thead>
                 <tr className="text-muted-foreground border-b text-left text-xs">
-                  <th className="py-2 pr-3 font-medium">{t('projection.scenarioCol')}</th>
-                  <th className="py-2 pr-3 font-medium">{t('projection.current')}</th>
+                  <th className="py-2 pr-2 font-medium sm:pr-3">{t('projection.scenarioCol')}</th>
+                  <th className="py-2 pr-2 font-medium sm:pr-3">{t('projection.current')}</th>
                   {MILESTONES.map((m) => (
-                    <th key={m} className="py-2 pr-3 font-medium">{t('projection.plusMonths', { m })}</th>
+                    <th key={m} className="py-2 pr-2 font-medium sm:pr-3">{t('projection.plusMonths', { m })}</th>
                   ))}
-                  <th className="hidden py-2 pr-3 font-medium sm:table-cell">{t('projection.peak')}</th>
+                  <th className="hidden py-2 pr-2 font-medium sm:pr-3 sm:table-cell">{t('projection.peak')}</th>
                   <th className="hidden py-2 font-medium sm:table-cell">{t('projection.earliestEntry')}</th>
                 </tr>
               </thead>
@@ -164,8 +164,8 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                   }
                   return (
                     <tr key={scenario.id} className="border-b last:border-0">
-                      <td className="py-2 pr-3">
-                        <span className="flex max-w-36 items-center sm:max-w-none">
+                      <td className="py-2 pr-2 sm:pr-3">
+                        <span className="flex max-w-24 items-center sm:max-w-none">
                           <span
                             className="mr-2 inline-block size-2.5 shrink-0 rounded-full"
                             style={{ background: seriesColor(i) }}
@@ -173,13 +173,13 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                           <span className="truncate">{scenario.name}</span>
                         </span>
                       </td>
-                      <td className="py-1.5 pr-3">{cell(0, points[0].score.total)}</td>
+                      <td className="py-1.5 pr-2 sm:pr-3">{cell(0, points[0].score.total)}</td>
                       {MILESTONES.map((m) => (
-                        <td key={m} className="py-1.5 pr-3">
+                        <td key={m} className="py-1.5 pr-2 sm:pr-3">
                           {m < points.length ? cell(m, points[m].score.total) : '—'}
                         </td>
                       ))}
-                      <td className="hidden py-1.5 pr-3 font-medium sm:table-cell">
+                      <td className="hidden py-1.5 pr-2 sm:pr-3 font-medium sm:table-cell">
                         {cell(
                           p.monthOffset,
                           <>
