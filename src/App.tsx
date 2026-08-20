@@ -53,7 +53,7 @@ export default function App() {
 
   return (
     <div className="min-h-dvh">
-      <header className="border-b">
+      <header className="bg-background sticky top-0 z-[60] border-b pt-[env(safe-area-inset-top)]">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
           <h1 className="font-heading text-base font-bold">🍁 {t('common.appTitle')}</h1>
           <div className="flex items-center gap-1">

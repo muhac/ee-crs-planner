@@ -158,7 +158,7 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
           </div>
 
           <div className="hidden lg:block">
-            <div className="sticky top-4">
+            <div className="sticky top-[4.5rem]">
               <ScorePanel
                 score={displayedScore}
                 swapGain={gain}
