@@ -130,7 +130,7 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
             onSelectPoint={(id, offset) => select(id, offset)}
           />
 
-          <div className="mt-4 overflow-x-auto">
+          <div className="no-scrollbar mt-4 overflow-x-auto">
             <table className="w-full text-sm sm:min-w-105">
               <thead>
                 <tr className="text-muted-foreground border-b text-left text-xs">

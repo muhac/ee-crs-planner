@@ -90,7 +90,7 @@ export function HomeOverview({ profiles, onOpen }: Props) {
       <CardContent>
         <ProjectionChart series={series} onSelectPoint={(id, offset) => open(id, offset)} />
 
-        <div className="mt-4 overflow-x-auto">
+        <div className="no-scrollbar mt-4 overflow-x-auto">
           <table className="w-full text-sm sm:min-w-105">
             <thead>
               <tr className="text-muted-foreground border-b text-left text-xs">
