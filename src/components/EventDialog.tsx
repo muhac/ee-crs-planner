@@ -57,10 +57,14 @@ const DEFAULT_TEST: LanguageTestResult = {
 
 interface Props {
   profile: Profile
-  onAdd: (event: FutureEvent) => void
+  onSave: (event: FutureEvent) => void
+  /** When set, the dialog edits this event in place instead of adding one. */
+  event?: FutureEvent
+  /** Custom trigger element (defaults to the "add event" button). */
+  trigger?: React.ReactNode
 }
 
-export function EventDialog({ profile, onAdd }: Props) {
+export function EventDialog({ profile, onSave, event, trigger }: Props) {
   const { t } = useTranslation()
   const [open, setOpen] = useState(false)
   const [type, setType] = useState<FutureEvent['type']>('language-update')
@@ -84,8 +88,39 @@ export function EventDialog({ profile, onAdd }: Props) {
     (v) => !SPOUSE_EVENT_TYPES.includes(v) || profile.spouse !== null,
   )
 
+  /** Reset the form to the edited event's values (or leave add-mode defaults). */
+  const seed = () => {
+    if (!event) return
+    setType(event.type)
+    setDate(event.date)
+    switch (event.type) {
+      case 'language-update':
+        setTarget(event.target)
+        setTest(event.test)
+        break
+      case 'work-status-update':
+        setWorkStatus(`${event.target}-${event.working ? 'start' : 'stop'}`)
+        break
+      case 'education-update':
+        setEducation(event.education)
+        if (event.canadianEducationCredential) {
+          setCanadianEducation(event.canadianEducationCredential)
+        }
+        break
+      case 'spouse-language-update':
+        setSpouseTest(event.test)
+        break
+      case 'spouse-education-update':
+        setSpouseEducation(event.education)
+        break
+      case 'spouse-work-status-update':
+        setSpouseWorking(event.working)
+        break
+    }
+  }
+
   const build = (): FutureEvent => {
-    const base = { id: newId(), date }
+    const base = { id: event?.id ?? newId(), date }
     switch (type) {
       case 'language-update':
         return { ...base, type, target, test }
@@ -123,13 +158,19 @@ export function EventDialog({ profile, onAdd }: Props) {
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (next) seed()
+        setOpen(next)
+      }}
+    >
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">{t('events.addTrigger')}</Button>
+        {trigger ?? <Button variant="outline" size="sm">{t('events.addTrigger')}</Button>}
       </DialogTrigger>
       <DialogContent className="max-h-[85vh] overflow-y-auto sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t('events.dialogTitle')}</DialogTitle>
+          <DialogTitle>{t(event ? 'events.editTitle' : 'events.dialogTitle')}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-1.5">
@@ -280,11 +321,11 @@ export function EventDialog({ profile, onAdd }: Props) {
         <DialogFooter>
           <Button
             onClick={() => {
-              onAdd(build())
+              onSave(build())
               setOpen(false)
             }}
           >
-            {t('events.add')}
+            {t(event ? 'events.save' : 'events.add')}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -8,6 +8,7 @@ import { checkEligibility } from '@/engine/eligibility'
 import { addMonths, todayIso } from '@/engine/dates'
 import { defaultScenario } from '@/lib/profile'
 import { describeEvent } from '@/lib/labels'
+import { Pencil, Trash2, X } from 'lucide-react'
 import { EventDialog } from './EventDialog'
 import { ProjectionChart, seriesColor } from './ProjectionChart'
 import { Button } from '@/components/ui/button'
@@ -230,15 +231,12 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                 />
                 <Input
                   value={scenario.name}
-                  className="w-36 sm:w-48"
+                  className="min-w-0 flex-1 sm:max-w-56 sm:flex-none"
                   onChange={(e) => updateScenario(scenario.id, { name: e.target.value })}
                   aria-label={t('projection.scenarioName')}
                 />
-                <div className="flex items-center gap-2 sm:ml-auto">
-                  <Label
-                    htmlFor={`pin-${scenario.id}`}
-                    className="text-muted-foreground whitespace-nowrap text-xs"
-                  >
+                <div className="order-last flex w-full items-center justify-between gap-4 sm:order-none sm:ml-auto sm:w-auto sm:gap-2">
+                  <Label htmlFor={`pin-${scenario.id}`} className="font-normal">
                     {t('projection.showOnHome')}
                   </Label>
                   <Switch
@@ -246,14 +244,14 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                     checked={scenario.pinned}
                     onCheckedChange={(on) => updateScenario(scenario.id, { pinned: on })}
                   />
-                  <Label className="text-muted-foreground whitespace-nowrap text-xs">
-                    {t('projection.horizon')}
-                  </Label>
+                </div>
+                <div className="order-last flex w-full items-center justify-between gap-4 sm:hidden">
+                  <Label className="font-normal">{t('projection.horizon')}</Label>
                   <Select
                     value={String(scenario.horizonMonths)}
                     onValueChange={(v) => updateScenario(scenario.id, { horizonMonths: Number(v) })}
                   >
-                    <SelectTrigger className="w-24" size="sm">
+                    <SelectTrigger className="w-32" size="sm">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -264,15 +262,6 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                       ))}
                     </SelectContent>
                   </Select>
-                  {scenarios.length > 1 && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onChange(scenarios.filter((s) => s.id !== scenario.id))}
-                    >
-                      {t('projection.delete')}
-                    </Button>
-                  )}
                 </div>
               </div>
 
@@ -286,31 +275,89 @@ export function Projection({ profile, scenarios, onChange, selected, onSelect }:
                       className="bg-muted/50 flex items-center justify-between gap-3 rounded-md px-3 py-2 text-sm"
                     >
                       <div>
-                        <span className="text-muted-foreground mr-2 tabular-nums text-xs">
+                        <span className="text-muted-foreground mr-2 font-mono text-xs">
                           {event.date}
                         </span>
                         {describeEvent(t, event)}
                       </div>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="text-muted-foreground shrink-0"
-                        onClick={() =>
-                          updateScenario(scenario.id, {
-                            events: scenario.events.filter((e) => e.id !== event.id),
-                          })
-                        }
-                      >
-                        {t('projection.remove')}
-                      </Button>
+                      <div className="flex shrink-0 items-center gap-1">
+                        <EventDialog
+                          profile={profile}
+                          event={event}
+                          onSave={(updated) =>
+                            updateScenario(scenario.id, {
+                              events: scenario.events.map((e) =>
+                                e.id === updated.id ? updated : e,
+                              ),
+                            })
+                          }
+                          trigger={
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              aria-label={t('events.edit')}
+                              className="text-muted-foreground"
+                            >
+                              <Pencil className="size-4" />
+                            </Button>
+                          }
+                        />
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          aria-label={t('projection.remove')}
+                          className="text-muted-foreground"
+                          onClick={() =>
+                            updateScenario(scenario.id, {
+                              events: scenario.events.filter((e) => e.id !== event.id),
+                            })
+                          }
+                        >
+                          <X className="size-4" />
+                        </Button>
+                      </div>
                     </div>
                   ))}
-                <EventDialog
-                  profile={profile}
-                  onAdd={(event) =>
-                    updateScenario(scenario.id, { events: [...scenario.events, event] })
-                  }
-                />
+                <div className="flex flex-wrap items-center gap-3">
+                  <EventDialog
+                    profile={profile}
+                    onSave={(event) =>
+                      updateScenario(scenario.id, { events: [...scenario.events, event] })
+                    }
+                  />
+                  <Label className="text-muted-foreground hidden text-xs font-normal sm:flex sm:items-center sm:gap-2">
+                    {t('projection.horizon')}
+                    <Select
+                      value={String(scenario.horizonMonths)}
+                      onValueChange={(v) =>
+                        updateScenario(scenario.id, { horizonMonths: Number(v) })
+                      }
+                    >
+                      <SelectTrigger className="w-32" size="sm">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {[12, 24, 36, 48, 60].map((m) => (
+                          <SelectItem key={m} value={String(m)}>
+                            {t('projection.horizonMonths', { m })}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </Label>
+                  {scenarios.length > 1 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      aria-label={t('projection.delete')}
+                      className="text-muted-foreground ml-auto shrink-0"
+                      onClick={() => onChange(scenarios.filter((s) => s.id !== scenario.id))}
+                    >
+                      <Trash2 className="size-4" />
+                      <span className="hidden sm:inline">{t('projection.delete')}</span>
+                    </Button>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>
