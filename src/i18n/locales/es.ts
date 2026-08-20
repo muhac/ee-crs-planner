@@ -3,6 +3,9 @@ import type { Messages } from './zh-CN'
 export const es = {
   common: {
     appTitle: 'Planificador CRS de EE',
+    toggleTheme: 'Cambiar modo oscuro',
+    themeDark: 'Oscuro',
+    themeLight: 'Claro',
     footer:
       'Herramienta no oficial. Las puntuaciones siguen los criterios oficiales CRS de IRCC; solo como referencia. Los datos permanecen en tu navegador.',
     sourceLink: 'Código fuente en <0>GitHub</0>.',
@@ -22,7 +25,7 @@ export const es = {
     defaultName: 'Perfil {{n}}',
   },
   page: {
-    back: '← Volver',
+    back: 'Volver',
     share: 'Enlace para compartir',
     shareCopied: 'Enlace copiado ✓',
     exportJson: 'Exportar JSON',
@@ -175,6 +178,9 @@ export const es = {
   events: {
     addTrigger: '+ Añadir evento futuro',
     dialogTitle: 'Añadir evento futuro',
+    editTitle: 'Editar evento',
+    edit: 'Editar',
+    save: 'Guardar',
     type: 'Tipo de evento',
     date: 'Fecha de efecto',
     whichLanguage: 'Qué idioma',

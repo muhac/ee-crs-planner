@@ -3,6 +3,9 @@ import type { Messages } from './zh-CN'
 export const en = {
   common: {
     appTitle: 'EE CRS Planner',
+    toggleTheme: 'Toggle dark mode',
+    themeDark: 'Dark',
+    themeLight: 'Light',
     footer:
       'Unofficial tool. Scores follow the official IRCC CRS criteria; for reference only. Data stays in your browser.',
     sourceLink: 'Source code on <0>GitHub</0>.',
@@ -22,7 +25,7 @@ export const en = {
     defaultName: 'Profile {{n}}',
   },
   page: {
-    back: '← Back',
+    back: 'Back',
     share: 'Share link',
     shareCopied: 'Link copied ✓',
     exportJson: 'Export JSON',
@@ -175,6 +178,9 @@ export const en = {
   events: {
     addTrigger: '+ Add future event',
     dialogTitle: 'Add future event',
+    editTitle: 'Edit event',
+    edit: 'Edit',
+    save: 'Save',
     type: 'Event type',
     date: 'Effective date',
     whichLanguage: 'Which language',

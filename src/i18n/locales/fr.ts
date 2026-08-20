@@ -3,6 +3,9 @@ import type { Messages } from './zh-CN'
 export const fr = {
   common: {
     appTitle: 'Planificateur SCG EE',
+    toggleTheme: 'Basculer le mode sombre',
+    themeDark: 'Sombre',
+    themeLight: 'Clair',
     footer:
       'Outil non officiel. Les scores suivent les critères officiels du SCG d’IRCC, à titre indicatif seulement. Les données restent dans votre navigateur.',
     sourceLink: 'Code source sur <0>GitHub</0>.',
@@ -22,7 +25,7 @@ export const fr = {
     defaultName: 'Profil {{n}}',
   },
   page: {
-    back: '← Retour',
+    back: 'Retour',
     share: 'Lien de partage',
     shareCopied: 'Lien copié ✓',
     exportJson: 'Exporter JSON',
@@ -175,6 +178,9 @@ export const fr = {
   events: {
     addTrigger: '+ Ajouter un événement futur',
     dialogTitle: 'Ajouter un événement futur',
+    editTitle: 'Modifier l’événement',
+    edit: 'Modifier',
+    save: 'Enregistrer',
     type: 'Type d’événement',
     date: 'Date d’effet',
     whichLanguage: 'Quelle langue',

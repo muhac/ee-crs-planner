@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Trash2 } from 'lucide-react'
+import { ArrowLeft, Check, Download, Share2, Trash2 } from 'lucide-react'
 import type { StoredProfile } from '@/storage/schema'
 import { calculateCrs, swapGain, swapLanguages } from '@/engine/crs'
 import { checkEligibility } from '@/engine/eligibility'
@@ -78,43 +78,67 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center gap-2">
-        <Button variant="ghost" size="sm" onClick={onBack}>
-          {t('page.back')}
-        </Button>
-        <Input
-          value={stored.name}
-          className="max-w-48 font-medium"
-          onChange={(e) => onChange((p) => ({ ...p, name: e.target.value }))}
-          aria-label={t('page.profileName')}
-        />
-        <div className="ml-auto flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => void share()}>
-            {copied ? t('page.shareCopied') : t('page.share')}
-          </Button>
-          <Button variant="outline" size="sm" onClick={exportJson}>
-            {t('page.exportJson')}
-          </Button>
+      <Tabs defaultValue={initialSelection ? 'projection' : 'profile'}>
+        <div className="mb-4 flex flex-wrap items-center gap-2">
           <Button
             variant="ghost"
-            size="icon"
-            aria-label={t('list.delete')}
-            className="text-muted-foreground size-8"
-            onClick={() => {
-              if (confirm(t('list.deleteConfirm', { name: stored.name }))) onRemove()
-            }}
+            size="sm"
+            className="text-muted-foreground"
+            onClick={onBack}
           >
-            <Trash2 className="size-4" />
+            <ArrowLeft className="size-4" />
+            <span className="hidden sm:inline">{t('page.back')}</span>
           </Button>
-        </div>
-      </div>
-
-      <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-6">
-        <Tabs defaultValue={initialSelection ? 'projection' : 'profile'}>
-          <TabsList className="mb-2">
+          <Input
+            value={stored.name}
+            className="min-w-0 flex-1 font-medium sm:max-w-48 sm:flex-none"
+            onChange={(e) => onChange((p) => ({ ...p, name: e.target.value }))}
+            aria-label={t('page.profileName')}
+          />
+          <TabsList className="order-last w-full sm:order-none sm:w-auto">
             <TabsTrigger value="profile">{t('page.tabProfile')}</TabsTrigger>
             <TabsTrigger value="projection">{t('page.tabProjection')}</TabsTrigger>
           </TabsList>
+          <div className="ml-auto flex shrink-0 items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label={t('page.share')}
+              className="text-muted-foreground"
+              onClick={() => void share()}
+            >
+              {copied ? <Check className="size-4" /> : <Share2 className="size-4" />}
+              <span className="hidden sm:inline">
+                {copied ? t('page.shareCopied') : t('page.share')}
+              </span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label={t('page.exportJson')}
+              className="text-muted-foreground"
+              onClick={exportJson}
+            >
+              <Download className="size-4" />
+              <span className="hidden sm:inline">{t('page.exportJson')}</span>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label={t('list.delete')}
+              className="text-muted-foreground"
+              onClick={() => {
+                if (confirm(t('list.deleteConfirm', { name: stored.name }))) onRemove()
+              }}
+            >
+              <Trash2 className="size-4" />
+              <span className="hidden sm:inline">{t('list.delete')}</span>
+            </Button>
+          </div>
+        </div>
+
+        <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_360px] lg:items-start lg:gap-6">
+          <div>
           <TabsContent value="profile">
             <ProfileForm
               profile={stored.profile}
@@ -130,21 +154,23 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
               onSelect={setSelected}
             />
           </TabsContent>
-        </Tabs>
+          </div>
 
-        <div className="hidden lg:block">
-          <div className="sticky top-4">
-            <ScorePanel
-              score={displayedScore}
-              swapGain={gain}
-              onSwap={swap}
-              contextLabel={contextLabel}
-              onClearContext={clearSelection}
-              eligibility={displayedEligibility}
-            />
+          <div className="hidden lg:block">
+            <div className="sticky top-4">
+              <ScorePanel
+                score={displayedScore}
+                swapGain={gain}
+                onSwap={swap}
+                contextLabel={contextLabel}
+                onClearContext={clearSelection}
+                eligibility={displayedEligibility}
+                nowTotal={score.total}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      </Tabs>
 
       <MobileScoreBar
         score={displayedScore}
@@ -153,6 +179,7 @@ export function ProfilePage({ stored, onChange, onBack, onRemove, initialSelecti
         contextLabel={contextLabel}
         onClearContext={clearSelection}
         eligibility={displayedEligibility}
+        nowTotal={score.total}
       />
     </div>
   )

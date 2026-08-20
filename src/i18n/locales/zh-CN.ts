@@ -1,6 +1,9 @@
 export const zhCN = {
   common: {
     appTitle: 'EE CRS 计算器',
+    toggleTheme: '切换深色模式',
+    themeDark: '深色',
+    themeLight: '浅色',
     footer: '非官方工具，分数按 IRCC 官方 CRS 标准计算，仅供参考。数据仅保存在本机浏览器。',
     sourceLink: '源代码见 <0>GitHub</0>。',
     metaDescription:
@@ -19,7 +22,7 @@ export const zhCN = {
     defaultName: '档案 {{n}}',
   },
   page: {
-    back: '← 返回',
+    back: '返回',
     share: '分享链接',
     shareCopied: '已复制链接 ✓',
     exportJson: '导出 JSON',
@@ -171,6 +174,9 @@ export const zhCN = {
   events: {
     addTrigger: '+ 添加未来事件',
     dialogTitle: '添加未来事件',
+    editTitle: '编辑事件',
+    edit: '编辑',
+    save: '保存',
     type: '事件类型',
     date: '生效日期',
     whichLanguage: '更新哪门语言',

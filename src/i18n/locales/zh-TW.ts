@@ -3,6 +3,9 @@ import type { Messages } from './zh-CN'
 export const zhTW = {
   common: {
     appTitle: 'EE CRS 計算器',
+    toggleTheme: '切換深色模式',
+    themeDark: '深色',
+    themeLight: '淺色',
     footer: '非官方工具，分數依 IRCC 官方 CRS 標準計算，僅供參考。資料僅儲存在本機瀏覽器。',
     sourceLink: '源代碼見 <0>GitHub</0>。',
     metaDescription:
@@ -21,7 +24,7 @@ export const zhTW = {
     defaultName: '檔案 {{n}}',
   },
   page: {
-    back: '← 返回',
+    back: '返回',
     share: '分享連結',
     shareCopied: '已複製連結 ✓',
     exportJson: '匯出 JSON',
@@ -173,6 +176,9 @@ export const zhTW = {
   events: {
     addTrigger: '+ 新增未來事件',
     dialogTitle: '新增未來事件',
+    editTitle: '編輯事件',
+    edit: '編輯',
+    save: '儲存',
     type: '事件類型',
     date: '生效日期',
     whichLanguage: '更新哪門語言',

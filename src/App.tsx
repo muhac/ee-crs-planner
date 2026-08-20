@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Trans, useTranslation } from 'react-i18next'
+import { Moon, Sun } from 'lucide-react'
 import type { StoredProfile } from '@/storage/schema'
 import { parseShareHash } from '@/storage/share'
 import { useAppData } from '@/hooks/useAppData'
@@ -21,8 +22,15 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 
+const THEME_KEY = 'ee-crs-theme'
+
 export default function App() {
   const { t } = useTranslation()
+  const [dark, setDark] = useState(() => localStorage.getItem(THEME_KEY) === 'dark')
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', dark)
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light')
+  }, [dark])
   const { data, addProfile, updateProfile, removeProfile } = useAppData()
   const [openId, setOpenId] = useState<string | null>(null)
   const [pendingSelection, setPendingSelection] = useState<ProjectionSelection | null>(null)
@@ -47,8 +55,22 @@ export default function App() {
     <div className="min-h-dvh">
       <header className="border-b">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3">
-          <h1 className="text-base font-bold">🍁 {t('common.appTitle')}</h1>
-          <LanguageSwitcher />
+          <h1 className="font-heading text-base font-bold">🍁 {t('common.appTitle')}</h1>
+          <div className="flex items-center gap-1">
+            <Button
+              variant="ghost"
+              size="sm"
+              aria-label={t('common.toggleTheme')}
+              className="text-muted-foreground"
+              onClick={() => setDark((d) => !d)}
+            >
+              {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
+              <span className="hidden sm:inline">
+                {dark ? t('common.themeLight') : t('common.themeDark')}
+              </span>
+            </Button>
+            <LanguageSwitcher />
+          </div>
         </div>
       </header>
 

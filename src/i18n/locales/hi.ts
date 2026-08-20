@@ -3,6 +3,9 @@ import type { Messages } from './zh-CN'
 export const hi = {
   common: {
     appTitle: 'EE CRS प्लानर',
+    toggleTheme: 'डार्क मोड बदलें',
+    themeDark: 'डार्क',
+    themeLight: 'लाइट',
     footer:
       'अनौपचारिक टूल। स्कोर IRCC के आधिकारिक CRS मानदंडों के अनुसार हैं; केवल संदर्भ के लिए। डेटा केवल आपके ब्राउज़र में रहता है।',
     sourceLink: 'सोर्स कोड <0>GitHub</0> पर उपलब्ध है।',
@@ -22,7 +25,7 @@ export const hi = {
     defaultName: 'प्रोफ़ाइल {{n}}',
   },
   page: {
-    back: '← वापस',
+    back: 'वापस',
     share: 'लिंक साझा करें',
     shareCopied: 'लिंक कॉपी हो गया ✓',
     exportJson: 'JSON निर्यात करें',
@@ -175,6 +178,9 @@ export const hi = {
   events: {
     addTrigger: '+ भावी घटना जोड़ें',
     dialogTitle: 'भावी घटना जोड़ें',
+    editTitle: 'घटना संपादित करें',
+    edit: 'संपादित करें',
+    save: 'सहेजें',
     type: 'घटना का प्रकार',
     date: 'प्रभावी तिथि',
     whichLanguage: 'कौन सी भाषा',
