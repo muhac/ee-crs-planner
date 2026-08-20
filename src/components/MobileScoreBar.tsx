@@ -79,7 +79,7 @@ export function MobileScoreBar({
             </DrawerHeader>
             <div
               ref={scrollRef}
-              className="max-h-[75vh] overflow-y-auto px-4 pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] pt-4 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:ring-0"
+              className="max-h-[75vh] overflow-y-auto px-4 pb-[max(1.5rem,calc(env(safe-area-inset-bottom)+0.75rem))] pt-1 [&_[data-slot=card]]:bg-transparent [&_[data-slot=card]]:ring-0"
             >
               <ScorePanel
                 score={score}
