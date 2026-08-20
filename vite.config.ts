@@ -29,6 +29,8 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
+        // Social share card; never requested by the app itself.
+        globIgnores: ['og.png'],
       },
     }),
   ],
