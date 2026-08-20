@@ -1,7 +1,10 @@
 # EE CRS Planner
 
-[![Deploy](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml/badge.svg)](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Deploy](https://img.shields.io/github/actions/workflow/status/muhac/ee-crs-planner/deploy.yml?style=flat-square&label=deploy)](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml)
+[![Website](https://img.shields.io/website?url=https%3A%2F%2Fmuhac.github.io%2Fee-crs-planner%2F&style=flat-square)](https://muhac.github.io/ee-crs-planner/)
+![PWA](https://img.shields.io/badge/PWA-offline_ready-1e2a44?style=flat-square)
+[![IRCC tables](https://img.shields.io/badge/IRCC_tables-verified_2026--08-1e2a44?style=flat-square)](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
 [English](./README.md) · 简体中文
 
