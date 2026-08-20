@@ -3,25 +3,29 @@
 [![Deploy](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml/badge.svg)](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
+English · [简体中文](./README.zh-CN.md)
+
 **Live app: https://muhac.github.io/ee-crs-planner/**
 
-An unofficial **CRS (Comprehensive Ranking System) calculator & planner** for Canada Express Entry:
-
-- Enter your profile (age, education, language CLB/NCLC, work experience, spouse, additional factors) and see your total score with a full per-factor breakdown, updated live
-- Language scores accepted as CLB/NCLC levels directly, or as raw results from CELPIP-General, IELTS (General Training), PTE Core, TEF Canada, or TCF Canada — converted per the official IRCC equivalency charts with the resulting CLB shown inline
-- **Future projection**: age advances automatically, work experience accrues month by month, and dated events (language retest, education upgrade, provincial nomination, …) take effect on schedule — plotted as monthly score curves
-- **Pool eligibility**: checks CEC / FSW (including the 67-point selection grid) / FST criteria, explains what's missing, warns when PNP points can't count, and marks ineligible stretches of the projection as dashed with the earliest pool-entry month per scenario
-- Multiple profiles and side-by-side what-if scenarios, with a home dashboard that overlays every pinned scenario across all profiles on one chart; all data stays in your browser (localStorage)
-- JSON export/import for backup, plus share links that encode the profile into the URL hash — nothing ever touches a server
-- Installable PWA: add it to your home screen and it works fully offline
-- Responsive: two-column workbench on desktop, single column with a floating score bar on mobile
-- Six-language UI: English / Français / Español / 简体中文 / 繁體中文 / हिन्दी, auto-detected from the browser on first visit
+Score your Express Entry profile today — and see what it becomes after a year of Canadian work, a better IELTS, or a French course.
 
 ![Home dashboard — every pinned scenario across all profiles on one chart, dashed while ineligible](docs/home.jpg)
 
+- **Score** — full per-factor CRS breakdown, updated live. Language results go in as CLB/NCLC levels or as raw IELTS / CELPIP / PTE / TEF / TCF scores, converted per the official IRCC charts.
+- **Project** — age advances, work experience accrues month by month, and dated events (language retest, education upgrade, provincial nomination) take effect on schedule, plotted as monthly score curves.
+- **Plan** — multiple profiles and side-by-side what-if scenarios; pool eligibility (CEC / FSW with the 67-point grid / FST) with reasons for every miss, plus the earliest entry month per scenario.
+
+Also an installable PWA that works fully offline, responsive down to phones, with a six-language UI (English / Français / Español / 简体中文 / 繁體中文 / हिन्दी).
+
 ![Profile — live score breakdown with transferability caps and pool eligibility](docs/profile.jpg)
 
-Point tables are transcribed from the [official IRCC CRS criteria](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html) (June 2026 edition; job-offer points removed as of 2025-03-25) and verified value-by-value against the live IRCC pages — the CRS grid, the language-test equivalency charts, and the program eligibility rules (August 2026). For reference only — always defer to IRCC.
+## Private by design
+
+Everything stays in your browser: profiles live in localStorage, share links encode the data in the URL itself, and JSON export/import is your backup. No server, no accounts, no analytics.
+
+## Accuracy
+
+Point tables are transcribed from the [official IRCC CRS criteria](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html) (June 2026 edition; job-offer points removed as of 2025-03-25) and verified value-by-value against the live IRCC pages — the CRS grid, the language-test equivalency charts, and the program eligibility rules (August 2026). For reference only — always defer to IRCC. Found a discrepancy? Open an issue.
 
 ## Development
 
