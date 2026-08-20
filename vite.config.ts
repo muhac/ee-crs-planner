@@ -15,7 +15,7 @@ export default defineConfig({
       includeAssets: ['apple-touch-icon.png'],
       manifest: {
         name: 'EE CRS Planner',
-        short_name: 'EE CRS',
+        short_name: 'CRS Planner',
         description:
           'Unofficial Express Entry CRS calculator: score your profile, project future changes, and check pool eligibility.',
         theme_color: '#fafbfc',
