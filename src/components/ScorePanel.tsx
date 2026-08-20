@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next'
+import { CalendarClock, Undo2 } from 'lucide-react'
 import type { ScoreBreakdown } from '@/engine/types'
 import type { EligibilityResult } from '@/engine/eligibility'
 import { EligibilityCard } from './EligibilityCard'
@@ -123,14 +124,18 @@ export function ScorePanel({
       <CardHeader className="pb-2">
         {contextLabel && (
           <div className="bg-muted/70 mb-1 flex items-center justify-between gap-2 rounded-md px-2.5 py-1.5">
-            <p className="text-xs font-medium">📍 {contextLabel}</p>
+            <p className="flex items-center gap-1.5 text-xs font-medium">
+              <CalendarClock className="size-3.5 shrink-0" />
+              {contextLabel}
+            </p>
             {onClearContext && (
               <Button
-                variant="outline"
+                variant="ghost"
                 size="sm"
-                className="h-7 shrink-0 text-xs"
+                className="text-muted-foreground h-7 shrink-0 text-xs"
                 onClick={onClearContext}
               >
+                <Undo2 className="size-3.5" />
                 {t('score.backToNow')}
               </Button>
             )}
