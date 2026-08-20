@@ -69,6 +69,43 @@ interface Props {
   contextLabel?: string
   onClearContext?: () => void
   eligibility?: EligibilityResult
+  /** Today's total, for the ruler when `score` is a projected month. */
+  nowTotal?: number
+}
+
+/**
+ * The whole CRS universe is 1200 points; place this score on that ruler.
+ * The fill always matches the big number above; while viewing a projected
+ * month, today's score appears as a labelled tick.
+ */
+function ScoreRuler({ total, nowTotal }: { total: number; nowTotal?: number }) {
+  const now = nowTotal ?? total
+  const pct = (n: number) => `${Math.min(100, Math.max(0, (n / 1200) * 100))}%`
+  return (
+    <div>
+      <div className="bg-border/70 relative h-1.5 rounded-full">
+        <div
+          className="bg-foreground absolute inset-y-0 left-0 rounded-full"
+          style={{ width: pct(total) }}
+        />
+        {total !== now && (
+          <div
+            className="bg-muted-foreground absolute -inset-y-1 w-px -translate-x-1/2"
+            style={{ left: pct(now) }}
+          />
+        )}
+      </div>
+      <div className="text-muted-foreground relative mt-1 h-3.5 font-mono text-[10px]">
+        <span className="absolute left-0">0</span>
+        {total !== now && (
+          <span className="absolute -translate-x-1/2" style={{ left: pct(now) }}>
+            {now}
+          </span>
+        )}
+        <span className="absolute right-0">1200</span>
+      </div>
+    </div>
+  )
 }
 
 export function ScorePanel({
@@ -78,6 +115,7 @@ export function ScorePanel({
   contextLabel,
   onClearContext,
   eligibility,
+  nowTotal,
 }: Props) {
   const { t } = useTranslation()
   return (
@@ -100,8 +138,9 @@ export function ScorePanel({
         )}
         <CardTitle className="flex items-baseline justify-between">
           <span>{t('score.total')}</span>
-          <span className="text-3xl tabular-nums">{score.total}</span>
+          <span className="font-heading text-3xl font-bold tabular-nums">{score.total}</span>
         </CardTitle>
+        <ScoreRuler total={score.total} nowTotal={nowTotal} />
         {swapGain > 0 && !contextLabel && (
           <div className="mt-1 flex items-center justify-between gap-2 rounded-md bg-amber-500/10 px-2.5 py-1.5">
             <p className="text-xs text-amber-700 dark:text-amber-500">

@@ -30,7 +30,7 @@ function ProgramRow({
       <div className="flex items-baseline justify-between text-sm">
         <span>{name}</span>
         <span className="flex items-baseline gap-1.5">
-          {detail && <span className="text-muted-foreground text-xs tabular-nums">{detail}</span>}
+          {detail && <span className="text-muted-foreground font-mono text-xs">{detail}</span>}
           <Badge eligible={status.eligible} />
         </span>
       </div>

@@ -98,7 +98,9 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
             >
               <CardContent className="flex items-center justify-between gap-3 py-4 sm:h-36 sm:flex-col sm:items-stretch">
                 <div className="min-w-0">
-                  <p className="sm:text-muted-foreground truncate text-3xl font-bold">{p.name}</p>
+                  <p className="font-heading sm:text-muted-foreground truncate text-3xl font-bold">
+                    {p.name}
+                  </p>
                   <p className="text-muted-foreground text-xs">
                     {programs.length > 0 ? (
                       programs.join(' / ')
@@ -108,9 +110,9 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
                   </p>
                 </div>
                 <div className="flex shrink-0 flex-col items-end text-right sm:self-end">
-                  <span className="text-3xl font-bold tabular-nums">{score.total}</span>
+                  <span className="font-heading text-3xl font-bold tabular-nums">{score.total}</span>
                   {change && (
-                    <p className="text-muted-foreground text-xs tabular-nums">
+                    <p className="text-muted-foreground font-mono text-xs">
                       {change.date.slice(0, 7)} → {change.score.total}
                     </p>
                   )}
