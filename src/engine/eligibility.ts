@@ -107,6 +107,19 @@ export function fsw67Points(profile: Profile, asOf: string): number {
 
 const FSW_PASS_MARK = 67
 
+/** Abbreviations of the programs this result qualifies for, in display order. */
+export function eligibleProgramNames(result: EligibilityResult): string[] {
+  return (
+    [
+      ['CEC', result.cec.eligible],
+      ['FSW', result.fsw.eligible],
+      ['FST', result.fst.eligible],
+    ] as const
+  )
+    .filter(([, ok]) => ok)
+    .map(([name]) => name)
+}
+
 export function checkEligibility(profile: Profile, asOf: string): EligibilityResult {
   const clb = profile.firstLanguage.clb
 

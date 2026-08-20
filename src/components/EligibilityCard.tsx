@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import type { EligibilityReason, EligibilityResult, ProgramStatus } from '@/engine/eligibility'
+import { eligibleProgramNames } from '@/engine/eligibility'
 
 function Badge({ eligible }: { eligible: boolean }) {
   return <span>{eligible ? '✓' : '✗'}</span>
@@ -48,15 +49,7 @@ interface Props {
 /** Rendered as a section of the score panel, matching its visual structure. */
 export function EligibilityCard({ result, pnp }: Props) {
   const { t } = useTranslation()
-  const eligiblePrograms = (
-    [
-      ['CEC', result.cec.eligible],
-      ['FSW', result.fsw.eligible],
-      ['FST', result.fst.eligible],
-    ] as const
-  )
-    .filter(([, ok]) => ok)
-    .map(([name]) => name)
+  const eligiblePrograms = eligibleProgramNames(result)
   return (
     <div className="space-y-1.5">
       <div className="flex items-baseline justify-between">

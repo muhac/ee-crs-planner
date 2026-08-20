@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type { StoredProfile } from '@/storage/schema'
 import { isShareEnvelope, upgradeStoredProfile } from '@/storage/schema'
 import { calculateCrs } from '@/engine/crs'
-import { checkEligibility } from '@/engine/eligibility'
+import { checkEligibility, eligibleProgramNames } from '@/engine/eligibility'
 import { simulate } from '@/engine/simulate'
 import { todayIso } from '@/engine/dates'
 import { newId, newStoredProfile } from '@/lib/profile'
@@ -76,16 +76,7 @@ export function ProfileList({ profiles, onOpen, onAdd }: Props) {
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         {profiles.map((p) => {
           const score = calculateCrs(p.profile, today)
-          const eligibility = checkEligibility(p.profile, today)
-          const programs = (
-            [
-              ['CEC', eligibility.cec.eligible],
-              ['FSW', eligibility.fsw.eligible],
-              ['FST', eligibility.fst.eligible],
-            ] as const
-          )
-            .filter(([, ok]) => ok)
-            .map(([name]) => name)
+          const programs = eligibleProgramNames(checkEligibility(p.profile, today))
           // First month the score moves, in the first pinned scenario.
           const scenario = p.scenarios.find((s) => s.pinned) ?? p.scenarios[0]
           const points = scenario ? simulate(p.profile, scenario, today) : []
