@@ -3,7 +3,7 @@
 [![Deploy](https://img.shields.io/github/actions/workflow/status/muhac/ee-crs-planner/deploy.yml?style=flat-square&label=deploy)](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fmuhac.github.io%2Fee-crs-planner%2F&style=flat-square)](https://muhac.github.io/ee-crs-planner/)
 ![PWA](https://img.shields.io/badge/PWA-offline_ready-5b74a8?style=flat-square)
-[![IRCC tables](https://img.shields.io/badge/IRCC_tables-verified_2026--08-5b74a8?style=flat-square)](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html)
+[![IRCC tables](https://img.shields.io/badge/IRCC_tables-verified_2026--10-5b74a8?style=flat-square)](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html)
 [![License: MIT](https://img.shields.io/badge/license-MIT-5b74a8?style=flat-square)](LICENSE)
 
 English · [简体中文](./README.zh-CN.md)
@@ -28,7 +28,7 @@ Everything stays in your browser: profiles live in localStorage, share links enc
 
 ## Accuracy
 
-Point tables are transcribed from the [official IRCC CRS criteria](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html) (June 2026 edition) and verified value-by-value against the live IRCC pages — the CRS grid, the language-test equivalency charts, and the program eligibility rules (August 2026). For reference only — always defer to IRCC. Found a discrepancy? Open an issue.
+Point tables are transcribed from the [official IRCC CRS criteria](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html) (June 2026 edition) and verified value-by-value against the live IRCC pages — the CRS grid, the language-test equivalency charts, and the program eligibility rules (August 2026). Scoring already follows the [Labour Market Integration factor](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/changes.html) that takes effect on November 3, 2026: Canadian work earns extra points in [high-wage occupations](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/high-wage.html), and job offers score again with no LMIA needed (October 2026). For reference only — always defer to IRCC. Found a discrepancy? Open an issue.
 
 ## Development
 

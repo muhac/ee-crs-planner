@@ -3,7 +3,7 @@
 [![Deploy](https://img.shields.io/github/actions/workflow/status/muhac/ee-crs-planner/deploy.yml?style=flat-square&label=deploy)](https://github.com/muhac/ee-crs-planner/actions/workflows/deploy.yml)
 [![Website](https://img.shields.io/website?url=https%3A%2F%2Fmuhac.github.io%2Fee-crs-planner%2F&style=flat-square)](https://muhac.github.io/ee-crs-planner/)
 ![PWA](https://img.shields.io/badge/PWA-offline_ready-5b74a8?style=flat-square)
-[![IRCC tables](https://img.shields.io/badge/IRCC_tables-verified_2026--08-5b74a8?style=flat-square)](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html)
+[![IRCC tables](https://img.shields.io/badge/IRCC_tables-verified_2026--10-5b74a8?style=flat-square)](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html)
 [![License: MIT](https://img.shields.io/badge/license-MIT-5b74a8?style=flat-square)](LICENSE)
 
 [English](./README.md) · 简体中文
@@ -28,7 +28,7 @@
 
 ## 准确性
 
-分数表转录自 [IRCC 官方 CRS 标准](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html)（2026 年 6 月版），并逐值核对过官方在线页面——CRS 分数表、语言成绩对照表与项目资格规则（2026 年 8 月）。仅供参考，一切以 IRCC 为准。发现与官方不一致？欢迎提 issue。
+分数表转录自 [IRCC 官方 CRS 标准](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html)（2026 年 6 月版），并逐值核对过官方在线页面——CRS 分数表、语言成绩对照表与项目资格规则（2026 年 8 月）。打分已按 2026 年 11 月 3 日生效的[劳动力市场融入因子](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/changes.html)计算：[高薪职业](https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/high-wage.html)的加拿大工作经验额外加分，Job Offer 重新计分且不再需要 LMIA（2026 年 10 月）。仅供参考，一切以 IRCC 为准。发现与官方不一致？欢迎提 issue。
 
 ## 开发
 
