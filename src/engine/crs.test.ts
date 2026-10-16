@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import type { ClbScores, EducationLevel, Profile } from './types'
+import type { ClbScores, EducationLevel, HighWageLevel, Profile } from './types'
 import { ageAt } from './dates'
 import { calculateCrs, swapGain, swapLanguages } from './crs'
 
@@ -30,7 +30,9 @@ function baseProfile(overrides: Partial<Profile> = {}): Profile {
     workingInCanada: false,
     workingAbroad: false,
     canadianWorkTeer: 'teer-0-1',
+    canadianWorkHighWage: 'none',
     jobOffer: false,
+    jobOfferHighWage: 'none',
     settlementFunds: true,
     relativeInCanada: false,
     certificateOfQualification: false,
@@ -144,6 +146,61 @@ describe('core: Canadian work experience', () => {
     expect(score({ canadianWorkMonths: months, workingInCanada: false }).core.canadianWork).toBe(without)
     const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } as const
     expect(score({ canadianWorkMonths: months, spouse }).core.canadianWork).toBe(withSp)
+  })
+})
+
+describe('core: labour market integration', () => {
+  const spouse = { education: 'secondary', language: null, canadianWorkMonths: 0, workingInCanada: false, studiedInCanada: false } as const
+
+  it('adds high-wage points once 12 months are in a listed occupation', () => {
+    const cases: Array<[HighWageLevel, number]> = [['none', 0], ['130', 20], ['150', 40], ['200', 70]]
+    for (const [level, pts] of cases) {
+      expect(score({ canadianWorkMonths: 11, canadianWorkHighWage: level }).core.highWage).toBe(0)
+      expect(score({ canadianWorkMonths: 12, canadianWorkHighWage: level }).core.highWage).toBe(pts)
+      expect(score({ canadianWorkMonths: 12, canadianWorkHighWage: level, spouse }).core.highWage).toBe(pts)
+    }
+  })
+
+  it('caps Canadian work at 150 without / 140 with spouse', () => {
+    expect(score({ canadianWorkMonths: 60, canadianWorkHighWage: '200' }).core.labourMarket).toBe(150)
+    expect(score({ canadianWorkMonths: 60, canadianWorkHighWage: '200', spouse }).core.labourMarket).toBe(140)
+  })
+
+  it('scores a job offer by its occupation level, same with or without spouse', () => {
+    const cases: Array<[HighWageLevel, number]> = [['none', 0], ['130', 50], ['150', 70], ['200', 100]]
+    for (const [level, pts] of cases) {
+      expect(score({ jobOffer: true, jobOfferHighWage: level }).core.jobOffer).toBe(pts)
+      expect(score({ jobOffer: true, jobOfferHighWage: level, spouse }).core.jobOffer).toBe(pts)
+    }
+  })
+
+  it('ignores the offer level without a job offer', () => {
+    expect(score({ jobOffer: false, jobOfferHighWage: '200' }).core.jobOffer).toBe(0)
+  })
+
+  it('takes the higher of Canadian work and job offer, never both', () => {
+    // 1 year unlisted (40) vs 2× offer (100)
+    const offerWins = score({ canadianWorkMonths: 12, jobOffer: true, jobOfferHighWage: '200' })
+    expect(offerWins.core.canadianWork).toBe(40)
+    expect(offerWins.core.jobOffer).toBe(100)
+    expect(offerWins.core.labourMarket).toBe(100)
+    expect(offerWins.core.subtotal).toBe(110 + 100)
+
+    // 5 years at 1.3× (80 + 20) vs 1.5× offer (70)
+    const workWins = score({
+      canadianWorkMonths: 60,
+      canadianWorkHighWage: '130',
+      jobOffer: true,
+      jobOfferHighWage: '150',
+    })
+    expect(workWins.core.labourMarket).toBe(100)
+    expect(workWins.core.subtotal).toBe(110 + 100)
+  })
+
+  it('keeps skill transferability on work length only', () => {
+    const plain = score({ education: 'bachelors', canadianWorkMonths: 24 })
+    const highWage = score({ education: 'bachelors', canadianWorkMonths: 24, canadianWorkHighWage: '200' })
+    expect(highWage.transferability).toEqual(plain.transferability)
   })
 })
 

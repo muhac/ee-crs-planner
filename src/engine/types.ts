@@ -36,6 +36,13 @@ export type CanadianEducationCredential = 'none' | 'one-year' | 'two-year' | 'th
 /** TEER category of the Canadian work experience (drives the CEC language threshold). */
 export type WorkTeer = 'teer-0-1' | 'teer-2-3'
 
+/**
+ * Express Entry high-wage occupation level of a NOC: its national median wage
+ * as a percentage of the average median wage (at least 130 / 150 / 200), or
+ * not on IRCC's list.
+ */
+export type HighWageLevel = 'none' | '130' | '150' | '200'
+
 export interface SpouseProfile {
   education: EducationLevel
   /** Spouse's first official language test; null if not tested. */
@@ -62,8 +69,12 @@ export interface Profile {
   workingAbroad: boolean
   /** TEER category of the Canadian work experience. */
   canadianWorkTeer: WorkTeer
-  /** Valid arranged employment / job offer (FSW-67 points; no longer scores in CRS). */
+  /** High-wage level of the Canadian work occupation; all Canadian experience is assumed to be in it. */
+  canadianWorkHighWage: HighWageLevel
+  /** Valid job offer (no LMIA needed); any TEER 0-3 offer counts for FSW/FST eligibility. */
   jobOffer: boolean
+  /** High-wage level of the job offer's occupation; only listed occupations earn CRS points. */
+  jobOfferHighWage: HighWageLevel
   /** Meets the settlement-funds requirement (or is exempt). */
   settlementFunds: boolean
   /** Adult relative in Canada beyond a sibling (FSW adaptability). */
@@ -80,7 +91,13 @@ export interface CoreBreakdown {
   education: number
   firstLanguage: number
   secondLanguage: number
+  /** Work-length points for Canadian experience. */
   canadianWork: number
+  /** High-wage occupation points, on top of work length. */
+  highWage: number
+  jobOffer: number
+  /** Labour Market Integration: max(canadianWork + highWage, jobOffer) — never both. */
+  labourMarket: number
   subtotal: number
 }
 

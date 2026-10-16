@@ -13,6 +13,9 @@ import {
   ADDITIONAL_POINTS,
   AGE_POINTS,
   EDUCATION_POINTS,
+  HIGH_WAGE_MIN_MONTHS,
+  HIGH_WAGE_WORK_POINTS,
+  JOB_OFFER_POINTS,
   SECOND_LANGUAGE_CAP,
   SPOUSE_EDUCATION_POINTS,
   TRANSFER_EDUCATION_POINTS,
@@ -48,6 +51,12 @@ function coreFactors(profile: Profile, age: number, withSpouse: boolean): CoreBr
   const secondLanguagePts = Math.min(secondRaw, SECOND_LANGUAGE_CAP[withSpouse ? 0 : 1])
 
   const canadianWorkPts = canadianWorkPoints(fullYears(profile.canadianWorkMonths), withSpouse)
+  const highWagePts =
+    profile.canadianWorkMonths >= HIGH_WAGE_MIN_MONTHS
+      ? HIGH_WAGE_WORK_POINTS[profile.canadianWorkHighWage]
+      : 0
+  const jobOfferPts = profile.jobOffer ? JOB_OFFER_POINTS[profile.jobOfferHighWage] : 0
+  const labourMarketPts = Math.max(canadianWorkPts + highWagePts, jobOfferPts)
 
   return {
     age: agePts,
@@ -55,7 +64,10 @@ function coreFactors(profile: Profile, age: number, withSpouse: boolean): CoreBr
     firstLanguage: firstLanguagePts,
     secondLanguage: secondLanguagePts,
     canadianWork: canadianWorkPts,
-    subtotal: agePts + educationPts + firstLanguagePts + secondLanguagePts + canadianWorkPts,
+    highWage: highWagePts,
+    jobOffer: jobOfferPts,
+    labourMarket: labourMarketPts,
+    subtotal: agePts + educationPts + firstLanguagePts + secondLanguagePts + labourMarketPts,
   }
 }
 
