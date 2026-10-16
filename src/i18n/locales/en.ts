@@ -76,7 +76,11 @@ export const en = {
       'These do not affect the CRS score — they are only used to determine pool eligibility.',
     jobOffer: 'Valid job offer',
     jobOfferHint:
-      'Arranged employment as defined by IRCC: a full-time, non-seasonal TEER 0-3 job of at least one year, usually LMIA-backed.',
+      'A full-time, non-seasonal TEER 0-3 job of at least one year; no LMIA needed. Any such offer counts for FSW/FST eligibility, but only occupations on the <0>high-wage list</0> earn CRS points (50 / 70 / 100).',
+    jobOfferLevel: "Offer's high-wage level",
+    highWageLevel: 'High-wage occupation level',
+    highWageHint:
+      "Your occupation's level on <0>IRCC's high-wage list</0>, by its median wage relative to the national average. Adds 20 / 40 / 70 points after 12 months; assumes all your Canadian experience is in this occupation.",
     settlementFunds: 'Meets the settlement funds requirement',
     settlementFundsHint:
       'Only affects FSW/FST eligibility; the amount depends on family size (about CAD 15k for one person). CEC requires no proof of funds.',
@@ -107,6 +111,12 @@ export const en = {
     'two-year': 'Two-year credential',
     'three-plus-year': "Credential of 3+ years, or a master's/professional/doctoral degree (at least one academic year)",
   },
+  highWage: {
+    'none': 'Not listed',
+    '130': '≥ 1.3×',
+    '150': '≥ 1.5×',
+    '200': '≥ 2×',
+  },
   score: {
     total: 'CRS total',
     core: 'Core / human capital',
@@ -115,6 +125,9 @@ export const en = {
     firstLanguage: 'First language',
     secondLanguage: 'Second language',
     canadianWork: 'Canadian work experience',
+    labourMarket: 'Labour market integration',
+    highWage: 'High-wage occupation',
+    jobOffer: 'Job offer',
     spouseFactors: 'Spouse factors',
     language: 'Language',
     transferability: 'Skill transferability (max 100)',

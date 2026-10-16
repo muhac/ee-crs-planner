@@ -76,7 +76,11 @@ export const es = {
       'Estos datos no afectan la puntuación CRS; solo se usan para determinar la elegibilidad para el pool.',
     jobOffer: 'Oferta de empleo válida',
     jobOfferHint:
-      'Empleo concertado según IRCC: un puesto TEER 0-3 a tiempo completo, no estacional, de al menos un año, normalmente respaldado por una LMIA.',
+      'Un puesto TEER 0-3 a tiempo completo, no estacional, de al menos un año; ya no requiere LMIA. Cualquier oferta así cuenta para la elegibilidad FSW/FST, pero solo las ocupaciones de la <0>lista de salario alto</0> dan puntos CRS (50 / 70 / 100).',
+    jobOfferLevel: 'Nivel salarial de la oferta',
+    highWageLevel: 'Nivel de ocupación de salario alto',
+    highWageHint:
+      'Nivel de tu ocupación en la <0>lista de ocupaciones de salario alto de IRCC</0>, según su salario mediano frente a la media nacional. Suma 20 / 40 / 70 puntos tras 12 meses; se asume que toda tu experiencia canadiense es en esta ocupación.',
     settlementFunds: 'Cumple el requisito de fondos de asentamiento',
     settlementFundsHint:
       'Solo afecta la elegibilidad FSW/FST; el monto depende del tamaño de la familia (unos 15 000 CAD para una persona). CEC no exige prueba de fondos.',
@@ -107,6 +111,12 @@ export const es = {
     'two-year': 'Título de dos años',
     'three-plus-year': 'Título de 3+ años, o maestría/título profesional/doctorado (mínimo un año académico)',
   },
+  highWage: {
+    'none': 'Fuera de la lista',
+    '130': '≥ 1,3×',
+    '150': '≥ 1,5×',
+    '200': '≥ 2×',
+  },
   score: {
     total: 'Total CRS',
     core: 'Capital humano básico',
@@ -115,6 +125,9 @@ export const es = {
     firstLanguage: 'Primer idioma',
     secondLanguage: 'Segundo idioma',
     canadianWork: 'Experiencia laboral en Canadá',
+    labourMarket: 'Integración al mercado laboral',
+    highWage: 'Ocupación de salario alto',
+    jobOffer: 'Oferta de empleo',
     spouseFactors: 'Factores del cónyuge',
     language: 'Idioma',
     transferability: 'Transferibilidad de habilidades (máx. 100)',
