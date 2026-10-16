@@ -165,7 +165,7 @@ export const zhCN = {
     delete: '删除',
     remove: '移除',
     defaultScenarioName: '方案 {{n}}',
-    swapHint: '⚠ 推演期间交换第一/第二语言指定,部分月份最多可再高 {{n}} 分',
+    swapHint: '⚠ 推演期间交换第一/第二语言指定，部分月份最多可再高 {{n}} 分',
   },
   eligibility: {
     title: '入池资格',
