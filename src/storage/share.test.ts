@@ -123,6 +123,17 @@ describe('share encoding', () => {
     })
   })
 
+  it('upgrades v7 payloads: high-wage levels default to not listed', () => {
+    const { canadianWorkHighWage: _cw, jobOfferHighWage: _jo, ...v7Profile } = stored.profile
+    const v7 = {
+      app: 'ee-crs',
+      schemaVersion: 7,
+      profile: { ...stored, profile: { ...v7Profile, jobOffer: true } },
+    }
+    const decoded = decodeShare(compressToEncodedURIComponent(JSON.stringify(v7)))
+    expect(decoded?.profile).toEqual({ ...stored.profile, jobOffer: true })
+  })
+
   it('parses only well-formed share hashes', () => {
     expect(parseShareHash(SHARE_HASH_PREFIX + encodeShare(stored))).toEqual(stored)
     expect(parseShareHash('#other=123')).toBeNull()
