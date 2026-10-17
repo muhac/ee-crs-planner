@@ -1,6 +1,7 @@
 import type {
   CanadianEducationCredential,
   EducationLevel,
+  HighWageLevel,
   LanguageTestResult,
   Profile,
   ScoreBreakdown,
@@ -15,6 +16,7 @@ export type FutureEvent =
   | { id: string; date: string; type: 'provincial-nomination' }
   | { id: string; date: string; type: 'certificate-of-qualification' }
   | { id: string; date: string; type: 'sibling-in-canada' }
+  | { id: string; date: string; type: 'job-offer'; highWage: HighWageLevel }
   | { id: string; date: string; type: 'spouse-language-update'; test: LanguageTestResult }
   | { id: string; date: string; type: 'spouse-education-update'; education: EducationLevel }
   | { id: string; date: string; type: 'spouse-work-status-update'; working: boolean }
@@ -57,6 +59,8 @@ function applyEvent(profile: Profile, event: FutureEvent): Profile {
       return { ...profile, certificateOfQualification: true }
     case 'sibling-in-canada':
       return { ...profile, siblingInCanada: true }
+    case 'job-offer':
+      return { ...profile, jobOffer: true, jobOfferHighWage: event.highWage }
     case 'spouse-language-update':
       return profile.spouse
         ? { ...profile, spouse: { ...profile.spouse, language: event.test } }

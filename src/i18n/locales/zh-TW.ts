@@ -210,6 +210,7 @@ export const zhTW = {
       'provincial-nomination': '獲得省提名',
       'certificate-of-qualification': '獲得技工證書',
       'sibling-in-canada': '兄弟姊妹成為公民/PR',
+      'job-offer': '獲得雇主 Job Offer',
       'spouse-language-update': '配偶語言重考',
       'spouse-education-update': '配偶學歷提升',
       'spouse-work-status-update': '配偶工作狀態變化',
@@ -219,6 +220,7 @@ export const zhTW = {
       stop: '配偶停止在加拿大工作',
     },
     descSpouseEducation: '配偶學歷提升為「{{education}}」',
+    descJobOffer: '獲得雇主 Job Offer（高薪級別：{{level}}）',
     workStatus: {
       'canada-start': '開始在加拿大工作',
       'canada-stop': '停止在加拿大工作',

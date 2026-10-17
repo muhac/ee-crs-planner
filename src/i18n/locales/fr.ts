@@ -212,6 +212,7 @@ export const fr = {
       'provincial-nomination': 'Candidature provinciale obtenue',
       'certificate-of-qualification': 'Certificat de compétence obtenu',
       'sibling-in-canada': 'Fratrie devient citoyen/RP',
+      'job-offer': 'Offre d’emploi obtenue',
       'spouse-language-update': 'Nouveau test de langue du conjoint',
       'spouse-education-update': 'Progression scolaire du conjoint',
       'spouse-work-status-update': 'Changement de statut de travail du conjoint',
@@ -221,6 +222,7 @@ export const fr = {
       stop: 'Le conjoint cesse de travailler au Canada',
     },
     descSpouseEducation: 'Scolarité du conjoint portée à « {{education}} »',
+    descJobOffer: 'Offre d’emploi obtenue (niveau salarial : {{level}})',
     workStatus: {
       'canada-start': 'Commencer à travailler au Canada',
       'canada-stop': 'Cesser de travailler au Canada',

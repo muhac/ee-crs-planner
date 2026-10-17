@@ -208,6 +208,7 @@ export const zhCN = {
       'provincial-nomination': '获得省提名',
       'certificate-of-qualification': '获得技工证书',
       'sibling-in-canada': '兄弟姐妹成为公民/PR',
+      'job-offer': '获得雇主 Job Offer',
       'spouse-language-update': '配偶语言重考',
       'spouse-education-update': '配偶学历提升',
       'spouse-work-status-update': '配偶工作状态变化',
@@ -217,6 +218,7 @@ export const zhCN = {
       stop: '配偶停止在加拿大工作',
     },
     descSpouseEducation: '配偶学历提升为「{{education}}」',
+    descJobOffer: '获得雇主 Job Offer（高薪档位：{{level}}）',
     workStatus: {
       'canada-start': '开始在加拿大工作',
       'canada-stop': '停止在加拿大工作',

@@ -212,6 +212,7 @@ export const en = {
       'provincial-nomination': 'Provincial nomination',
       'certificate-of-qualification': 'Certificate of qualification',
       'sibling-in-canada': 'Sibling becomes citizen/PR',
+      'job-offer': 'Job offer',
       'spouse-language-update': 'Spouse language retest',
       'spouse-education-update': 'Spouse education upgrade',
       'spouse-work-status-update': 'Spouse work status change',
@@ -221,6 +222,7 @@ export const en = {
       stop: 'Spouse stops working in Canada',
     },
     descSpouseEducation: 'Spouse education upgraded to "{{education}}"',
+    descJobOffer: 'Job offer received (high-wage level: {{level}})',
     workStatus: {
       'canada-start': 'Start working in Canada',
       'canada-stop': 'Stop working in Canada',

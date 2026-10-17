@@ -212,6 +212,7 @@ export const hi = {
       'provincial-nomination': 'प्रांतीय नामांकन प्राप्त',
       'certificate-of-qualification': 'योग्यता प्रमाणपत्र प्राप्त',
       'sibling-in-canada': 'भाई/बहन नागरिक/PR बने',
+      'job-offer': 'जॉब ऑफ़र प्राप्त',
       'spouse-language-update': 'जीवनसाथी की भाषा परीक्षा दोबारा',
       'spouse-education-update': 'जीवनसाथी की शिक्षा उन्नयन',
       'spouse-work-status-update': 'जीवनसाथी की कार्य स्थिति में बदलाव',
@@ -221,6 +222,7 @@ export const hi = {
       stop: 'जीवनसाथी कनाडा में काम बंद करे',
     },
     descSpouseEducation: 'जीवनसाथी की शिक्षा «{{education}}» तक उन्नत',
+    descJobOffer: 'जॉब ऑफ़र प्राप्त (उच्च-वेतन स्तर: {{level}})',
     workStatus: {
       'canada-start': 'कनाडा में काम शुरू करें',
       'canada-stop': 'कनाडा में काम बंद करें',
