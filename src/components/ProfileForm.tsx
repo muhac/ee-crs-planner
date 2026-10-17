@@ -1,7 +1,8 @@
 import { Trans, useTranslation } from 'react-i18next'
-import type { HighWageLevel, Profile } from '@/engine/types'
+import type { Profile } from '@/engine/types'
 import { defaultSpouse } from '@/lib/profile'
 import { EDUCATION_ORDER } from '@/lib/labels'
+import { HighWageSelect } from './HighWageSelect'
 import { LanguageScoreInput } from './LanguageScoreInput'
 import { MonthsInput } from './MonthsInput'
 import {
@@ -28,8 +29,6 @@ interface Props {
 
 const SECTIONS = ['basics', 'education', 'language', 'work', 'extra', 'spouse', 'eligibility']
 
-const HIGH_WAGE_LEVELS: HighWageLevel[] = ['none', '130', '150', '200']
-
 const highWageListLink = (
   <a
     key="high-wage"
@@ -39,30 +38,6 @@ const highWageListLink = (
     className="hover:text-foreground underline underline-offset-2"
   />
 )
-
-function HighWageSelect({
-  value,
-  onChange,
-}: {
-  value: HighWageLevel
-  onChange: (v: HighWageLevel) => void
-}) {
-  const { t } = useTranslation()
-  return (
-    <Select value={value} onValueChange={(v) => onChange(v as HighWageLevel)}>
-      <SelectTrigger className="w-40">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent>
-        {HIGH_WAGE_LEVELS.map((level) => (
-          <SelectItem key={level} value={level}>
-            {t(`highWage.${level}`)}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  )
-}
 
 function EducationSelect({
   value,
