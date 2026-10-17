@@ -2,16 +2,32 @@ import { useTranslation } from 'react-i18next'
 import { CalendarClock, Undo2 } from 'lucide-react'
 import type { ScoreBreakdown } from '@/engine/types'
 import type { EligibilityResult } from '@/engine/eligibility'
+import { CRS_MAX } from '@/engine/tables'
 import { EligibilityCard } from './EligibilityCard'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 
-function Row({ label, value, muted = false }: { label: string; value: number; muted?: boolean }) {
+function Row({
+  label,
+  value,
+  muted = false,
+  struck = false,
+}: {
+  label: string
+  value: number
+  muted?: boolean
+  /** Shown for comparison but not counted (e.g. the losing side of an either/or factor). */
+  struck?: boolean
+}) {
   return (
     <div className="flex items-baseline justify-between text-sm">
       <span className={muted ? 'text-muted-foreground' : ''}>{label}</span>
-      <span className={`tabular-nums ${muted ? 'text-muted-foreground' : 'font-medium'}`}>
+      <span
+        className={`tabular-nums ${muted ? 'text-muted-foreground' : 'font-medium'} ${
+          struck ? 'line-through' : ''
+        }`}
+      >
         {value}
       </span>
     </div>
@@ -75,13 +91,13 @@ interface Props {
 }
 
 /**
- * The whole CRS universe is 1200 points; place this score on that ruler.
+ * The whole CRS universe is CRS_MAX points; place this score on that ruler.
  * The fill always matches the big number above; while viewing a projected
  * month, today's score appears as a labelled tick.
  */
 function ScoreRuler({ total, nowTotal }: { total: number; nowTotal?: number }) {
   const now = nowTotal ?? total
-  const pct = (n: number) => `${Math.min(100, Math.max(0, (n / 1200) * 100))}%`
+  const pct = (n: number) => `${Math.min(100, Math.max(0, (n / CRS_MAX) * 100))}%`
   return (
     <div>
       <div className="bg-border/70 relative h-1.5 rounded-full">
@@ -103,7 +119,7 @@ function ScoreRuler({ total, nowTotal }: { total: number; nowTotal?: number }) {
             {now}
           </span>
         )}
-        <span className="absolute right-0">1200</span>
+        <span className="absolute right-0">{CRS_MAX}</span>
       </div>
     </div>
   )
@@ -119,6 +135,7 @@ export function ScorePanel({
   nowTotal,
 }: Props) {
   const { t } = useTranslation()
+  const offerCounts = score.core.jobOffer > score.core.canadianWork + score.core.highWage
   return (
     <Card>
       <CardHeader className="pb-2">
@@ -167,7 +184,25 @@ export function ScorePanel({
           {score.core.secondLanguage > 0 && (
             <Row label={t('score.secondLanguage')} value={score.core.secondLanguage} muted />
           )}
-          <Row label={t('score.canadianWork')} value={score.core.canadianWork} muted />
+          <GroupRow
+            label={t('score.labourMarket')}
+            raw={score.core.labourMarket}
+            capped={score.core.labourMarket}
+          />
+          <div className="space-y-1 pl-3">
+            <Row
+              label={t('score.canadianWork')}
+              value={score.core.canadianWork}
+              muted
+              struck={offerCounts}
+            />
+            {score.core.highWage > 0 && (
+              <Row label={t('score.highWage')} value={score.core.highWage} muted struck={offerCounts} />
+            )}
+            {score.core.jobOffer > 0 && (
+              <Row label={t('score.jobOffer')} value={score.core.jobOffer} muted struck={!offerCounts} />
+            )}
+          </div>
         </Section>
 
         {score.withSpouse && (

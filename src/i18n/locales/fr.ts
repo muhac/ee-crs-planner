@@ -76,7 +76,11 @@ export const fr = {
       'Ces renseignements n’affectent pas le score SCG — ils servent uniquement à déterminer l’admissibilité au bassin.',
     jobOffer: 'Offre d’emploi valide',
     jobOfferHint:
-      'Emploi réservé au sens d’IRCC : un poste TEER 0-3 à temps plein, non saisonnier, d’au moins un an, généralement appuyé par une EIMT.',
+      'Un poste FEER 0-3 à temps plein, non saisonnier, d’au moins un an ; aucune EIMT requise. Toute offre de ce type compte pour l’admissibilité TQF/MQF, mais seules les professions de la <0>liste à salaire élevé</0> donnent des points SCG (50 / 70 / 100).',
+    jobOfferLevel: 'Niveau salarial de l’offre',
+    highWageLevel: 'Niveau de profession à salaire élevé',
+    highWageHint:
+      'Niveau de votre profession sur la <0>liste des professions à salaire élevé d’IRCC</0>, selon son salaire médian par rapport à la moyenne nationale. Ajoute 20 / 40 / 70 points après 12 mois ; l’outil suppose que toute votre expérience canadienne relève de cette profession.',
     settlementFunds: 'Satisfait à l’exigence de fonds d’établissement',
     settlementFundsHint:
       'N’affecte que l’admissibilité TQF/MQF ; le montant dépend de la taille de la famille (environ 15 000 $ CA pour une personne). La CEC n’exige aucune preuve de fonds.',
@@ -107,6 +111,12 @@ export const fr = {
     'two-year': 'Diplôme de deux ans',
     'three-plus-year': 'Diplôme de 3 ans ou plus, ou maîtrise/diplôme professionnel/doctorat (au moins une année scolaire)',
   },
+  highWage: {
+    'none': 'Hors liste',
+    '130': '≥ 1,3×',
+    '150': '≥ 1,5×',
+    '200': '≥ 2×',
+  },
   score: {
     total: 'Total SCG',
     core: 'Capital humain de base',
@@ -115,6 +125,9 @@ export const fr = {
     firstLanguage: 'Première langue',
     secondLanguage: 'Seconde langue',
     canadianWork: 'Expérience de travail au Canada',
+    labourMarket: 'Intégration au marché du travail',
+    highWage: 'Profession à salaire élevé',
+    jobOffer: 'Offre d’emploi',
     spouseFactors: 'Facteurs du conjoint',
     language: 'Langue',
     transferability: 'Transférabilité des compétences (max 100)',
@@ -199,6 +212,7 @@ export const fr = {
       'provincial-nomination': 'Candidature provinciale obtenue',
       'certificate-of-qualification': 'Certificat de compétence obtenu',
       'sibling-in-canada': 'Fratrie devient citoyen/RP',
+      'job-offer': 'Offre d’emploi obtenue',
       'spouse-language-update': 'Nouveau test de langue du conjoint',
       'spouse-education-update': 'Progression scolaire du conjoint',
       'spouse-work-status-update': 'Changement de statut de travail du conjoint',
@@ -208,6 +222,7 @@ export const fr = {
       stop: 'Le conjoint cesse de travailler au Canada',
     },
     descSpouseEducation: 'Scolarité du conjoint portée à « {{education}} »',
+    descJobOffer: 'Offre d’emploi obtenue (niveau salarial : {{level}})',
     workStatus: {
       'canada-start': 'Commencer à travailler au Canada',
       'canada-stop': 'Cesser de travailler au Canada',

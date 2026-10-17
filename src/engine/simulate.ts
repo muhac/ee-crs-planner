@@ -1,12 +1,14 @@
 import type {
   CanadianEducationCredential,
   EducationLevel,
+  HighWageLevel,
   LanguageTestResult,
   Profile,
   ScoreBreakdown,
 } from './types'
 import { addMonths } from './dates'
 import { calculateCrs } from './crs'
+import { JOB_OFFER_POINTS } from './tables'
 
 export type FutureEvent =
   | { id: string; date: string; type: 'language-update'; target: 'first' | 'second'; test: LanguageTestResult }
@@ -15,6 +17,7 @@ export type FutureEvent =
   | { id: string; date: string; type: 'provincial-nomination' }
   | { id: string; date: string; type: 'certificate-of-qualification' }
   | { id: string; date: string; type: 'sibling-in-canada' }
+  | { id: string; date: string; type: 'job-offer'; highWage: HighWageLevel }
   | { id: string; date: string; type: 'spouse-language-update'; test: LanguageTestResult }
   | { id: string; date: string; type: 'spouse-education-update'; education: EducationLevel }
   | { id: string; date: string; type: 'spouse-work-status-update'; working: boolean }
@@ -57,6 +60,17 @@ function applyEvent(profile: Profile, event: FutureEvent): Profile {
       return { ...profile, certificateOfQualification: true }
     case 'sibling-in-canada':
       return { ...profile, siblingInCanada: true }
+    case 'job-offer': {
+      // A candidate claims their best offer, so a weaker one never replaces it.
+      const keepCurrent =
+        profile.jobOffer &&
+        JOB_OFFER_POINTS[profile.jobOfferHighWage] >= JOB_OFFER_POINTS[event.highWage]
+      return {
+        ...profile,
+        jobOffer: true,
+        jobOfferHighWage: keepCurrent ? profile.jobOfferHighWage : event.highWage,
+      }
+    }
     case 'spouse-language-update':
       return profile.spouse
         ? { ...profile, spouse: { ...profile.spouse, language: event.test } }

@@ -1,11 +1,14 @@
 /**
  * CRS point tables, transcribed from the official IRCC grid:
  * https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/crs-criteria.html
- * (page last updated 2026-06-22; job-offer points removed as of 2025-03-25)
+ * (page last updated 2026-06-22), with the Labour Market Integration factor
+ * that takes effect 2026-11-03:
+ * https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/changes.html
+ * (page last updated 2026-10-16)
  *
  * Every entry is [withSpouse, withoutSpouse] unless noted otherwise.
  */
-import type { EducationLevel } from './types'
+import type { EducationLevel, HighWageLevel } from './types'
 
 type Pair = readonly [withSpouse: number, withoutSpouse: number]
 
@@ -83,6 +86,31 @@ export function canadianWorkPoints(years: number, withSpouse: boolean): number {
   }
   return 0
 }
+
+/** Months of Canadian work in listed occupations needed before high-wage points apply. */
+export const HIGH_WAGE_MIN_MONTHS = 12
+
+/** High-wage occupation points, added to Canadian work-length points (same with or without spouse). */
+export const HIGH_WAGE_WORK_POINTS: Record<HighWageLevel, number> = {
+  'none': 0,
+  '130': 20,
+  '150': 40,
+  '200': 70,
+}
+
+/** Job offer points by the offer's occupation level (same with or without spouse). */
+export const JOB_OFFER_POINTS: Record<HighWageLevel, number> = {
+  'none': 0,
+  '130': 50,
+  '150': 70,
+  '200': 100,
+}
+
+/**
+ * Highest reachable CRS total: core 570 (Labour Market Integration replaces the
+ * 80-point Canadian work cap with 150) + transferability 100 + additional 600.
+ */
+export const CRS_MAX = 1270
 
 export const SPOUSE_EDUCATION_POINTS: Record<EducationLevel, number> = {
   'less-than-secondary': 0,

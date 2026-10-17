@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import type {
   CanadianEducationCredential,
   EducationLevel,
+  HighWageLevel,
   LanguageTestResult,
   Profile,
 } from '@/engine/types'
@@ -10,6 +11,7 @@ import type { FutureEvent } from '@/engine/simulate'
 import { addMonths, todayIso } from '@/engine/dates'
 import { newId } from '@/lib/profile'
 import { EDUCATION_ORDER } from '@/lib/labels'
+import { HighWageSelect } from './HighWageSelect'
 import { LanguageScoreInput } from './LanguageScoreInput'
 import { Button } from '@/components/ui/button'
 import {
@@ -37,6 +39,7 @@ const EVENT_TYPES: Array<FutureEvent['type']> = [
   'provincial-nomination',
   'certificate-of-qualification',
   'sibling-in-canada',
+  'job-offer',
   'spouse-language-update',
   'spouse-education-update',
   'spouse-work-status-update',
@@ -83,14 +86,21 @@ export function EventDialog({ profile, onSave, event, trigger }: Props) {
   const [canadianEducation, setCanadianEducation] = useState<CanadianEducationCredential>(
     profile.canadianEducationCredential,
   )
+  const [offerHighWage, setOfferHighWage] = useState<HighWageLevel>(profile.jobOfferHighWage)
 
   const types = EVENT_TYPES.filter(
     (v) => !SPOUSE_EVENT_TYPES.includes(v) || profile.spouse !== null,
   )
 
-  /** Reset the form to the edited event's values (or leave add-mode defaults). */
+  /**
+   * Reset the form to the edited event's values. Add mode keeps its defaults,
+   * except the offer level, which tracks the profile as it is now.
+   */
   const seed = () => {
-    if (!event) return
+    if (!event) {
+      setOfferHighWage(profile.jobOfferHighWage)
+      return
+    }
     setType(event.type)
     setDate(event.date)
     switch (event.type) {
@@ -115,6 +125,9 @@ export function EventDialog({ profile, onSave, event, trigger }: Props) {
         break
       case 'spouse-work-status-update':
         setSpouseWorking(event.working)
+        break
+      case 'job-offer':
+        setOfferHighWage(event.highWage)
         break
     }
   }
@@ -141,6 +154,8 @@ export function EventDialog({ profile, onSave, event, trigger }: Props) {
         return { ...base, type, education: spouseEducation }
       case 'spouse-work-status-update':
         return { ...base, type, working: spouseWorking }
+      case 'job-offer':
+        return { ...base, type, highWage: offerHighWage }
       default:
         return { ...base, type }
     }
@@ -238,6 +253,13 @@ export function EventDialog({ profile, onSave, event, trigger }: Props) {
                 ))}
               </SelectContent>
             </Select>
+          )}
+
+          {type === 'job-offer' && (
+            <div className="space-y-1.5">
+              <Label>{t('form.jobOfferLevel')}</Label>
+              <HighWageSelect value={offerHighWage} onChange={setOfferHighWage} />
+            </div>
           )}
 
           {type === 'spouse-language-update' && (

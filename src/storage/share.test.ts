@@ -18,7 +18,9 @@ const stored: StoredProfile = {
     workingInCanada: true,
     workingAbroad: false,
     canadianWorkTeer: 'teer-0-1',
+    canadianWorkHighWage: 'none',
     jobOffer: false,
+    jobOfferHighWage: 'none',
     settlementFunds: true,
     relativeInCanada: false,
     certificateOfQualification: false,
@@ -119,6 +121,17 @@ describe('share encoding', () => {
     expect(decoded?.scenarios[0].events[0]).toMatchObject({
       canadianEducationCredential: 'two-year',
     })
+  })
+
+  it('upgrades v7 payloads: high-wage levels default to not listed', () => {
+    const { canadianWorkHighWage: _cw, jobOfferHighWage: _jo, ...v7Profile } = stored.profile
+    const v7 = {
+      app: 'ee-crs',
+      schemaVersion: 7,
+      profile: { ...stored, profile: { ...v7Profile, jobOffer: true } },
+    }
+    const decoded = decodeShare(compressToEncodedURIComponent(JSON.stringify(v7)))
+    expect(decoded?.profile).toEqual({ ...stored.profile, jobOffer: true })
   })
 
   it('parses only well-formed share hashes', () => {

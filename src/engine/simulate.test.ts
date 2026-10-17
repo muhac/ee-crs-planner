@@ -17,7 +17,9 @@ function profile(overrides: Partial<Profile> = {}): Profile {
     workingInCanada: false,
     workingAbroad: false,
     canadianWorkTeer: 'teer-0-1',
+    canadianWorkHighWage: 'none',
     jobOffer: false,
+    jobOfferHighWage: 'none',
     settlementFunds: true,
     relativeInCanada: false,
     certificateOfQualification: false,
@@ -173,6 +175,50 @@ describe('simulate', () => {
     expect(points[10].score.additional.canadianEducation).toBe(15)
     expect(points[16].score.additional.provincialNomination).toBe(0)
     expect(points[17].score.additional.provincialNomination).toBe(600)
+  })
+
+  it('applies a job offer from its date', () => {
+    const sc = scenario({
+      events: [{ id: 'e1', date: '2027-01-01', type: 'job-offer', highWage: '200' }],
+    })
+    const points = simulate(profile({ canadianWorkMonths: 12 }), sc, START)
+    expect(points[4].score.core.labourMarket).toBe(40)
+    expect(points[5].score.core.jobOffer).toBe(100)
+    expect(points[5].score.core.labourMarket).toBe(100)
+    expect(projectProfile(profile(), sc, START, 5)).toMatchObject({
+      jobOffer: true,
+      jobOfferHighWage: '200',
+    })
+  })
+
+  it('an unlisted job offer earns no CRS points but still marks the offer', () => {
+    const sc = scenario({
+      events: [{ id: 'e1', date: '2027-01-01', type: 'job-offer', highWage: 'none' }],
+    })
+    const base = profile({ canadianWorkMonths: 12 })
+    expect(projectProfile(base, sc, START, 5).jobOffer).toBe(true)
+    expect(simulate(base, sc, START)[5].score.total).toBe(simulate(base, scenario(), START)[5].score.total)
+  })
+
+  it('a job offer worth less than work points leaves the score unchanged', () => {
+    // 5 years at 1.3×: 80 + 20 = 100 beats a 1.5× offer's 70
+    const base = profile({ canadianWorkMonths: 60, canadianWorkHighWage: '130' })
+    const sc = scenario({
+      events: [{ id: 'e1', date: '2027-01-01', type: 'job-offer', highWage: '150' }],
+    })
+    const points = simulate(base, sc, START)
+    expect(points[5].score.core.jobOffer).toBe(70)
+    expect(points[5].score.core.labourMarket).toBe(100)
+    expect(points[5].score.total).toBe(simulate(base, scenario(), START)[5].score.total)
+  })
+
+  it('a job offer event never replaces a better offer', () => {
+    const base = profile({ canadianWorkMonths: 12, jobOffer: true, jobOfferHighWage: '200' })
+    const sc = scenario({
+      events: [{ id: 'e1', date: '2027-01-01', type: 'job-offer', highWage: 'none' }],
+    })
+    expect(projectProfile(base, sc, START, 5).jobOfferHighWage).toBe('200')
+    expect(simulate(base, sc, START)[5].score.core.labourMarket).toBe(100)
   })
 
   it('applies second-language and spouse events', () => {
