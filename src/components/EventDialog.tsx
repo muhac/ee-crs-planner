@@ -92,9 +92,15 @@ export function EventDialog({ profile, onSave, event, trigger }: Props) {
     (v) => !SPOUSE_EVENT_TYPES.includes(v) || profile.spouse !== null,
   )
 
-  /** Reset the form to the edited event's values (or leave add-mode defaults). */
+  /**
+   * Reset the form to the edited event's values. Add mode keeps its defaults,
+   * except the offer level, which tracks the profile as it is now.
+   */
   const seed = () => {
-    if (!event) return
+    if (!event) {
+      setOfferHighWage(profile.jobOfferHighWage)
+      return
+    }
     setType(event.type)
     setDate(event.date)
     switch (event.type) {
