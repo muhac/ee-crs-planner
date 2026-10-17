@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import type { ClbScores, EducationLevel, HighWageLevel, Profile } from './types'
 import { ageAt } from './dates'
 import { calculateCrs, swapGain, swapLanguages } from './crs'
+import { CRS_MAX } from './tables'
 
 const AS_OF = '2026-08-18'
 
@@ -550,5 +551,33 @@ describe('integration', () => {
     expect(s.transferability.subtotal).toBe(50)
     expect(s.additional.subtotal).toBe(15)
     expect(s.total).toBe(384 + 23 + 50 + 15)
+  })
+
+  it('a maximal profile reaches CRS_MAX with or without a spouse', () => {
+    const maximal = baseProfile({
+      dateOfBirth: dobForAge(25),
+      education: 'doctoral',
+      firstLanguage: { language: 'french', clb: uniformClb(10) },
+      secondLanguage: { language: 'english', clb: uniformClb(10) },
+      canadianWorkMonths: 60,
+      canadianWorkHighWage: '200',
+      foreignWorkMonths: 36,
+      provincialNomination: true,
+    })
+    expect(calculateCrs(maximal, AS_OF).total).toBe(CRS_MAX)
+    const married = calculateCrs(
+      {
+        ...maximal,
+        spouse: {
+          education: 'doctoral',
+          language: { language: 'english', clb: uniformClb(10) },
+          canadianWorkMonths: 60,
+          workingInCanada: false,
+          studiedInCanada: false,
+        },
+      },
+      AS_OF,
+    )
+    expect(married.total).toBe(CRS_MAX)
   })
 })
