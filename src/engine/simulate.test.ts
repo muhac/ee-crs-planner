@@ -212,6 +212,15 @@ describe('simulate', () => {
     expect(points[5].score.total).toBe(simulate(base, scenario(), START)[5].score.total)
   })
 
+  it('a job offer event never replaces a better offer', () => {
+    const base = profile({ canadianWorkMonths: 12, jobOffer: true, jobOfferHighWage: '200' })
+    const sc = scenario({
+      events: [{ id: 'e1', date: '2027-01-01', type: 'job-offer', highWage: 'none' }],
+    })
+    expect(projectProfile(base, sc, START, 5).jobOfferHighWage).toBe('200')
+    expect(simulate(base, sc, START)[5].score.core.labourMarket).toBe(100)
+  })
+
   it('applies second-language and spouse events', () => {
     const points = simulate(
       profile({
