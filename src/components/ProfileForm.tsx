@@ -1,7 +1,8 @@
-import { useTranslation } from 'react-i18next'
+import { Trans, useTranslation } from 'react-i18next'
 import type { Profile } from '@/engine/types'
 import { defaultSpouse } from '@/lib/profile'
 import { EDUCATION_ORDER } from '@/lib/labels'
+import { HighWageSelect } from './HighWageSelect'
 import { LanguageScoreInput } from './LanguageScoreInput'
 import { MonthsInput } from './MonthsInput'
 import {
@@ -27,6 +28,16 @@ interface Props {
 }
 
 const SECTIONS = ['basics', 'education', 'language', 'work', 'extra', 'spouse', 'eligibility']
+
+const highWageListLink = (
+  <a
+    key="high-wage"
+    href="https://www.canada.ca/en/immigration-refugees-citizenship/services/immigrate-canada/express-entry/check-score/high-wage.html#list"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="hover:text-foreground underline underline-offset-2"
+  />
+)
 
 function EducationSelect({
   value,
@@ -190,6 +201,18 @@ export function ProfileForm({ profile, onChange }: Props) {
               </SelectContent>
             </Select>
           </div>
+          <div className="space-y-1">
+            <div className="flex items-center justify-between gap-4">
+              <Label className="font-normal">{t('form.highWageLevel')}</Label>
+              <HighWageSelect
+                value={profile.canadianWorkHighWage}
+                onChange={(canadianWorkHighWage) => set({ canadianWorkHighWage })}
+              />
+            </div>
+            <p className="text-muted-foreground text-xs">
+              <Trans i18nKey="form.highWageHint" components={[highWageListLink]} />
+            </p>
+          </div>
           <div className="space-y-1.5">
             <Label htmlFor="foreign-work">{t('form.foreignWork')}</Label>
             <MonthsInput
@@ -208,6 +231,28 @@ export function ProfileForm({ profile, onChange }: Props) {
               onCheckedChange={(on) => set({ workingAbroad: on })}
             />
           </div>
+          <div className="space-y-1">
+            <div className="flex items-center justify-between gap-4">
+              <Label htmlFor="job-offer" className="font-normal">{t('form.jobOffer')}</Label>
+              <Switch
+                id="job-offer"
+                checked={profile.jobOffer}
+                onCheckedChange={(on) => set({ jobOffer: on })}
+              />
+            </div>
+            <p className="text-muted-foreground text-xs">
+              <Trans i18nKey="form.jobOfferHint" components={[highWageListLink]} />
+            </p>
+          </div>
+          {profile.jobOffer && (
+            <div className="flex items-center justify-between gap-4 border-l-2 pl-4">
+              <Label className="font-normal">{t('form.jobOfferLevel')}</Label>
+              <HighWageSelect
+                value={profile.jobOfferHighWage}
+                onChange={(jobOfferHighWage) => set({ jobOfferHighWage })}
+              />
+            </div>
+          )}
         </AccordionContent>
       </AccordionItem>
 
@@ -328,7 +373,6 @@ export function ProfileForm({ profile, onChange }: Props) {
           <p className="text-muted-foreground text-xs">{t('form.eligibilityHint')}</p>
           {(
             [
-              ['jobOffer', t('form.jobOffer'), t('form.jobOfferHint')],
               ['settlementFunds', t('form.settlementFunds'), t('form.settlementFundsHint')],
               ['relativeInCanada', t('form.relativeInCanada'), t('form.relativeInCanadaHint')],
             ] as const

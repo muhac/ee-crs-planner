@@ -1,10 +1,10 @@
 import type { ClbScores, Profile } from '@/engine/types'
 import type { Scenario } from '@/engine/simulate'
 
-export const SCHEMA_VERSION = 7
+export const SCHEMA_VERSION = 8
 
 /** Schema versions this build can read (older ones are upgraded on load). */
-const READABLE_VERSIONS: number[] = [1, 2, 3, 4, 5, 6, 7]
+const READABLE_VERSIONS: number[] = [1, 2, 3, 4, 5, 6, 7, 8]
 
 export interface StoredProfile {
   id: string
@@ -43,6 +43,8 @@ export function emptyAppData(): AppData {
  * v6 → v7: the 'one-or-two-year' Canadian credential split into 'one-year'
  * and 'two-year'; old values map to 'two-year', which keeps both the CRS
  * points (15) and the FSW-67 study adaptability credit unchanged.
+ * v7 → v8: high-wage occupation levels for Canadian work and the job offer
+ * (default 'none', which scores the same as before the 2026-11-03 change).
  */
 const upgradeCredential = (value: unknown) =>
   value === 'one-or-two-year' ? 'two-year' : (value as Profile['canadianEducationCredential'])
@@ -70,8 +72,10 @@ export function upgradeStoredProfile(sp: StoredProfile): StoredProfile {
         (sp.profile.workingAbroad as boolean | undefined) ??
         scenarios.some((s) => s.workingAbroad === true),
       canadianWorkTeer: sp.profile.canadianWorkTeer ?? 'teer-0-1',
+      canadianWorkHighWage: sp.profile.canadianWorkHighWage ?? 'none',
       canadianEducationCredential: upgradeCredential(sp.profile.canadianEducationCredential),
       jobOffer: (sp.profile.jobOffer as boolean | undefined) ?? false,
+      jobOfferHighWage: sp.profile.jobOfferHighWage ?? 'none',
       settlementFunds: (sp.profile.settlementFunds as boolean | undefined) ?? true,
       relativeInCanada: (sp.profile.relativeInCanada as boolean | undefined) ?? false,
       spouse: spouse

@@ -44,6 +44,8 @@ export function describeEvent(t: TFunction, event: FutureEvent): string {
       return t(`events.workStatus.${event.target}-${event.working ? 'start' : 'stop'}`)
     case 'spouse-work-status-update':
       return t(`events.spouseWorkStatus.${event.working ? 'start' : 'stop'}`)
+    case 'job-offer':
+      return t('events.descJobOffer', { level: t(`highWage.${event.highWage}`) })
     case 'spouse-education-update':
       return t('events.descSpouseEducation', { education: t(`education.${event.education}`) })
     case 'spouse-language-update': {

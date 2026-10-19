@@ -74,7 +74,11 @@ export const zhTW = {
     eligibilityHint: '以下資訊不影響 CRS 分數，僅用於判定入池資格。',
     jobOffer: '有有效雇主 Job Offer',
     jobOfferHint:
-      '指官方定義的「安排就業」：全職、非季節性、至少一年的 TEER 0-3 職位，通常需 LMIA 支持。',
+      '全職、非季節性、至少一年的 TEER 0-3 職位，不再需要 LMIA。任何這樣的 Offer 都可用於 FSW/FST 資格，但只有<0>高薪職業名單</0>上的職業才有 CRS 加分（50 / 70 / 100）。',
+    jobOfferLevel: 'Offer 職業的高薪級別',
+    highWageLevel: '高薪職業級別',
+    highWageHint:
+      '你的職業在<0>IRCC 高薪職業名單</0>上的級別（依該職業薪資中位數相對全國平均的倍數）。滿 12 個月後加 20 / 40 / 70 分；本工具假設你的加拿大經驗都在這個職業。',
     settlementFunds: '滿足安家資金要求',
     settlementFundsHint:
       '僅影響 FSW/FST 資格，金額隨家庭人數而定（單人約 1.5 萬加元）；CEC 無需資金證明。',
@@ -105,6 +109,12 @@ export const zhTW = {
     'two-year': '兩年制文憑',
     'three-plus-year': '三年及以上文憑，或碩士/職業/博士學位（至少一學年）',
   },
+  highWage: {
+    'none': '不在名單上',
+    '130': '≥ 1.3 倍',
+    '150': '≥ 1.5 倍',
+    '200': '≥ 2 倍',
+  },
   score: {
     total: 'CRS 總分',
     core: '核心人力資本',
@@ -113,6 +123,9 @@ export const zhTW = {
     firstLanguage: '第一語言',
     secondLanguage: '第二語言',
     canadianWork: '加拿大工作經驗',
+    labourMarket: '勞動市場融入',
+    highWage: '高薪職業',
+    jobOffer: '雇主 Offer',
     spouseFactors: '配偶因素',
     language: '語言',
     transferability: '技能可轉移性（上限 100）',
@@ -154,7 +167,7 @@ export const zhTW = {
     delete: '刪除',
     remove: '移除',
     defaultScenarioName: '方案 {{n}}',
-    swapHint: '⚠ 推演期間交換第一/第二語言指定,部分月份最多可再高 {{n}} 分',
+    swapHint: '⚠ 推演期間交換第一/第二語言指定，部分月份最多可再高 {{n}} 分',
   },
   eligibility: {
     title: '入池資格',
@@ -197,6 +210,7 @@ export const zhTW = {
       'provincial-nomination': '獲得省提名',
       'certificate-of-qualification': '獲得技工證書',
       'sibling-in-canada': '兄弟姊妹成為公民/PR',
+      'job-offer': '獲得雇主 Job Offer',
       'spouse-language-update': '配偶語言重考',
       'spouse-education-update': '配偶學歷提升',
       'spouse-work-status-update': '配偶工作狀態變化',
@@ -206,6 +220,7 @@ export const zhTW = {
       stop: '配偶停止在加拿大工作',
     },
     descSpouseEducation: '配偶學歷提升為「{{education}}」',
+    descJobOffer: '獲得雇主 Job Offer（高薪級別：{{level}}）',
     workStatus: {
       'canada-start': '開始在加拿大工作',
       'canada-stop': '停止在加拿大工作',
