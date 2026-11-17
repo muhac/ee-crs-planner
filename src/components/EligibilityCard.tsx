@@ -11,7 +11,7 @@ function ReasonList({ reasons }: { reasons: EligibilityReason[] }) {
   return (
     <ul className="text-muted-foreground space-y-1 pl-3 text-sm">
       {reasons.map((r) => (
-        <li key={r.key}>{t(`eligibility.reasons.${r.key}`, r.params)}</li>
+        <li key={r.key}>{t(`eligibility.reasons.${r.key}`, r.params ?? {})}</li>
       ))}
     </ul>
   )
